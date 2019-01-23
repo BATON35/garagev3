@@ -1,7 +1,8 @@
 package com.konrad.garagev3.repository;
 
+import com.konrad.garagev3.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.security.core.userdetails.User;
+
 import org.springframework.stereotype.Repository;
 
 @Repository("userRepository")
