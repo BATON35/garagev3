@@ -19,11 +19,21 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = {"/", "/login"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/1", "/login"}, method = RequestMethod.GET)
     public ModelAndView login() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("login");
         return modelAndView;
+    }
+
+    @RequestMapping(value = "/")
+    public String index(){
+        return "index";
+    }
+
+    @RequestMapping(value = "/about")
+    public String about(){
+        return "about";
     }
 
 
@@ -73,7 +83,7 @@ public class LoginController {
         return "index";
     }
 
-    @RequestMapping(value = "registration", method = RequestMethod.POST)
+    @RequestMapping(value = "registrationVersion2", method = RequestMethod.POST)
     public ModelAndView addNewUser(@Valid User user, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
         User userExists = userService.findUserByEmail(user.getEmail());
@@ -83,12 +93,12 @@ public class LoginController {
                             "There is already a user registered with the email provided");
         }
         if (bindingResult.hasErrors()) {
-            modelAndView.setViewName("registration");
+            modelAndView.setViewName("registrationVersion2");
         } else {
             userService.saveUser(user);
             modelAndView.addObject("successMessage", "User has been registered successfully");
             modelAndView.addObject("user", new User());
-            modelAndView.setViewName("registration");
+            modelAndView.setViewName("registrationVersion2");
 
         }
         return modelAndView;
