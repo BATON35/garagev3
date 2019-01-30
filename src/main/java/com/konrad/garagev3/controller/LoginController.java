@@ -7,6 +7,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -19,23 +20,12 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = {"/1", "/login"}, method = RequestMethod.GET)
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView login() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("login");
         return modelAndView;
     }
-
-    @RequestMapping(value = "/")
-    public String index(){
-        return "index";
-    }
-
-    @RequestMapping(value = "/about")
-    public String about(){
-        return "about";
-    }
-
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public ModelAndView registration() {
@@ -77,32 +67,4 @@ public class LoginController {
         modelAndView.setViewName("admin/home");
         return modelAndView;
     }
-
-    @RequestMapping("/index")
-    public String getIndex() {
-        return "index";
-    }
-
-    @RequestMapping(value = "registrationVersion2", method = RequestMethod.POST)
-    public ModelAndView addNewUser(@Valid User user, BindingResult bindingResult) {
-        ModelAndView modelAndView = new ModelAndView();
-        User userExists = userService.findUserByEmail(user.getEmail());
-        if (userExists != null) {
-            bindingResult
-                    .rejectValue("name", "name.user",
-                            "There is already a user registered with the email provided");
-        }
-        if (bindingResult.hasErrors()) {
-            modelAndView.setViewName("registrationVersion2");
-        } else {
-            userService.saveUser(user);
-            modelAndView.addObject("successMessage", "User has been registered successfully");
-            modelAndView.addObject("user", new User());
-            modelAndView.setViewName("registrationVersion2");
-
-        }
-        return modelAndView;
-    }
-
-
 }

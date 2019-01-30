@@ -14,7 +14,7 @@ body {
 }
 
 .carousel-item {
-  height: 450px;
+  height: 500px;
 }
 
 .carousel-image-1 {
@@ -67,13 +67,13 @@ body {
 }
 
 #page-header {
-  height: 200px;
-  background: url('../img/image1v1.jpg');
+  height: 850px;
+  background: url('../img/image1.jpg');
   background-position: 0 -360px;
   background-attachment: fixed;
   color: #fff;
   border-bottom: 1px #eee solid;
-  padding-top: 50px;
+  padding-top: 150px;
 }
 
 .about-img {
