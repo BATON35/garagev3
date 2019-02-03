@@ -20,7 +20,7 @@
                     <a href="index" class="nav-link">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a href="about.html" class="nav-link">About Us</a>
+                    <a href="about" class="nav-link">About Us</a>
                 </li>
                 <li class="nav-item">
                     <a href="services" class="nav-link">Services</a>
@@ -29,13 +29,13 @@
                     <a href="blog" class="nav-link">Blog</a>
                 </li>
                 <li class="nav-item">
-                    <a href="contact.html" class="nav-link">Contact</a>
+                    <a href="contact" class="nav-link">Contact</a>
                 </li>
                 <li class="nav-item" sec:authorize="isAnonymous()">
                     <a href="registration" class="nav-link">Rejestracja</a>
                 </li>
                 <li class="nav-item" sec:authorize="isAnonymous()">
-                    <a href="login" class="nav-link">Logowanie</a>
+                    <a href="index" class="nav-link">Logowanie</a>
                 </li>
                 <li class="nav-item" sec:authorize="isAuthenticated()">
                     <form th:action="@{/logout}" method="get">

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class MainBarController {
     @RequestMapping(value = "/")
-    public String sss(){
+    public String isitingCard(){
         return "visitingCard";
     }
 
@@ -22,16 +22,16 @@ public class MainBarController {
     }
 
     @RequestMapping(value = "/services")
-    public String blog(){
+    public String services(){
         return "services";
     }
 
     @RequestMapping("/index")
-    public String getIndex() {
+    public String index() {
         return "index";
     }
     @RequestMapping("/blog")
-    public String getBlog() {
+    public String blog() {
         return "blog";
     }
 }
