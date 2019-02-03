@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,7 +23,7 @@
                     <a href="about.html" class="nav-link">About Us</a>
                 </li>
                 <li class="nav-item">
-                    <a href="services.html" class="nav-link">Services</a>
+                    <a href="services" class="nav-link">Services</a>
                 </li>
                 <li class="nav-item">
                     <a href="blog" class="nav-link">Blog</a>
@@ -31,11 +31,18 @@
                 <li class="nav-item">
                     <a href="contact.html" class="nav-link">Contact</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" sec:authorize="isAnonymous()">
                     <a href="registration" class="nav-link">Rejestracja</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" sec:authorize="isAnonymous()">
                     <a href="login" class="nav-link">Logowanie</a>
+                </li>
+                <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <form th:action="@{/logout}" method="get">
+                        <button class="btn btn-md btn-danger btn-block" name="registration"
+                                type="Submit">Logout
+                        </button>
+                    </form>
                 </li>
             </ul>
         </div>

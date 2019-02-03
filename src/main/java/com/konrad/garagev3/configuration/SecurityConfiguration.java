@@ -45,12 +45,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         http.
                 authorizeRequests()
-                .antMatchers("/**").permitAll()
-                .antMatchers("/login").permitAll()
+                .antMatchers("/").permitAll()
                 .antMatchers("/registration").permitAll()
                 .antMatchers("/admin/**").hasAuthority("ADMIN").anyRequest()
                 .authenticated().and().csrf().disable().formLogin()
-                .loginPage("/login").failureUrl("/login?error=true")
+                .loginPage("/login").permitAll()
                 .defaultSuccessUrl("/index")
                 .usernameParameter("email")
                 .passwordParameter("password")
@@ -64,7 +63,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web
                 .ignoring()
-                .antMatchers("../resources/static/**", "/**");
+                .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/img/**");
     }
 
 }
