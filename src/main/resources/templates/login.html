@@ -54,9 +54,17 @@
                             <div class="card p-4">
                                 <div class="card-body">
                                     <input type="text" id="email" name="email" th:placeholder="Email"
-                                           class="form-control"/> <br/>
-                                    <input type="password" th:placeholder="Password"
-                                           id="password" name="password" class="form-control"/> <br/>
+                                           class="form-control"/>
+                                    <br/>
+                                    <div>
+                                        <input type="password" th:placeholder="Password"
+                                               id="password-field" name="password" class="form-control"/>
+                                        <span toggle="#password-field"
+                                              class="fa fa-fw fa-eye field-icon toggle-password"
+                                              style="color: #0a2441;">
+                                    </span>
+                                    </div>
+                                    <br/>
                                     <button class="btn btn-lg btn-primary btn-block" name="Submit" value="Login"
                                             type="Submit"
                                             th:text="Login"></button>
@@ -73,6 +81,7 @@
         </div>
     </div>
 </header>
+
 
 <footer id="main-footer" class="text-center p-4" th:replace="fragments/footer :: footer">
     <div class="container">
@@ -93,6 +102,18 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
         integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
         crossorigin="anonymous"></script>
+<script type="text/javascript">
+    $(".toggle-password").click(function () {
+
+        $(this).toggleClass("fa-eye fa-eye-slash");
+        var input = $($(this).attr("toggle"));
+        if (input.attr("type") == "password") {
+            input.attr("type", "text");
+        } else {
+            input.attr("type", "password");
+        }
+    });
+</script>
 </body>
 
 </html>

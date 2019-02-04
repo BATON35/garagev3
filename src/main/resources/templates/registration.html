@@ -46,7 +46,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6 m-auto text-center">
-                <h1 >Zarejestruj się</h1>
+                <h1>Zarejestruj się</h1>
                 <div class="container">
                     <form class="form-horizontal"
                           th:action="@{/registration}" th:object="${user}" method="post">
@@ -59,18 +59,28 @@
                                             <div class="form-group">
                                                 <input type="text" th:field="*{name}" class="form-control"
                                                        placeholder="Imie">
+                                                <label th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+                                                       style="color: #FF1C19;"></label>
                                             </div>
                                         </div>
                                         <div class="col-md-7">
                                             <div class="form-group">
                                                 <input type="text" th:field="*{email}" class="form-control"
-                                                       placeholder="Email">
+                                                       placeholder="Email"/>
+                                                <label th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+                                                       style="color: #FF1C19;"></label>
                                             </div>
                                         </div>
                                         <div class="col-md-7">
                                             <div class="form-group">
-                                                <input type="text" th:field="*{password}" class="form-control"
-                                                       placeholder="password">
+                                                    <input type="password" th:field="*{password}" class="form-control"
+                                                           id="password-field" placeholder="password" data-toggle="password"/>
+                                                    <span toggle="#password-field"
+                                                          class="fa fa-fw fa-eye field-icon toggle-password"
+                                                          style="color: #0a2441;">
+                                                    </span>
+                                                <label th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
+                                                       style="color: #FF1C19;"></label>
                                             </div>
                                         </div>
                                         <div class="col-7">
@@ -112,6 +122,18 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
         integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
         crossorigin="anonymous"></script>
+<script type="text/javascript">
+    $(".toggle-password").click(function () {
+
+        $(this).toggleClass("fa-eye fa-eye-slash");
+        var input = $($(this).attr("toggle"));
+        if (input.attr("type") == "password") {
+            input.attr("type", "text");
+        } else {
+            input.attr("type", "password");
+        }
+    });
+</script>
 </body>
 
 </html>
