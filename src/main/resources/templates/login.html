@@ -18,31 +18,45 @@
 
 <body>
 <!--login-->
-<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark" th:replace="fragments/mainBarAnonymous :: mainBarAnonymous">
     <div class="container">
-        <a href="/" class="navbar-brand">Auto Doktor</a>
+        <a href="index.html" class="navbar-brand">Auto Doktor</a>
         <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a href="/" class="nav-link">Strona Główna</a>
+                <li class="nav-item active">
+                    <a href="index.html" class="nav-link">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a href="about" class="nav-link">O Nas</a>
+                    <a href="about.html" class="nav-link">About Us</a>
                 </li>
                 <li class="nav-item">
-                    <a href="services" class="nav-link">Usługi</a>
+                    <a href="services.html" class="nav-link">Services</a>
                 </li>
-                <a href="contact" class="nav-link">Kontakt</a>
+                <li class="nav-item">
+                    <a href="blog" class="nav-link">Blog</a>
+                </li>
+                <li class="nav-item">
+                    <a href="registration.html" class="nav-link">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a href="registration.html" class="nav-link">Registration</a>
+                </li>
+                <li class="nav-item">
+                    <form th:action="@{/logout}" method="get">
+                        <button class="btn btn-md btn-danger btn-block" name="registration"
+                                type="Submit">Logout
+                        </button>
+                    </form>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
 
-<header id="page-header" class="responsive" width="1200" height="800">
+<header id="page-header">
     <div class="container">
         <div class="row">
             <div class="col-md-6 m-auto text-center">

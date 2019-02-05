@@ -18,24 +18,38 @@
 
 <body>
 <!--visitingCard-->
-<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark" th:replace="fragments/mainBarAnonymous :: mainBarAnonymous">
     <div class="container">
-        <a href="/" class="navbar-brand">Auto Doktor</a>
+        <a href="index.html" class="navbar-brand">Auto Doktor</a>
         <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a href="about" class="nav-link">O Nas</a>
+                <li class="nav-item active">
+                    <a href="index.html" class="nav-link">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a href="services" class="nav-link">Usługi</a>
-                </li>
-                <a href="contact" class="nav-link">Kontakt</a>
+                    <a href="about.html" class="nav-link">About Us</a>
                 </li>
                 <li class="nav-item">
-                    <a href="index" class="nav-link">Login</a>
+                    <a href="services.html" class="nav-link">Services</a>
+                </li>
+                <li class="nav-item">
+                    <a href="blog" class="nav-link">Blog</a>
+                </li>
+                <li class="nav-item">
+                    <a href="registration.html" class="nav-link">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a href="registration.html" class="nav-link">Registration</a>
+                </li>
+                <li class="nav-item">
+                    <form th:action="@{/logout}" method="get">
+                        <button class="btn btn-md btn-danger btn-block" name="registration"
+                                type="Submit">Logout
+                        </button>
+                    </form>
                 </li>
             </ul>
         </div>
@@ -52,12 +66,8 @@
         <div class="carousel-inner">
             <div class="carousel-item carousel-image-1 active">
                 <div class="container">
-                    <div class="carousel-caption d-none d-sm-block text-right mb-5">
-                        <h1 class="display-3">Heading One</h1>
-                        <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste, aperiam vel ullam
-                            deleniti reiciendis ratione
-                            quod aliquid inventore vero perspiciatis.</p>
-                        <a href="#" class="btn btn-danger btn-lg">Sign Up Now</a>
+                    <div class="carousel-caption d-none d-sm-block mb-5">
+                        <h1 class="display-3">Niezawodnie</h1>
                     </div>
                 </div>
             </div>
@@ -65,23 +75,15 @@
             <div class="carousel-item carousel-image-2">
                 <div class="container">
                     <div class="carousel-caption d-none d-sm-block mb-5">
-                        <h1 class="display-3">Heading Two</h1>
-                        <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste, aperiam vel ullam
-                            deleniti reiciendis ratione
-                            quod aliquid inventore vero perspiciatis.</p>
-                        <a href="#" class="btn btn-primary btn-lg">Learn More</a>
+                        <h1 class="display-3">Szybko</h1>
                     </div>
                 </div>
             </div>
 
             <div class="carousel-item carousel-image-3">
                 <div class="container">
-                    <div class="carousel-caption d-none d-sm-block text-right mb-5">
-                        <h1 class="display-3">Heading Three</h1>
-                        <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste, aperiam vel ullam
-                            deleniti reiciendis ratione
-                            quod aliquid inventore vero perspiciatis.</p>
-                        <a href="#" class="btn btn-success btn-lg">Learn More</a>
+                    <div class="carousel-caption d-none d-sm-block mb-5">
+                        <h1 class="display-3">Uczciwie</h1>
                     </div>
                 </div>
             </div>
@@ -142,7 +144,8 @@
         <div class="row">
             <div class="col-md-6 align-self-center">
                 <h3>Lorem Ipsum</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate eveniet blanditiis incidunt iusto
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate eveniet blanditiis incidunt
+                    iusto
                     corrupti illum
                     cum laudantium ex sequi amet.</p>
                 <a href="about.html" class="btn btn-outline-danger btn-lg">Learn More</a>
@@ -161,7 +164,8 @@
         <div class="row">
             <div class="col">
                 <div class="container p-5">
-                    <a href="#" class="video" data-video="https://www.youtube.com/embed/HnwsG9a5riA" data-toggle="modal"
+                    <a href="#" class="video" data-video="https://www.youtube.com/embed/HnwsG9a5riA"
+                       data-toggle="modal"
                        data-target="#videoModal">
                         <i class="fas fa-play fa-3x"></i>
                     </a>
@@ -179,7 +183,8 @@
         <p class="text-center">Check out our photos</p>
         <div class="row mb-4">
             <div class="col-md-4">
-                <a href="https://source.unsplash.com/random/560x560" data-toggle="lightbox" data-gallery="img-gallery"
+                <a href="https://source.unsplash.com/random/560x560" data-toggle="lightbox"
+                   data-gallery="img-gallery"
                    data-height="560"
                    data-width="560">
                     <img src="https://source.unsplash.com/random/560x560" alt="" class="img-fluid">
@@ -187,7 +192,8 @@
             </div>
 
             <div class="col-md-4">
-                <a href="https://source.unsplash.com/random/561x561" data-toggle="lightbox" data-gallery="img-gallery"
+                <a href="https://source.unsplash.com/random/561x561" data-toggle="lightbox"
+                   data-gallery="img-gallery"
                    data-height="561"
                    data-width="561">
                     <img src="https://source.unsplash.com/random/561x561" alt="" class="img-fluid">
@@ -195,7 +201,8 @@
             </div>
 
             <div class="col-md-4">
-                <a href="https://source.unsplash.com/random/562x562" data-toggle="lightbox" data-gallery="img-gallery"
+                <a href="https://source.unsplash.com/random/562x562" data-toggle="lightbox"
+                   data-gallery="img-gallery"
                    data-height="562"
                    data-width="562">
                     <img src="https://source.unsplash.com/random/562x562" alt="" class="img-fluid">
@@ -205,7 +212,8 @@
 
         <div class="row mb-4">
             <div class="col-md-4">
-                <a href="https://source.unsplash.com/random/563x563" data-toggle="lightbox" data-gallery="img-gallery"
+                <a href="https://source.unsplash.com/random/563x563" data-toggle="lightbox"
+                   data-gallery="img-gallery"
                    data-height="563"
                    data-width="563">
                     <img src="https://source.unsplash.com/random/563x563" alt="" class="img-fluid">
@@ -213,7 +221,8 @@
             </div>
 
             <div class="col-md-4">
-                <a href="https://source.unsplash.com/random/564x564" data-toggle="lightbox" data-gallery="img-gallery"
+                <a href="https://source.unsplash.com/random/564x564" data-toggle="lightbox"
+                   data-gallery="img-gallery"
                    data-height="564"
                    data-width="564">
                     <img src="https://source.unsplash.com/random/564x564" alt="" class="img-fluid">
@@ -221,7 +230,8 @@
             </div>
 
             <div class="col-md-4">
-                <a href="https://source.unsplash.com/random/565x565" data-toggle="lightbox" data-gallery="img-gallery"
+                <a href="https://source.unsplash.com/random/565x565" data-toggle="lightbox"
+                   data-gallery="img-gallery"
                    data-height="565"
                    data-width="565">
                     <img src="https://source.unsplash.com/random/565x565" alt="" class="img-fluid">
@@ -237,7 +247,8 @@
         <div class="row">
             <div class="col">
                 <h1>Sign Up For Our Newsletter</h1>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio asperiores consectetur, quae ducimus
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio asperiores consectetur, quae
+                    ducimus
                     voluptates
                     vero repellendus architecto maiores recusandae mollitia?</p>
                 <form class="form-inline justify-content-center">
@@ -251,7 +262,6 @@
 </section>
 
 <!-- FOOTER -->
-
 <footer id="main-footer" class="text-center p-4" th:replace="fragments/footer :: footer">
     <div class="container">
         <div class="row">
@@ -261,7 +271,6 @@
         </div>
     </div>
 </footer>
-
 
 <!-- VIDEO MODAL -->
 <div class="modal fade" id="videoModal">
@@ -278,7 +287,8 @@
 </div>
 
 
-<script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+<script src="http://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
         integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
