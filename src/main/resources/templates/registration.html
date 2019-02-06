@@ -17,7 +17,8 @@
 </head>
 
 <body>
-<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark" th:replace="fragments/mainBarAnonymous :: mainBarAnonymous">
     <div class="container">
         <a href="index.html" class="navbar-brand">Auto Doktor</a>
         <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
@@ -25,7 +26,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
+                <li class="nav-item active">
                     <a href="index.html" class="nav-link">Home</a>
                 </li>
                 <li class="nav-item">
@@ -35,61 +36,79 @@
                     <a href="services.html" class="nav-link">Services</a>
                 </li>
                 <li class="nav-item">
-                    <a href="blog.html" class="nav-link">Blog</a>
+                    <a href="blog" class="nav-link">Blog</a>
                 </li>
-                <li class="nav-item active">
-                    <a href="contact.html" class="nav-link">Contact</a>
+                <li class="nav-item">
+                    <a href="registration.html" class="nav-link">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a href="registration.html" class="nav-link">Registration</a>
+                </li>
+                <li class="nav-item">
+                    <form th:action="@{/logout}" method="get">
+                        <button class="btn btn-md btn-danger btn-block" name="registration"
+                                type="Submit">Logout
+                        </button>
+                    </form>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
-
 <!-- PAGE HEADER -->
 <header id="page-header">
     <div class="container">
         <div class="row">
             <div class="col-md-6 m-auto text-center">
-                <h1>Zarejestruj sie</h1>
-            </div>
-
-            <div class="container">
-                <form class="form-horizontal"
-                      th:action="@{/registration}" th:object="${user}" method="post">
-                    <div class="col-md-12 align-self-center">
-                        <div class="card p-4">
-                            <div class="card-body">
-                                <hr>
-                                <div class="row justify-content-center">
-                                    <div class="col-md-7">
-                                        <div class="form-group">
-                                            <input type="text" th:field="*{name}" class="form-control"
-                                                   placeholder="Imie">
+                <h1>Zarejestruj się</h1>
+                <div class="container">
+                    <form class="form-horizontal"
+                          th:action="@{/registration}" th:object="${user}" method="post">
+                        <div class="col-md-12 align-self-center">
+                            <div class="card p-4">
+                                <div class="card-body">
+                                    <hr>
+                                    <div class="row justify-content-center">
+                                        <div class="col-md-7">
+                                            <div class="form-group">
+                                                <input type="text" th:field="*{name}" class="form-control"
+                                                       placeholder="Imie">
+                                                <label th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+                                                       style="color: #FF1C19;"></label>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-7">
-                                        <div class="form-group">
-                                            <input type="text" th:field="*{email}" class="form-control"
-                                                   placeholder="Email">
+                                        <div class="col-md-7">
+                                            <div class="form-group">
+                                                <input type="text" th:field="*{email}" class="form-control"
+                                                       placeholder="Email"/>
+                                                <label th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+                                                       style="color: #FF1C19;"></label>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-7">
-                                        <div class="form-group">
-                                            <input type="text" th:field="*{password}" class="form-control"
-                                                   placeholder="password">
+                                        <div class="col-md-7">
+                                            <div class="form-group">
+                                                    <input type="password" th:field="*{password}" class="form-control"
+                                                           id="password-field" placeholder="password" data-toggle="password"/>
+                                                    <span toggle="#password-field"
+                                                          class="fa fa-fw fa-eye field-icon toggle-password"
+                                                          style="color: #0a2441;">
+                                                    </span>
+                                                <label th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
+                                                       style="color: #FF1C19;"></label>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-7">
-                                        <div class="form-group">
-                                            <input type="submit" value="Submit"
-                                                   class="btn btn-outline-danger btn-block">
+                                        <div class="col-7">
+                                            <div class="form-group">
+                                                <input type="submit" value="Submit"
+                                                       class="btn btn-outline-danger btn-block">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
@@ -117,6 +136,17 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
         integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
         crossorigin="anonymous"></script>
+<script type="text/javascript">
+    $(".toggle-password").click(function () {
+        $(this).toggleClass("fa-eye-slash fa-eye");
+        var input = $($(this).attr("toggle"));
+        if (input.attr("type") == "password") {
+            input.attr("type", "text");
+        } else {
+            input.attr("type", "password");
+        }
+    });
+</script>
 </body>
 
 </html>

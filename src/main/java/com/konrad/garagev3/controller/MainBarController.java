@@ -7,27 +7,32 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class MainBarController {
     @RequestMapping(value = "/")
-    public String index(){
-        return "index";
+    public String isitingCard() {
+        return "visitingCard";
     }
 
     @RequestMapping(value = "/about")
-    public String about(){
+    public String about() {
         return "about";
     }
 
-    @RequestMapping(value = "/contact.html")
-    public String contact(){
+    @RequestMapping(value = "/contact")
+    public String contact() {
         return "contact";
     }
 
-    @PostMapping(value = "/blog")
-    public String blog(){
-        return "blog";
+    @RequestMapping(value = "/services")
+    public String services() {
+        return "services";
     }
 
     @RequestMapping("/index")
-    public String getIndex() {
+    public String index() {
         return "index";
+    }
+
+    @RequestMapping("/blog")
+    public String blog() {
+        return "blog";
     }
 }
