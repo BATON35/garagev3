@@ -17,7 +17,7 @@
 </head>
 
 <body>
-<nav class="navbar navbar-expand-sm navbar-dark bg-dark" th:replace="fragments/mainBarAnonymous :: mainBarAnonymous">
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark" th:replace="fragments/mainBarLogged :: mainBarLogged">
     <div class="container">
         <a href="index.html" class="navbar-brand">Auto Doktor</a>
         <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
@@ -54,12 +54,6 @@
         </div>
     </div>
 </nav>
-
-
-<div sec:authorize="isAnonymous()">
-    This content is only for anonymous
-</div>
-
 <!-- PAGE HEADER -->
 <header id="page-header-service">
     <div class="container">
@@ -92,46 +86,37 @@
             <div class="col-md-8">
                 <div class="card p-4">
                     <div class="card-body">
-                        <h3 class="text-center">Please fill out this form to contact us</h3>
+                        <h3 class="text-center">Chcesz zadać pytanie? <br>Wypełnij folmularz</h3>
                         <hr>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="First Name">
+                                    <input type="text" class="form-control" placeholder="Adres mailowy">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Last Name">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Email">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Phone Number">
+                                    <input type="text" class="form-control" placeholder="Imie">
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <textarea class="form-control" placeholder="Message"></textarea>
-                                </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <textarea class="form-control" placeholder="Message"></textarea>
                             </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <input type="submit" value="Submit" class="btn btn-outline-danger btn-block">
-                                </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <input type="submit" value="Submit" class="btn btn-outline-primary btn-block">
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </section>
 
@@ -156,7 +141,6 @@
         </div>
     </div>
 </footer>
-
 
 
 <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
