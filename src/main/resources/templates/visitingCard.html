@@ -129,11 +129,11 @@
         <div class="row">
             <div class="col">
                 <div class="container p-5">
-                    <a href="#" class="video" data-video="https://www.youtube.com/embed/HnwsG9a5riA" data-toggle="modal"
+                    <a href="#" class="video" data-video="https://www.youtube.com/embed/r0U8WanPisY" data-toggle="modal"
                        data-target="#videoModal">
                         <i class="fas fa-play fa-3x" style="color: #FFFFFF;"></i>
                     </a>
-                    <h1 >See What We Do</h1>
+                    <h1 >Zobacz jak pracujemy</h1>
                 </div>
             </div>
         </div>
@@ -141,78 +141,59 @@
 </section>
 
 <!-- PHOTO GALLERY -->
+
 <section id="gallery" class="py-5">
     <div class="container">
-        <h1 class="text-center">Photo Gallery</h1>
-        <p class="text-center">Check out our photos</p>
+        <h1 class="text-center">Galeria zdjęć</h1>
         <div class="row mb-4">
             <div class="col-md-4">
-                <a href="https://source.unsplash.com/random/560x560" data-toggle="lightbox" data-gallery="img-gallery"
+                <a th:href="@{/img/image1.jpg}" href="../static/img/image1.jpg"  data-toggle="lightbox" data-gallery="img-gallery"
                    data-height="560"
                    data-width="560">
-                    <img src="https://source.unsplash.com/random/560x560" alt="" class="img-fluid">
+                    <img th:src="@{/img/image1.jpg}" src="../static/img/image1.jpg"  alt="" class="img-fluid">
                 </a>
             </div>
 
             <div class="col-md-4">
-                <a href="https://source.unsplash.com/random/561x561" data-toggle="lightbox" data-gallery="img-gallery"
-                   data-height="561"
-                   data-width="561">
-                    <img src="https://source.unsplash.com/random/561x561" alt="" class="img-fluid">
+                <a th:href="@{/img/image2.jpg}" href="../static/img/image2.jpg"  data-toggle="lightbox" data-gallery="img-gallery"
+                   data-height="560"
+                   data-width="560">
+                    <img th:src="@{/img/image2.jpg}" src="../static/img/image2.jpg"  alt="" class="img-fluid">
                 </a>
             </div>
 
             <div class="col-md-4">
-                <a href="https://source.unsplash.com/random/562x562" data-toggle="lightbox" data-gallery="img-gallery"
-                   data-height="562"
-                   data-width="562">
-                    <img src="https://source.unsplash.com/random/562x562" alt="" class="img-fluid">
+                <a th:href="@{/img/image3.jpg}" href="../static/img/image3.jpg"  data-toggle="lightbox" data-gallery="img-gallery"
+                   data-height="560"
+                   data-width="560">
+                    <img th:src="@{/img/image3.jpg}" src="../static/img/image3.jpg"  alt="" class="img-fluid">
                 </a>
             </div>
         </div>
 
         <div class="row mb-4">
             <div class="col-md-4">
-                <a href="https://source.unsplash.com/random/563x563" data-toggle="lightbox" data-gallery="img-gallery"
-                   data-height="563"
-                   data-width="563">
-                    <img src="https://source.unsplash.com/random/563x563" alt="" class="img-fluid">
+                <a th:href="@{/img/image4.jpg}" href="../static/img/image4.jpg"  data-toggle="lightbox" data-gallery="img-gallery"
+                   data-height="560"
+                   data-width="560">
+                    <img th:src="@{/img/image4.jpg}" src="../static/img/image4.jpg"  alt="" class="img-fluid">
                 </a>
             </div>
 
             <div class="col-md-4">
-                <a href="https://source.unsplash.com/random/564x564" data-toggle="lightbox" data-gallery="img-gallery"
-                   data-height="564"
-                   data-width="564">
-                    <img src="https://source.unsplash.com/random/564x564" alt="" class="img-fluid">
+                <a href="../static/img/image3.jpg" th:href="@{/img/image3.jpg}" data-toggle="lightbox" data-gallery="img-gallery"
+                   data-height="560"
+                   data-width="560">
+                    <img src="../static/img/image3.jpg" th:src="@{/img/image3.jpg}" alt="" class="img-fluid">
                 </a>
             </div>
 
             <div class="col-md-4">
-                <a href="https://source.unsplash.com/random/565x565" data-toggle="lightbox" data-gallery="img-gallery"
-                   data-height="565"
-                   data-width="565">
-                    <img src="https://source.unsplash.com/random/565x565" alt="" class="img-fluid">
+                <a href="../static/img/image3.jpg" th:href="@{/img/image3.jpg}" data-toggle="lightbox" data-gallery="img-gallery"
+                   data-height="560"
+                   data-width="560">
+                    <img src="../static/img/image3.jpg" th:src="@{/img/image3.jpg}" alt="" class="img-fluid">
                 </a>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- NEWSLETTER -->
-<section id="newsletter" class="text-center p-5 bg-dark text-white">
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <h1>Sign Up For Our Newsletter</h1>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio asperiores consectetur, quae ducimus
-                    voluptates
-                    vero repellendus architecto maiores recusandae mollitia?</p>
-                <form class="form-inline justify-content-center">
-                    <input type="text" class="form-control mb-2 mr-2" placeholder="Enter Name">
-                    <input type="text" class="form-control mb-2 mr-2" placeholder="Enter Email">
-                    <button class="btn btn-primary mb-2">Submit</button>
-                </form>
             </div>
         </div>
     </div>
