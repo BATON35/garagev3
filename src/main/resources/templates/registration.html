@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta charset="UTF-8">
@@ -18,7 +18,7 @@
 
 <body>
 
-<nav class="navbar navbar-expand-sm navbar-dark bg-dark" th:replace="fragments/mainBarAnonymous :: mainBarAnonymous">
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark" th:replace="fragments/mainBarLogged :: mainBarLogged">
     <div class="container">
         <a href="index.html" class="navbar-brand">Auto Doktor</a>
         <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
@@ -60,8 +60,9 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6 m-auto text-center">
-                <h1>Zarejestruj się</h1>
-                <div class="container">
+                <h1 sec:authorize="isAnonymous()" >Zarejestruj się</h1>
+                <h1 sec:authorize="isAuthenticated()">Jestś już zalogowany</h1>
+                <div class="container" sec:authorize="isAnonymous()">
                     <form class="form-horizontal"
                           th:action="@{/registration}" th:object="${user}" method="post">
                         <div class="col-md-12 align-self-center">
@@ -99,8 +100,8 @@
                                         </div>
                                         <div class="col-7">
                                             <div class="form-group">
-                                                <input type="submit" value="Submit"
-                                                       class="btn btn-outline-danger btn-block">
+                                                <input type="submit" value="Zatwierdz"
+                                                       class="btn btn-lg btn-primary btn-block">
                                             </div>
                                         </div>
                                     </div>
