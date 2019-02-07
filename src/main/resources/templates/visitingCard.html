@@ -103,19 +103,18 @@
     <div class="container">
         <div class="row">
             <div class="col-md-4 mb-4 text-center">
-                <i class="fas cog fa-3x mb-2"></i>
+                <a href="/services"> <i class="fas cog fa-3x mb-2"></i></a>
                 <h3>Naprawa samochodów i motocykli</h3>
                 <p>Zajmujemy sie szeroko pojetą naprawą samochdów. Począwszy od silników przed elektrykę aż po poprawki
                     blacharskie.</p>
             </div>
             <div class="col-md-4 mb-4 text-center">
-                <i class="fas fast fa-3x mb-2"></i>
-                <h3>Tuning samochodów</h3>
-                <p>Jeśli chcech aby twój pojazd jeździł szybciej. Bądz zależy Ci aby zużywał mnie paliwa to dobrze
-                    trafiłeś.</p>
+                <a href="/services"> <i class="fas paint fa-3x mb-2"></i></a>
+                <h3>Naprawy blacharskie i lakierowanie</h3>
+                <p>Masz problem z rdzą? Chcesz zmienić kolor auta? Przyjedz do nasz.</p>
             </div>
             <div class="col-md-4 mb-4 text-center">
-                <i class="fas tyre fa-3x mb-2"></i>
+                <a href="/services"> <i class="fas tyre fa-3x mb-2"></i></a>
                 <h3>Usługi wulkanizacyjne</h3>
                 <p>Wykonujemy wszelkie prace wulkanizacyjne: wymina, naprawa, komputerowe wyważanie opon.</p>
             </div>
@@ -133,7 +132,7 @@
                        data-target="#videoModal">
                         <i class="fas fa-play fa-3x" style="color: #FFFFFF;"></i>
                     </a>
-                    <h1 >Zobacz jak pracujemy</h1>
+                    <h1>Zobacz jak pracujemy</h1>
                 </div>
             </div>
         </div>
@@ -147,41 +146,46 @@
         <h1 class="text-center">Galeria zdjęć</h1>
         <div class="row mb-4">
             <div class="col-md-4">
-                <a th:href="@{/img/image1.jpg}" href="../static/img/image1.jpg"  data-toggle="lightbox" data-gallery="img-gallery"
+                <a th:href="@{/img/image1.jpg}" href="../static/img/image1.jpg" data-toggle="lightbox"
+                   data-gallery="img-gallery"
                    data-height="560"
                    data-width="560">
-                    <img th:src="@{/img/image1.jpg}" src="../static/img/image1.jpg"  alt="" class="img-fluid">
+                    <img th:src="@{/img/image1.jpg}" src="../static/img/image1.jpg" alt="" class="img-fluid">
                 </a>
             </div>
 
             <div class="col-md-4">
-                <a th:href="@{/img/image2.jpg}" href="../static/img/image2.jpg"  data-toggle="lightbox" data-gallery="img-gallery"
+                <a th:href="@{/img/image2.jpg}" href="../static/img/image2.jpg" data-toggle="lightbox"
+                   data-gallery="img-gallery"
                    data-height="560"
                    data-width="560">
-                    <img th:src="@{/img/image2.jpg}" src="../static/img/image2.jpg"  alt="" class="img-fluid">
+                    <img th:src="@{/img/image2.jpg}" src="../static/img/image2.jpg" alt="" class="img-fluid">
                 </a>
             </div>
 
             <div class="col-md-4">
-                <a th:href="@{/img/image3.jpg}" href="../static/img/image3.jpg"  data-toggle="lightbox" data-gallery="img-gallery"
+                <a th:href="@{/img/image3.jpg}" href="../static/img/image3.jpg" data-toggle="lightbox"
+                   data-gallery="img-gallery"
                    data-height="560"
                    data-width="560">
-                    <img th:src="@{/img/image3.jpg}" src="../static/img/image3.jpg"  alt="" class="img-fluid">
+                    <img th:src="@{/img/image3.jpg}" src="../static/img/image3.jpg" alt="" class="img-fluid">
                 </a>
             </div>
         </div>
 
         <div class="row mb-4">
             <div class="col-md-4">
-                <a th:href="@{/img/image4.jpg}" href="../static/img/image4.jpg"  data-toggle="lightbox" data-gallery="img-gallery"
+                <a th:href="@{/img/image4.jpg}" href="../static/img/image4.jpg" data-toggle="lightbox"
+                   data-gallery="img-gallery"
                    data-height="560"
                    data-width="560">
-                    <img th:src="@{/img/image4.jpg}" src="../static/img/image4.jpg"  alt="" class="img-fluid">
+                    <img th:src="@{/img/image4.jpg}" src="../static/img/image4.jpg" alt="" class="img-fluid">
                 </a>
             </div>
 
             <div class="col-md-4">
-                <a href="../static/img/image3.jpg" th:href="@{/img/image3.jpg}" data-toggle="lightbox" data-gallery="img-gallery"
+                <a href="../static/img/image3.jpg" th:href="@{/img/image3.jpg}" data-toggle="lightbox"
+                   data-gallery="img-gallery"
                    data-height="560"
                    data-width="560">
                     <img src="../static/img/image3.jpg" th:src="@{/img/image3.jpg}" alt="" class="img-fluid">
@@ -189,7 +193,8 @@
             </div>
 
             <div class="col-md-4">
-                <a href="../static/img/image3.jpg" th:href="@{/img/image3.jpg}" data-toggle="lightbox" data-gallery="img-gallery"
+                <a href="../static/img/image3.jpg" th:href="@{/img/image3.jpg}" data-toggle="lightbox"
+                   data-gallery="img-gallery"
                    data-height="560"
                    data-width="560">
                     <img src="../static/img/image3.jpg" th:src="@{/img/image3.jpg}" alt="" class="img-fluid">
