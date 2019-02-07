@@ -85,34 +85,37 @@
             </div>
             <div class="col-md-8">
                 <div class="card p-4">
-                    <div class="card-body">
-                        <h3 class="text-center">Chcesz zadać pytanie? <br>Wypełnij folmularz</h3>
+                    <form lass="form-horizontal"  th:object="${mailData}" th:action="@{/contact}" method="post">
+                        <div class="card-body">
+                            <h3 class="text-center">Chcesz zadać pytanie? <br>Wypełnij folmularz</h3>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" th:field="*{mail}" class="form-control" placeholder="Adres mailowy">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="Imie">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <hr>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Adres mailowy">
+                                    <textarea type="text" class="form-control"
+                                              placeholder="Message"></textarea>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Imie">
+                                    <input type="submit" value="Submit" class="btn btn-outline-primary btn-block">
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <textarea class="form-control" placeholder="Message"></textarea>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <input type="submit" value="Submit" class="btn btn-outline-primary btn-block">
-                            </div>
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
