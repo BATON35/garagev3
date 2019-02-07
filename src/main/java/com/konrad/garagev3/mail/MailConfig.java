@@ -1,4 +1,4 @@
-package com.konrad.garagev3.mail.mail;
+package com.konrad.garagev3.mail;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

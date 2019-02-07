@@ -1,24 +1,21 @@
 package com.konrad.garagev3.controller;
 
 import com.konrad.garagev3.mail.AnonymousUserQuestion;
+import com.konrad.garagev3.service.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class MainBarController {
-    private final JavaMailSender emailSender;
+    private final MailService mailService;
 
     @Autowired
-    public MainBarController(JavaMailSender javaMailSender) {
-        this.emailSender = javaMailSender;
+    public MainBarController(MailService mailService) {
+        this.mailService = mailService;
     }
 
     @RequestMapping(value = "/")
@@ -40,18 +37,10 @@ public class MainBarController {
     @PostMapping(value = "/contact")
     public String contact2(Model model, @ModelAttribute("mailData") AnonymousUserQuestion anonymousUserQuestion) {
         System.out.println(anonymousUserQuestion.getMail());
-        sendEmail(anonymousUserQuestion);
+        mailService.sendEmail(anonymousUserQuestion);
         return "contact";
     }
 
-    private String sendEmail(AnonymousUserQuestion anonymousUserQuestion){
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(anonymousUserQuestion.getMail());
-        message.setSubject("Welcome on board login");
-        message.setText("http://localhost:3000/token/");
-        this.emailSender.send(message);
-        return "EmailSuccess";
-    }
 
     @RequestMapping(value = "/services")
     public String services() {

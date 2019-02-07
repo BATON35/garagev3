@@ -72,40 +72,43 @@
             <div class="col-md-4">
                 <div class="card p-4">
                     <div class="card-body">
-                        <h4>Get In Touch</h4>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, odio!</p>
-                        <h4>Address</h4>
-                        <p>550 Main st, Boston MA</p>
+                        <h4 align="center">Dane Kontaktowe</h4>
+                        <br><br>
+                        <h4>Addres</h4>
+                        <p>Łódź ul. Przewodnia 22</p>
+                        <br>
                         <h4>Email</h4>
-                        <p>test@test.com</p>
-                        <h4>Phone</h4>
-                        <p>(555) 555-5555</p>
+                        <p>nazwa@onet.com</p>
+                        <br>
+                        <h4>Telefon</h4>
+                        <p>502-555-789</p>
                     </div>
                 </div>
             </div>
             <div class="col-md-8">
                 <div class="card p-4">
-                    <form lass="form-horizontal"  th:object="${mailData}" th:action="@{/contact}" method="post">
+                    <form class="form-horizontal" th:object="${mailData}" th:action="@{/contact}" method="post">
                         <div class="card-body">
                             <h3 class="text-center">Chcesz zadać pytanie? <br>Wypełnij folmularz</h3>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <input type="text" th:field="*{mail}" class="form-control" placeholder="Adres mailowy">
+                                        <input type="text" th:field="*{mail}" class="form-control"
+                                               placeholder="Adres mailowy">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" placeholder="Imie">
+                                        <input type="text" th:field="*{name}" class="form-control" placeholder="Imie">
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <hr>
+
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <textarea type="text" class="form-control"
+                                    <textarea rows="6" type="text" th:field="*{message}" class="form-control"
                                               placeholder="Message"></textarea>
                                 </div>
                             </div>
