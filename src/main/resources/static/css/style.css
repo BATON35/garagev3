@@ -34,8 +34,8 @@ body {
 
 #home-heading {
     position: relative;
-    min-height: 300px;
-    background: url('../img/image3ver0.jpg');
+    min-height: 250px;
+    background: url('../img/image4.jpg');
     background-attachment: fixed;
     background-repeat: no-repeat;
     text-align: center;
@@ -154,3 +154,30 @@ body {
     background-repeat:no-repeat;
     background-size:cover;
 }
+.paint::before {
+    content:none!important;
+}
+.paint {
+    background-image:url('../vector/paint.png');
+    height:100px;
+    width:100px;
+    background-repeat:no-repeat;
+    background-size:cover;
+}
+
+#authors img {
+    margin-top: -50px; }
+#authors .card:hover {
+    background: #3292a6;
+    color: #fff; }
+#authors .fab {
+    color: #fff; }
+
+@media (max-width: 768px) {
+    #showcase {
+        min-height: 500px; }
+    #showcase h1 {
+        font-size: 4rem; }
+
+    .mb-resp {
+        margin-bottom: 1rem; } }

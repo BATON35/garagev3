@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta charset="UTF-8">
@@ -18,7 +18,7 @@
 
 <body>
 <!--login-->
-<nav class="navbar navbar-expand-sm navbar-dark bg-dark" th:replace="fragments/mainBarAnonymous :: mainBarAnonymous">
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark" th:replace="fragments/mainBarLogged :: mainBarLogged">
     <div class="container">
         <a href="index.html" class="navbar-brand">Auto Doktor</a>
         <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
@@ -27,22 +27,22 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item active">
-                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="index.html" class="nav-link">Strona Główna</a>
                 </li>
                 <li class="nav-item">
-                    <a href="about.html" class="nav-link">About Us</a>
+                    <a href="about.html" class="nav-link">O nas</a>
                 </li>
                 <li class="nav-item">
-                    <a href="services.html" class="nav-link">Services</a>
+                    <a href="services.html" class="nav-link">Usługi</a>
                 </li>
                 <li class="nav-item">
                     <a href="blog" class="nav-link">Blog</a>
                 </li>
                 <li class="nav-item">
-                    <a href="registration.html" class="nav-link">Contact</a>
+                    <a href="registration" class="nav-link">Kontakt</a>
                 </li>
                 <li class="nav-item">
-                    <a href="registration.html" class="nav-link">Registration</a>
+                    <a href="registration" class="nav-link">Logowanie</a>
                 </li>
                 <li class="nav-item">
                     <form th:action="@{/logout}" method="get">
@@ -60,9 +60,10 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6 m-auto text-center">
-                <h1>Zaloguje sie</h1>
+                <h1 sec:authorize="isAnonymous()">Zaloguj się</h1>
+                <h1 sec:authorize="isAuthenticated()">Jestes już zalogowany</h1>
                 <div class="container">
-                    <form class="form-horizontal"
+                    <form class="form-horizontal" sec:authorize="isAnonymous()"
                           th:action="@{/login}" method="POST">
                         <div class="col-md-12 align-self-center">
                             <div class="card p-4">
@@ -79,13 +80,13 @@
                                     </span>
                                     </div>
                                     <br/>
-                                    <button class="btn btn-lg btn-primary btn-block" name="Submit" value="Login"
+                                    <button class="btn btn-lg btn-outline-primary btn-block" name="Submit" value="Login"
                                             type="Submit"
                                             th:text="Login"></button>
                                     <div align="center" th:if="${param.error}">
                                         <p style="color: #FF1C19;">Email or Password invalid, please verify</p>
                                     </div>
-                                    <a href="registration" role="button" class="btn btn-lg btn-primary btn-block">Registration</a>
+                                    <a href="registration" role="button" class="btn btn-lg btn-outline-primary btn-block">Registration</a>
                                 </div>
                             </div>
                         </div>
@@ -96,6 +97,18 @@
     </div>
 </header>
 
+<div sec:authorize="isAuthenticated()">
+This content is only shown to authenticated users.
+</div>
+<div sec:authorize="hasRole('ROLE_ADMIN')">
+This content is only shown to administrators.
+</div>
+<div sec:authorize="hasRole('ROLE_USER')">
+This content is only shown to users.
+</div>
+<div sec:authorize="isAnonymous()">
+    This content is only for anonymous
+</div>
 
 <footer id="main-footer" class="text-center p-4" th:replace="fragments/footer :: footer">
     <div class="container">
