@@ -17,7 +17,7 @@
 </head>
 
 <body>
-<nav class="navbar navbar-expand-sm navbar-dark bg-dark" th:replace="fragments/mainBarAnonymous :: mainBarAnonymous">
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark" th:replace="fragments/mainBarLogged :: mainBarLogged">
     <div class="container">
         <a href="index.html" class="navbar-brand">Auto Doktor</a>
         <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
@@ -54,12 +54,6 @@
         </div>
     </div>
 </nav>
-
-
-<div sec:authorize="isAnonymous()">
-    This content is only for anonymous
-</div>
-
 <!-- PAGE HEADER -->
 <header id="page-header-service">
     <div class="container">
@@ -78,60 +72,57 @@
             <div class="col-md-4">
                 <div class="card p-4">
                     <div class="card-body">
-                        <h4>Get In Touch</h4>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, odio!</p>
-                        <h4>Address</h4>
-                        <p>550 Main st, Boston MA</p>
+                        <h4 align="center">Dane Kontaktowe</h4>
+                        <br><br>
+                        <h4>Addres</h4>
+                        <p>Łódź ul. Przewodnia 22</p>
+                        <br>
                         <h4>Email</h4>
-                        <p>test@test.com</p>
-                        <h4>Phone</h4>
-                        <p>(555) 555-5555</p>
+                        <p>nazwa@onet.com</p>
+                        <br>
+                        <h4>Telefon</h4>
+                        <p>502-555-789</p>
                     </div>
                 </div>
             </div>
             <div class="col-md-8">
                 <div class="card p-4">
-                    <div class="card-body">
-                        <h3 class="text-center">Please fill out this form to contact us</h3>
-                        <hr>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="First Name">
+                    <form class="form-horizontal" th:object="${mailData}" th:action="@{/contact}" method="post">
+                        <div class="card-body">
+                            <h3 class="text-center">Chcesz zadać pytanie? <br>Wypełnij folmularz</h3>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" th:field="*{mail}" class="form-control"
+                                               placeholder="Adres mailowy">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Last Name">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Email">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Phone Number">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" th:field="*{name}" class="form-control" placeholder="Imie">
+                                    </div>
                                 </div>
                             </div>
                         </div>
+
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <textarea class="form-control" placeholder="Message"></textarea>
+                                    <textarea rows="6" type="text" th:field="*{message}" class="form-control"
+                                              placeholder="Message"></textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <input type="submit" value="Submit" class="btn btn-outline-danger btn-block">
+                                    <input type="submit" value="Submit" class="btn btn-outline-primary btn-block">
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </section>
 
@@ -156,7 +147,6 @@
         </div>
     </div>
 </footer>
-
 
 
 <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
