@@ -11,12 +11,12 @@ import javax.persistence.*;
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "Address_id")
+    //@Column(name = "Address_id")
     private int id;
-    @Column(name="city")
+    //@Column(name="city")
     private String city;
-    @Column(name="street")
+  //  @Column(name="street")
     private String street;
-    @Column(name="postcode")
+  //  @Column(name="postcode")
     private String postcode;
 }
