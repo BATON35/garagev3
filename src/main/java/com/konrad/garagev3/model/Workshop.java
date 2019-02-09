@@ -11,8 +11,8 @@ import java.util.List;
 @Data
 public class Workshop {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "workshop_id")
+  //  @GeneratedValue(strategy = GenerationType.AUTO)
+ //   @Column(name = "workshop_id")
     private int id;
  //   @Column(name = "name")
     private String name;

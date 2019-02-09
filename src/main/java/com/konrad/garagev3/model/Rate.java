@@ -6,9 +6,16 @@ import java.util.List;
 @Entity
 public class Rate {
     @Id
-    @Column(name = "id_rate")
+   // @Column(name = "id_rate")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    @ManyToMany(mappedBy = "rates")
+   @ManyToMany(cascade = {
+           CascadeType.PERSIST,
+           CascadeType.MERGE
+   })
+   @JoinTable(name = "service_rate",
+           joinColumns = @JoinColumn(name = "rate_id"),
+           inverseJoinColumns = @JoinColumn(name = "service_id")
+   )
     private List<Service> services;
 }

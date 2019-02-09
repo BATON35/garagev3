@@ -8,15 +8,11 @@ import java.util.List;
 public class Service {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "service_id")
+    //@Column(name = "service_id")
     private int id;
-    @ManyToMany(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
-    })
-    @JoinTable(name = "service_rate",
-            joinColumns = @JoinColumn(name = "service_id"),
-            inverseJoinColumns = @JoinColumn(name = "rate_id")
-    )
+    @ManyToMany(mappedBy = "services")
     private List<Rate> rates;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "vehicle_id")
+    private Vehicle vehicle;
 }
