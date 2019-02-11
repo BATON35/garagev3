@@ -11,10 +11,7 @@ import java.util.List;
 @Data
 public class Workshop {
     @Id
-  //  @GeneratedValue(strategy = GenerationType.AUTO)
- //   @Column(name = "workshop_id")
     private int id;
- //   @Column(name = "name")
     private String name;
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @MapsId
@@ -25,4 +22,10 @@ public class Workshop {
             orphanRemoval = true
     )
     private List<Vehicle> vehicles;
+    @OneToMany(
+            mappedBy = "workshop",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<User> users;
 }

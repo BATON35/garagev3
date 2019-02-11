@@ -1,6 +1,7 @@
 package com.konrad.garagev3.controller;
 
 import com.konrad.garagev3.mail.AnonymousUserQuestion;
+import com.konrad.garagev3.model.Role;
 import com.konrad.garagev3.model.User;
 import com.konrad.garagev3.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,6 +61,26 @@ public class LoginController {
             modelAndView.setViewName("registration");
         } else {
             userService.saveUser(user);
+            modelAndView.addObject("successMessage", "User has been registered successfully");
+            modelAndView.addObject("user", new User());
+            modelAndView.setViewName("index");
+
+        }
+        return modelAndView;
+    }
+    @PostMapping("/addUser")
+    public ModelAndView  addUser(User user, BindingResult bindingResult) {
+        ModelAndView modelAndView = new ModelAndView();
+        User userExists = userService.findUserByEmail(user.getEmail());
+        if (userExists != null) {
+            bindingResult
+                    .rejectValue("email", "error.user",
+                            "There is already a user registered with the email provided");
+        }
+        if (bindingResult.hasErrors()) {
+            modelAndView.setViewName("admin");
+        } else {
+            userService.SaveUserVithPrivileges(user);
             modelAndView.addObject("successMessage", "User has been registered successfully");
             modelAndView.addObject("user", new User());
             modelAndView.setViewName("index");

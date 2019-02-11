@@ -1,10 +1,13 @@
 package com.konrad.garagev3.model;
 
+import com.konrad.garagev3.model.Service;
+
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
-public class Rate {
+public class BodyPriceList {
+    
     @Id
    // @Column(name = "id_rate")
     @GeneratedValue(strategy = GenerationType.AUTO)

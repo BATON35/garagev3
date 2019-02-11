@@ -46,8 +46,15 @@
                 </li>
                 <li class="nav-item" sec:authorize="isAuthenticated()">
                     <form th:action="@{/logout}" method="get">
-                        <button class="btn btn-md btn-outline-danger btn-block" name="registration"
+                        <button class="btn btn-md btn-outline-danger mr-3 " name="registration"
                                 type="Submit">Logout
+                        </button>
+                    </form>
+                </li>
+                <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
+                    <form th:action="@{/admin}">
+                        <button class="btn btn-md btn-outline-success"
+                                type="Submit">Admin
                         </button>
                     </form>
                 </li>
