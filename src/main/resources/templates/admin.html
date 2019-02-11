@@ -17,7 +17,7 @@
 
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
     <div class="container">
-        <a href="/index" class="navbar-brand">Auto Doktor</a>
+        <div class="navbar-brand">Panel administratora</div>
 
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav ml-auto">
@@ -25,15 +25,15 @@
                     <a href="/" class="nav-link">Strona Główna</a>
                 </li>
                 <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <form th:action="@{/logout}" method="get">
-                        <button class="btn btn-md btn-outline-danger mr-3 " name="registration"
-                                type="Submit">Logout
+                    <form th:action="@{/admin/addUser}">
+                        <button class="btn btn-md btn-outline-success mr-3"
+                                type="Submit">Dodaj urzytkownika
                         </button>
                     </form>
                 </li>
                 <li class="nav-item" sec:authorize="isAuthenticated()">
                     <form th:action="@{/logout}" method="get">
-                        <button class="btn btn-md btn-outline-danger mr-3 " name="registration"
+                        <button class="btn btn-md btn-outline-danger mr-3" name="registration"
                                 type="Submit">Logout
                         </button>
                     </form>
@@ -48,89 +48,11 @@
         <div class="row">
             <div class="col-md-6 m-auto text-center">
                 <div class="container">
-                    <form class="form-horizontal"
-                          th:action="@{/addUser}" th:object="${user}" method="post">
-                        <div class="col-md-12 align-self-center">
-                            <div class="card p-4">
-                                <h1 style="color: #000000;">Dodaj urzytkownika</h1>
-                                <div class="card-body">
-                                    <hr>
-                                    <div class="row justify-content-center">
-                                        <div class="col-md-7">
-                                            <div class="form-group">
-                                                <input type="text" th:field="*{name}" class="form-control"
-                                                       placeholder="Imie">
-                                                <label th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
-                                                       style="color: #FF1C19;"></label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-7">
-                                            <div class="form-group">
-                                                <input type="text" th:field="*{email}" class="form-control"
-                                                       placeholder="Email"/>
-                                                <label th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
-                                                       style="color: #FF1C19;"></label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-7">
-                                            <div class="form-group">
-                                                <input type="password" th:field="*{password}" class="form-control"
-                                                       id="password-field" placeholder="password"
-                                                       data-toggle="password"/>
-                                                <span toggle="#password-field"
-                                                      class="fa fa-fw fa-eye field-icon toggle-password"
-                                                      style="color: #000000;">
-                                                    </span>
-                                                <label th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
-                                                       style="color: #FF1C19;"></label>
-                                            </div>
-                                            <!--<div class="col-md-7">-->
-                                                <!--<div class="form-group">-->
-                                                    <!--<input type="text" th:field="*{roles}" class="form-control"-->
-                                                           <!--placeholder="role"/>-->
-                                                <!--</div>-->
-                                            <!--</div>-->
-                                            <table>
-                                                    <div class="form-group">
-                                                        <select th:field="*{roles}" class="form-control">
-                                                            <option value="">Wybierz role</option>
-                                                            <option th:each="oneRole : ${allRoles}"
-                                                                    th:value="${oneRole.id}"
-                                                                    th:utext="${oneRole.role}"></option>
-                                                        </select>
-                                                    </div>
-                                            </table>
-                                            <!--<ul>-->
-                                                <!--<li th:each="role : ${allRoles}">-->
-                                                    <!--<div class="ui checkbox">-->
-                                                        <!--<input type="checkbox" th:field="*{roles}" th:value="${role.id}">-->
-                                                        <!--<label th:text="${role.role}"></label>-->
-                                                    <!--</div>-->
-                                                <!--</li>-->
-                                            <!--</ul>-->
-
-                                        </div>
-                                        <div class="col-7">
-                                            <div class="form-group">
-                                                <input type="submit" value="Zatwierdz"
-                                                       class="btn btn-lg btn-outline-primary btn-block">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
                 </div>
             </div>
         </div>
     </div>
 </header>
-
-
-<!--<tr th:each="role : ${roles}">-->
-<!--<td th:text="${role.role}">1</td>-->
-<!--</tr>-->
 
 <!-- FOOTER -->
 <footer id="main-footer" class="text-center p-4" th:replace="fragments/footer :: footer">

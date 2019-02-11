@@ -16,4 +16,7 @@ public class Owner {
             orphanRemoval = true
     )
     private List<Vehicle> vehicles;
+    private String name;
+    private String email;
+    private String phoneNumber;
 }

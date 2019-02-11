@@ -48,7 +48,6 @@ public class MainBarController {
         return "contact";
     }
 
-
     @RequestMapping(value = "/services")
     public String services() {
         return "services";
@@ -64,15 +63,5 @@ public class MainBarController {
         return "blog";
     }
 
-    @RequestMapping(value = "/admin", method = RequestMethod.GET)
-    public ModelAndView admin(){
-        ModelAndView modelAndView = new ModelAndView();
-        User user = new User();
-        modelAndView.addObject("user", user);
-        modelAndView.addObject("allRoles", userService.findAllRoles());
-        modelAndView.addObject("role", new Role());
-        modelAndView.setViewName("admin");
-        return modelAndView;
-    }
 
 }
