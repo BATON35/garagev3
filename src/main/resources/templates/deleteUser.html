@@ -25,9 +25,9 @@
                     <a href="/" class="nav-link">Strona Główna</a>
                 </li>
                 <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <form th:action="@{/admin/deleteUser}">
+                    <form th:action="@{/admin/addUser}">
                         <button class="btn btn-md btn-outline-success mr-3"
-                                type="Submit">Usuń urzytkownika
+                                type="Submit">Dodaj urzytkownika
                         </button>
                     </form>
                 </li>
@@ -49,51 +49,20 @@
             <div class="col-md-6 m-auto text-center">
                 <div class="container">
                     <form class="form-horizontal"
-                          th:action="@{/admin/addUser}" th:object="${user}" method="post">
+                          th:action="@{/admin/deleteUser}" th:object="${user}" method="post">
                         <div class="col-md-12 align-self-center">
                             <div class="card p-4">
-                                <h1 style="color: #000000;">Dodaj urzytkownika</h1>
+                                <h1 style="color: #000000;">Usuń urzytkownika</h1>
                                 <div class="card-body">
                                     <hr>
                                     <div class="row justify-content-center">
                                         <div class="col-md-7">
                                             <div class="form-group">
-                                                <input type="text" th:field="*{name}" class="form-control"
-                                                       placeholder="Imie">
-                                                <label th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
-                                                       style="color: #FF1C19;"></label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-7">
-                                            <div class="form-group">
                                                 <input type="text" th:field="*{email}" class="form-control"
-                                                       placeholder="Email"/>
+                                                       placeholder="Mail urzytkownika">
                                                 <label th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
                                                        style="color: #FF1C19;"></label>
                                             </div>
-                                        </div>
-                                        <div class="col-md-7">
-                                            <div class="form-group">
-                                                <input type="password" th:field="*{password}" class="form-control"
-                                                       id="password-field" placeholder="password"
-                                                       data-toggle="password"/>
-                                                <span toggle="#password-field"
-                                                      class="fa fa-fw fa-eye field-icon toggle-password"
-                                                      style="color: #000000;">
-                                                </span>
-                                                <label th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
-                                                       style="color: #FF1C19;"></label>
-                                            </div>
-                                            <table>
-                                                <div class="form-group">
-                                                    <select th:field="*{roles}" class="form-control">
-                                                        <!--<option value="">Wybierz role</option>-->
-                                                        <option th:each="oneRole : ${allRoles}"
-                                                                th:value="${oneRole.id}"
-                                                                th:utext="${oneRole.role}"></option>
-                                                    </select>
-                                                </div>
-                                            </table>
                                         </div>
                                         <div class="col-7">
                                             <div class="form-group">
@@ -101,18 +70,17 @@
                                                        class="btn btn-lg btn-outline-primary btn-block">
                                             </div>
                                         </div>
-                                        <h2><span class="text-success" th:utext="${successMessage}"></span></h2>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
                     </form>
                 </div>
             </div>
         </div>
     </div>
 </header>
+
 
 <!-- FOOTER -->
 <footer id="main-footer" class="text-center p-4" th:replace="fragments/footer :: footer">

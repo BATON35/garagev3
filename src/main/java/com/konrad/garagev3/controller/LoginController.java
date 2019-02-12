@@ -41,12 +41,6 @@ public class LoginController {
         return modelAndView;
     }
 
-    @PostMapping (value = "/mail")
-    public String  mail(Model model) {
-        model.addAttribute("nazwaKlasy", new AnonymousUserQuestion());
-        return "contact";
-    }
-
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
@@ -62,10 +56,16 @@ public class LoginController {
             userService.saveUser(user);
             modelAndView.addObject("successMessage", "User has been registered successfully");
             modelAndView.addObject("user", new User());
-            modelAndView.setViewName("index");
+            modelAndView.setViewName("login");
 
         }
         return modelAndView;
+    }
+
+    @PostMapping (value = "/mail")
+    public String  mail(Model model) {
+        model.addAttribute("nazwaKlasy", new AnonymousUserQuestion());
+        return "contact";
     }
 }
 

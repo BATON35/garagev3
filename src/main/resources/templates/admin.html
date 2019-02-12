@@ -32,6 +32,13 @@
                     </form>
                 </li>
                 <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <form th:action="@{/admin/deleteUser}">
+                        <button class="btn btn-md btn-outline-success mr-3"
+                                type="Submit">Usuń urzytkownika
+                        </button>
+                    </form>
+                </li>
+                <li class="nav-item" sec:authorize="isAuthenticated()">
                     <form th:action="@{/logout}" method="get">
                         <button class="btn btn-md btn-outline-danger mr-3" name="registration"
                                 type="Submit">Logout
