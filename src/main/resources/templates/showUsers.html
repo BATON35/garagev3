@@ -39,16 +39,9 @@
                     </form>
                 </li>
                 <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <form th:action="@{/admin/showUsers}">
+                    <form th:action="@{/admin/getUsers}">
                         <button class="btn btn-md btn-outline-success mr-3"
-                                type="Submit">Wyświetl urzytkowników
-                        </button>
-                    </form>
-                </li>
-                <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <form th:action="@{/employee/addClient}">
-                        <button class="btn btn-md btn-outline-success mr-3"
-                                type="Submit">Dodaj klienta
+                                type="Submit">Znajdź urzytkowników
                         </button>
                     </form>
                 </li>
@@ -67,14 +60,58 @@
 <header id="page-header">
     <div class="container">
         <div class="row">
-            <div class="col-md-6 m-auto text-center">
+            <div class="col-md-10 m-auto text-center">
                 <div class="container">
+                    <!--<form class="form-horizontal"-->
+                    <!--th:action="@{/admin/addUser}" th:object="${user}" method="post">-->
+                    <section>
+                        <div class="container">
+                            <form th:action="@{/admin/showUsers}" th:object="${userToDelete}" method="post">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h4 style="color: #000000;">Lista urzytkoników</h4>
+                                            </div>
+                                            <div class="scrollable">
+                                                <table class="table table-striped">
+                                                    <thead class="thead-dark">
+                                                    <tr>
+                                                        <th>Id</th>
+                                                        <th>Name</th>
+                                                        <th>Email</th>
+                                                        <th></th>
+                                                    </tr>
+                                                    </thead>
+                                                    </tbody>
+                                                    <tr th:each="user : ${users}">
+                                                        <td style="color: #000000" th:text="${user.id}">
+                                                            Idddddddddddddddddddddddddddddddddddddddddddd
+                                                        </td>
+                                                        <td style="color: #000000" th:text="${user.name}">Name</td>
+                                                        <td style="color: #000000" th:text="${user.email}">Email</td>
+                                                        <td>
+                                                            <div class="form-group">
+                                                                <input type="submit" value="Delete"
+                                                                       class="btn btn-lg btn-outline-primary btn-block">
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </section>
+                    <!--</form>-->
                 </div>
             </div>
         </div>
     </div>
 </header>
-
 <!-- FOOTER -->
 <footer id="main-footer" class="text-center p-4" th:replace="fragments/footer :: footer">
     <div class="container">

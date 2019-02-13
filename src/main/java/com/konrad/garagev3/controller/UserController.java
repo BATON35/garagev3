@@ -5,11 +5,13 @@ import com.konrad.garagev3.model.User;
 import com.konrad.garagev3.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 
 @Controller
 public class UserController {
@@ -27,7 +29,7 @@ public class UserController {
         if (userExists != null) {
             bindingResult
                     .rejectValue("email", "error.user",
-                            "Adres email: " + user.getEmail() +  "  znajduje sie już w bazie danych");
+                            "Adres email: " + user.getEmail() + "  znajduje sie już w bazie danych");
         }
         if (bindingResult.hasErrors()) {
             modelAndView.addObject("allRoles", userService.findAllRoles());
@@ -64,8 +66,9 @@ public class UserController {
         modelAndView.setViewName("deleteUser");
         return modelAndView;
     }
+
     @PostMapping("/admin/deleteUser")
-    public ModelAndView deleteUser(User user, BindingResult bindingResult){
+    public ModelAndView deleteUser(User user, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
         User userExists = userService.findUserByEmail(user.getEmail());
         if (userExists == null) {
@@ -85,5 +88,19 @@ public class UserController {
         return modelAndView;
     }
 
+    @GetMapping("/admin/showUsers")
+    public String showUsers(Model model) {
+        model.addAttribute("users", userService.findAllUsers());
+        model.addAttribute("userToDelete", new User());
+        return "showUsers";
+    }
+
+    @PostMapping("/admin/showUsers")
+    public ModelAndView showUsersAfterDelete(User user, BindingResult bindingResult) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("users", userService.findAllUsers());
+        modelAndView.setViewName("showUsers");
+        return modelAndView;
+    }
 
 }

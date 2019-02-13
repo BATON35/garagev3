@@ -20,10 +20,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.lang.reflect.Array;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service("userService")
@@ -68,5 +65,11 @@ public class UserService {
     @Modifying
     public void deleteUser(String email) {
         userRepository.deleteUserByEmail(email);
+    }
+
+    public List<User> findAllUsers() {
+        List<User> test = userRepository.findAll();
+        test.sort(Comparator.comparing(User::getEmail));
+        return test;
     }
 }
