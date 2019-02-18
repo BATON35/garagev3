@@ -1,11 +1,15 @@
 package com.konrad.garagev3.model;
 
+import lombok.Data;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+@Data
 @Entity
-public class Vehicle {
+public class Vehicle implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
    // @Column(name = "vehicle_id")

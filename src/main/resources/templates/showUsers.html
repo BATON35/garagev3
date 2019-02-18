@@ -66,12 +66,13 @@
                     <!--th:action="@{/admin/addUser}" th:object="${user}" method="post">-->
                     <section>
                         <div class="container">
-                            <form th:action="@{/admin/showUsers}" th:object="${userToDelete}" method="post">
+                            <!--<form th:action="@{/admin/showUsers}" th:object="${userToDelete}" method="post">-->
                                 <div class="row">
                                     <div class="col">
                                         <div class="card">
                                             <div class="card-header">
                                                 <h4 style="color: #000000;">Lista urzytkoników</h4>
+                                                <h2><span class="text-success" th:utext="${successMessage}"></span></h2>
                                             </div>
                                             <div class="scrollable">
                                                 <table class="table table-striped">
@@ -92,8 +93,11 @@
                                                         <td style="color: #000000" th:text="${user.email}">Email</td>
                                                         <td>
                                                             <div class="form-group">
-                                                                <input type="submit" value="Delete"
-                                                                       class="btn btn-lg btn-outline-primary btn-block">
+                                                                <a th:href="@{/admin/user/delete(id=${user.id})}">
+                                                                    <button class="btn btn-md btn-outline-success mr-3"
+                                                                            type="Submit">Skasuj urzytkownika
+                                                                    </button>
+                                                                </a>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -103,7 +107,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </form>
+                            <!--</form>-->
                         </div>
                     </section>
                     <!--</form>-->

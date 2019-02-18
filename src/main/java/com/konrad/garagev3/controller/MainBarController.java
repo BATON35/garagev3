@@ -43,7 +43,6 @@ public class MainBarController {
 
     @PostMapping(value = "/contact")
     public String contact2(Model model, @ModelAttribute("mailData") AnonymousUserQuestion anonymousUserQuestion) {
-        System.out.println(anonymousUserQuestion.getMail());
         mailService.sendEmail(anonymousUserQuestion);
         return "contact";
     }

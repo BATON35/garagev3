@@ -4,24 +4,14 @@ import com.konrad.garagev3.model.Role;
 import com.konrad.garagev3.model.User;
 import com.konrad.garagev3.repository.RoleRepository;
 import com.konrad.garagev3.repository.UserRepository;
-import netscape.security.Privilege;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
-import java.lang.reflect.Array;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service("userService")
 public class UserService {
@@ -61,14 +51,31 @@ public class UserService {
     public List<Role> findAllRoles() {
         return roleRepository.findAll();
     }
+
+    public Role findRoleById(int id) {
+        return roleRepository.findById(id);
+    }
+
     @Transactional
     @Modifying
     public void deleteUser(String email) {
         userRepository.deleteUserByEmail(email);
     }
 
+    @Transactional
+    @Modifying
+    public void deleteUserById(int id) {
+        userRepository.deleteUserById(id);
+    }
+
+    public User deactivateUser(int id) {
+        User user = userRepository.findUserById(id);
+        user.setActive(0);
+        return userRepository.save(user);
+    }
+
     public List<User> findAllUsers() {
-        List<User> test = userRepository.findAll();
+        List<User> test = userRepository.findAllActiveUsers();
         test.sort(Comparator.comparing(User::getEmail));
         return test;
     }
