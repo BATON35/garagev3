@@ -60,23 +60,17 @@
                                         <div class="row justify-content-center">
                                             <div class="col-md-7">
                                                 <div class="form-group">
-                                                    <input type="text" th:text="*{mail}" class="form-control"
-                                                    >
-                                                    <!--<label th:if="${#fields.hasErrors('name')}" th:errors="*{name}"-->
-                                                    <!--style="color: #FF1C19;"></label>-->
+                                                    <input type="text" class="form-control" placeholder="email">
                                                 </div>
                                             </div>
                                             <div class="col-md-7">
                                                 <div class="form-group">
-                                                    <input type="text" class="form-control" th:value="${client.name}"
-                                                           name="name"/>
-                                                    <input type="text" class="form-control"
-                                                           name="brand"/>
-                                                    <!--<input type="text" id="name" name="name" th:value="*{name}" />-->
-                                                    <!--<label th:if="${#fields.hasErrors('email')}" th:errors="*{email}"-->
-                                                    <!--style="color: #FF1C19;"></label>-->
-
-
+                                                    <input type="text" class="form-control" placeholder="name"/>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-7">
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control" placeholder="brand"/>
                                                 </div>
                                             </div>
                                             <div class="col-7">

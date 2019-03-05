@@ -26,7 +26,7 @@ public class MainBarController {
     }
 
     @RequestMapping(value = "/")
-    public String isitingCard() {
+    public String visitingCard() {
         return "visitingCard";
     }
 

@@ -46,7 +46,6 @@ public class EmployeeController {
     @GetMapping("/employee/addClient")
     public String addOwner(Model model) {
         Owner owner = new Owner();
-        owner.setName("dupa");
         model.addAttribute("client", owner);
       //  model.addAttribute("vehicle", new Vehicle());
         return "addClient";
