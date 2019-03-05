@@ -1,6 +1,7 @@
 package com.konrad.garagev3.controller;
 
 import com.konrad.garagev3.mail.AnonymousUserQuestion;
+import com.konrad.garagev3.model.Role;
 import com.konrad.garagev3.model.User;
 import com.konrad.garagev3.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,13 +41,6 @@ public class LoginController {
         return modelAndView;
     }
 
-    @PostMapping (value = "/mail")
-    public String  mail(Model model) {
-      //  System.out.println(mail.getMessage());
-        model.addAttribute("nazwaKlasy", new AnonymousUserQuestion());
-        return "contact";
-    }
-
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
@@ -62,22 +56,16 @@ public class LoginController {
             userService.saveUser(user);
             modelAndView.addObject("successMessage", "User has been registered successfully");
             modelAndView.addObject("user", new User());
-            modelAndView.setViewName("index");
+            modelAndView.setViewName("login");
 
         }
         return modelAndView;
     }
 
-
-    @RequestMapping(value = "/admin/home", method = RequestMethod.GET)
-    public ModelAndView home() {
-        ModelAndView modelAndView = new ModelAndView();
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findUserByEmail(auth.getName());
-        modelAndView.addObject("userName", "Welcome " + user.getName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
-        modelAndView.addObject("adminMessage", "Content Available Only for Users with Admin Role");
-        modelAndView.setViewName("admin/home");
-        return modelAndView;
+    @PostMapping (value = "/mail")
+    public String  mail(Model model) {
+        model.addAttribute("nazwaKlasy", new AnonymousUserQuestion());
+        return "contact";
     }
 }
 

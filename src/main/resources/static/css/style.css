@@ -181,3 +181,8 @@ body {
 
     .mb-resp {
         margin-bottom: 1rem; } }
+
+.scrollable{
+    height: 500px;
+    overflow: scroll;
+}

@@ -37,7 +37,6 @@ public class UserServiceTest {
         user = User.builder()
                 .id(1)
                 .name("Gustavo")
-                .lastName("Ponce")
                 .email("test@test.com")
                 .build();
 
