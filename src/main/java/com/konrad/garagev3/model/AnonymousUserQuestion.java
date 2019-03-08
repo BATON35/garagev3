@@ -1,4 +1,4 @@
-package com.konrad.garagev3.mail;
+package com.konrad.garagev3.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
