@@ -1,6 +1,6 @@
 package com.konrad.garagev3.repository;
 
-import com.konrad.garagev3.model.Role;
+import com.konrad.garagev3.model.dao.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,4 +1,4 @@
-package com.konrad.garagev3.model;
+package com.konrad.garagev3.model.dao;
 
 import lombok.Data;
 

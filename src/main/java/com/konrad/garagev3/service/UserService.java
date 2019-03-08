@@ -1,7 +1,7 @@
 package com.konrad.garagev3.service;
 
-import com.konrad.garagev3.model.Role;
-import com.konrad.garagev3.model.User;
+import com.konrad.garagev3.model.dao.Role;
+import com.konrad.garagev3.model.dao.User;
 import com.konrad.garagev3.repository.RoleRepository;
 import com.konrad.garagev3.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,7 @@
 package com.konrad.garagev3.seervice;
 
 
-import com.konrad.garagev3.model.User;
+import com.konrad.garagev3.model.dao.User;
 import com.konrad.garagev3.repository.RoleRepository;
 import com.konrad.garagev3.repository.UserRepository;
 import com.konrad.garagev3.service.UserService;

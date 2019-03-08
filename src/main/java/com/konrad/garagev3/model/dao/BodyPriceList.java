@@ -1,6 +1,4 @@
-package com.konrad.garagev3.model;
-
-import com.konrad.garagev3.model.Service;
+package com.konrad.garagev3.model.dao;
 
 import javax.persistence.*;
 import java.util.List;

@@ -1,7 +1,7 @@
 package com.konrad.garagev3.controller;
 
-import com.konrad.garagev3.model.AnonymousUserQuestion;
-import com.konrad.garagev3.model.User;
+import com.konrad.garagev3.model.dao.AnonymousUserQuestion;
+import com.konrad.garagev3.model.dao.User;
 import com.konrad.garagev3.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
