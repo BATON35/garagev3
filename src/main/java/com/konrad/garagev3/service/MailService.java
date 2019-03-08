@@ -1,6 +1,6 @@
 package com.konrad.garagev3.service;
 
-import com.konrad.garagev3.mail.AnonymousUserQuestion;
+import com.konrad.garagev3.model.AnonymousUserQuestion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;

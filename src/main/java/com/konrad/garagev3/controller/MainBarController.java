@@ -1,28 +1,23 @@
 package com.konrad.garagev3.controller;
 
-import com.konrad.garagev3.mail.AnonymousUserQuestion;
-import com.konrad.garagev3.model.Role;
-import com.konrad.garagev3.model.User;
+import com.konrad.garagev3.model.AnonymousUserQuestion;
 import com.konrad.garagev3.service.MailService;
 import com.konrad.garagev3.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class MainBarController {
     private final MailService mailService;
-    private final UserService userService;
 
     @Autowired
-    public MainBarController(MailService mailService, UserService userService) {
+    public MainBarController(MailService mailService) {
         this.mailService = mailService;
-        this.userService = userService;
     }
 
     @RequestMapping(value = "/")
@@ -35,7 +30,7 @@ public class MainBarController {
         return "about";
     }
 
-    @RequestMapping(value = "/contact")
+    @GetMapping(value = "/contact")
     public String contact(Model model) {
         model.addAttribute("mailData", new AnonymousUserQuestion());
         return "contact";
