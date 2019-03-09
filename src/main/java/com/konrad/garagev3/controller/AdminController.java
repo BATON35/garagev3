@@ -2,6 +2,7 @@ package com.konrad.garagev3.controller;
 
 import com.konrad.garagev3.model.dao.Role;
 import com.konrad.garagev3.model.dao.User;
+import com.konrad.garagev3.model.dto.UserDto;
 import com.konrad.garagev3.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,7 +28,7 @@ public class AdminController {
     }
 
     @PostMapping("/admin/addUser")
-    public ModelAndView showAddUser(@Valid User user, BindingResult bindingResult) {
+    public ModelAndView showAddUser(@Valid UserDto user, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
         User userExists = userService.findUserByEmail(user.getEmail());
         if (userExists != null) {
@@ -53,7 +54,7 @@ public class AdminController {
     @RequestMapping(value = "/admin/addUser", method = RequestMethod.GET)
     public ModelAndView addUser() {
         ModelAndView modelAndView = new ModelAndView();
-        User user = new User();
+        UserDto user = new UserDto();
         modelAndView.addObject("user", user);
         modelAndView.addObject("allRoles", userService.findAllRoles());
         modelAndView.addObject("role", new Role());
@@ -65,7 +66,7 @@ public class AdminController {
     @GetMapping("/admin/deleteUser")
     public ModelAndView showDeleteUser() {
         ModelAndView modelAndView = new ModelAndView();
-        User user = new User();
+        UserDto user = new UserDto();
         modelAndView.addObject("user", user);
         modelAndView.setViewName("deleteUser");
         return modelAndView;

@@ -5,7 +5,7 @@ import com.konrad.garagev3.model.dto.UserDto;
 import org.mapstruct.Mapper;
 
 @Mapper
-public interface userMaper {
+public interface UserDtoMapper {
 
     UserDto userToUserDto(User user);
 
