@@ -14,7 +14,7 @@ import javax.validation.constraints.NotEmpty;
 import java.util.Set;
 
 @Data
-@Builder
+//@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDto {
@@ -29,4 +29,44 @@ public class UserDto {
     private String name;
     private Set<Role> roles;
     private Workshop workshop;
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    public void setWorkshop(Workshop workshop) {
+        this.workshop = workshop;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public Workshop getWorkshop() {
+        return workshop;
+    }
 }

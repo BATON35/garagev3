@@ -38,7 +38,9 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
-    public User saveUser(User user) {
+    public User saveUser(UserDto userDto) {
+        UserDtoMapper userMapper = Mappers.getMapper(UserDtoMapper.class);
+        User user = userMapper.userDtoToUser(userDto);
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setActive(1);
         Role userRole = roleRepository.findByRole("ROLE_USER");

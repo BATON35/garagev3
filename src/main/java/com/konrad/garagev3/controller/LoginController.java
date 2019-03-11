@@ -2,6 +2,7 @@ package com.konrad.garagev3.controller;
 
 import com.konrad.garagev3.model.dao.AnonymousUserQuestion;
 import com.konrad.garagev3.model.dao.User;
+import com.konrad.garagev3.model.dto.UserDto;
 import com.konrad.garagev3.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,14 +32,14 @@ public class LoginController {
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public ModelAndView registration() {
         ModelAndView modelAndView = new ModelAndView();
-        User user = new User();
-        modelAndView.addObject("user", user);
+        UserDto userDto = new UserDto();
+        modelAndView.addObject("userDto", userDto);
         modelAndView.setViewName("registration");
         return modelAndView;
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) {
+    public ModelAndView createNewUser(@Valid UserDto user, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
         User userExists = userService.findUserByEmail(user.getEmail());
         if (userExists != null) {

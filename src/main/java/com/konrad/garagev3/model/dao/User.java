@@ -9,7 +9,7 @@ import javax.validation.constraints.NotEmpty;
 import java.util.Set;
 
 @Data
-@Builder
+//@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -21,15 +21,12 @@ public class User {
     @Column(name = "user_id")
     private int id;
     // @Column(name = "email")
-    @Email(message = "*Please provide a valid Email")
-    @NotEmpty(message = "*Please provide an email")
+
     private String email;
     //  @Column(name = "password")
-    @Length(min = 5, message = "*Your password must have at least 5 characters")
-    @NotEmpty(message = "*Please provide your password")
+
     private String password;
-    @Column(name = "name")
-    @NotEmpty(message = "*Please provide your name")
+
     private String name;
     //   @Column(name = "active")
     private int active;
@@ -39,4 +36,60 @@ public class User {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "workshop_id")
     private Workshop workshop;
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setActive(int active) {
+        this.active = active;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    public void setWorkshop(Workshop workshop) {
+        this.workshop = workshop;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getActive() {
+        return active;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public Workshop getWorkshop() {
+        return workshop;
+    }
 }
