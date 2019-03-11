@@ -27,41 +27,41 @@ public class AdminController {
         return "admin";
     }
 
-    @PostMapping("/user")
-    public ModelAndView showAddUser(@Valid UserDto user, BindingResult bindingResult) {
-        ModelAndView modelAndView = new ModelAndView();
-        User userExists = userService.findUserByEmail(user.getEmail());
-        if (userExists != null) {
-            bindingResult
-                    .rejectValue("email", "error.user",
-                            "Adres email: " + user.getEmail() + "  znajduje sie już w bazie danych");
-        }
-        if (bindingResult.hasErrors()) {
-            modelAndView.addObject("allRoles", userService.findAllRoles());
-            modelAndView.setViewName("addUser");
-        } else {
-            userService.SaveUserWithPrivileges(user);
-            modelAndView.addObject("successMessage", "Dodano nowego urzytkownika");
-            modelAndView.addObject("user", new User());
-            modelAndView.addObject("allRoles", userService.findAllRoles());
-            modelAndView.addObject("role", new Role());
-            modelAndView.setViewName("addUser");
-
-        }
-        return modelAndView;
-    }
-
-    @GetMapping(value = "/user")
-    public ModelAndView addUser() {
-        ModelAndView modelAndView = new ModelAndView();
-        UserDto user = new UserDto();
-        modelAndView.addObject("user", user);
-        modelAndView.addObject("allRoles", userService.findAllRoles());
-        modelAndView.addObject("role", new Role());
-        modelAndView.setViewName("addUser");
-        return modelAndView;
-    }
-
+//    @PostMapping("/user")
+//    public ModelAndView showAddUser(@Valid UserDto user, BindingResult bindingResult) {
+//        ModelAndView modelAndView = new ModelAndView();
+//        User userExists = userService.findUserByEmail(user.getEmail());
+//        if (userExists != null) {
+//            bindingResult
+//                    .rejectValue("email", "error.user",
+//                            "Adres email: " + user.getEmail() + "  znajduje sie już w bazie danych");
+//        }
+//        if (bindingResult.hasErrors()) {
+//            modelAndView.addObject("allRoles", userService.findAllRoles());
+//            modelAndView.setViewName("addUser");
+//        } else {
+//            userService.SaveUserWithPrivileges(user);
+//            modelAndView.addObject("successMessage", "Dodano nowego urzytkownika");
+//            modelAndView.addObject("user", new User());
+//            modelAndView.addObject("allRoles", userService.findAllRoles());
+//            modelAndView.addObject("role", new Role());
+//            modelAndView.setViewName("addUser");
+//
+//        }
+//        return modelAndView;
+//    }
+//
+//    @GetMapping(value = "/user")
+//    public ModelAndView addUser() {
+//        ModelAndView modelAndView = new ModelAndView();
+//        UserDto user = new UserDto();
+//        modelAndView.addObject("user", user);
+//        modelAndView.addObject("allRoles", userService.findAllRoles());
+//        modelAndView.addObject("role", new Role());
+//        modelAndView.setViewName("addUser");
+//        return modelAndView;
+//    }
+//
 
     @GetMapping("/admin/showUsers")
     public String showUsers(Model model) {
