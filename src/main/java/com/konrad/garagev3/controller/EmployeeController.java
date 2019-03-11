@@ -36,7 +36,6 @@ public class EmployeeController {
             bindingResult.rejectValue("email", "error.user",
                     "Adres email: " + owner.getEmail() + "  znajduje sie już w bazie danych");
         }
-        //modelAndView.addObject("client2", new Owner());
         modelAndView.setViewName("addClient");
         return modelAndView;
     }

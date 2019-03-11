@@ -93,7 +93,7 @@
                                                         <td style="color: #000000" th:text="${user.email}">Email</td>
                                                         <td>
                                                             <div class="form-group">
-                                                                <a th:href="@{/admin/user/delete(id=${user.id})}">
+                                                                <a th:href="@{/user/deactivate/{id}(id=${user.id})}">
                                                                     <button class="btn btn-md btn-outline-success mr-3"
                                                                             type="Submit">Skasuj urzytkownika
                                                                     </button>

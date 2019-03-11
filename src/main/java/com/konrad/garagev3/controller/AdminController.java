@@ -27,7 +27,7 @@ public class AdminController {
         return "admin";
     }
 
-    @PostMapping("/admin/addUser")
+    @PostMapping("/user")
     public ModelAndView showAddUser(@Valid UserDto user, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
         User userExists = userService.findUserByEmail(user.getEmail());
@@ -38,30 +38,51 @@ public class AdminController {
         }
         if (bindingResult.hasErrors()) {
             modelAndView.addObject("allRoles", userService.findAllRoles());
-            modelAndView.setViewName("addUser");
+            modelAndView.setViewName("user");
         } else {
             userService.SaveUserWithPrivileges(user);
             modelAndView.addObject("successMessage", "Dodano nowego urzytkownika");
             modelAndView.addObject("user", new User());
             modelAndView.addObject("allRoles", userService.findAllRoles());
             modelAndView.addObject("role", new Role());
-            modelAndView.setViewName("addUser");
+            modelAndView.setViewName("user");
 
         }
         return modelAndView;
     }
 
-    @RequestMapping(value = "/admin/addUser", method = RequestMethod.GET)
+    @GetMapping(value = "/user")
     public ModelAndView addUser() {
         ModelAndView modelAndView = new ModelAndView();
         UserDto user = new UserDto();
         modelAndView.addObject("user", user);
         modelAndView.addObject("allRoles", userService.findAllRoles());
         modelAndView.addObject("role", new Role());
-        modelAndView.setViewName("addUser");
+        modelAndView.setViewName("user");
         return modelAndView;
     }
 
+
+    @GetMapping("/admin/showUsers")
+    public String showUsers(Model model) {
+        model.addAttribute("users", userService.findAllUsers());
+        // model.addAttribute("userToDelete", new User());
+        return "showUsers";
+    }
+
+    @PostMapping("/admin/showUsers")
+    public ModelAndView showUsersAfterDelete(@Valid User user, BindingResult bindingResult) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("users", userService.findAllUsers());
+        modelAndView.setViewName("showUsers");
+        return modelAndView;
+    }
+
+    @GetMapping("/user/deactivate/{id}")
+    public ModelAndView showUsers(@PathVariable(value = "id") String id) {
+        userService.deactivateUser(Integer.parseInt(id));
+        return new ModelAndView("redirect:/admin/showUsers");
+    }
 
     @GetMapping("/admin/deleteUser")
     public ModelAndView showDeleteUser() {
@@ -92,27 +113,4 @@ public class AdminController {
         }
         return modelAndView;
     }
-
-    @GetMapping("/admin/showUsers")
-    public String showUsers(Model model) {
-        model.addAttribute("users", userService.findAllUsers());
-       // model.addAttribute("userToDelete", new User());
-        return "showUsers";
-    }
-
-    @PostMapping("/admin/showUsers")
-    public ModelAndView showUsersAfterDelete(@Valid User user, BindingResult bindingResult) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("users", userService.findAllUsers());
-        modelAndView.setViewName("showUsers");
-        return modelAndView;
-    }
-
-    @GetMapping("/admin/user/delete")
-    public ModelAndView showUsers(@RequestParam("id") int userId) {
-       // userService.deleteUserById(userId);
-        userService.deactivateUser(userId);
-        return new ModelAndView("redirect:/admin/showUsers");
-    }
-
 }
