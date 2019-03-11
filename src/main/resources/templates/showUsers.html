@@ -25,7 +25,7 @@
                     <a href="/" class="nav-link">Strona Główna</a>
                 </li>
                 <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <form th:action="@{/admin/addUser}">
+                    <form th:action="@{/user}">
                         <button class="btn btn-md btn-outline-success mr-3"
                                 type="Submit">Dodaj urzytkownika
                         </button>
@@ -93,11 +93,15 @@
                                                         <td style="color: #000000" th:text="${user.email}">Email</td>
                                                         <td>
                                                             <div class="form-group">
-                                                                <a th:href="@{/user/deactivate/{id}(id=${user.id})}">
+                                                                <!-- It should be delete method-->
+                                                                <form class="form-horizontal"
+                                                                      th:action="@{/user/deactivate/{id}(id=${user.id})}" th:method="delete">
+                                                                <!--<a th:href="@{/user/deactivate/{id}(id=${user.id})}"> -->
                                                                     <button class="btn btn-md btn-outline-success mr-3"
-                                                                            type="Submit">Skasuj urzytkownika
+                                                                            type="Submit">Skasuj urzytkownikadfaf
                                                                     </button>
-                                                                </a>
+                                                                </form>
+                                                                <!--</a>-->
                                                             </div>
                                                         </td>
                                                     </tr>
