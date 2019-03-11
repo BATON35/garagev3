@@ -1,10 +1,11 @@
-package com.konrad.garagev3.model;
+package com.konrad.garagev3.model.dao;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
-public class Service {
+public class Service implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     //@Column(name = "service_id")

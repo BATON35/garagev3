@@ -1,15 +1,16 @@
-package com.konrad.garagev3.model;
+package com.konrad.garagev3.model.dao;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @NoArgsConstructor
 @Data
-public class Workshop {
+public class Workshop implements Serializable {
     @Id
     private int id;
     private String name;

@@ -1,9 +1,12 @@
 package com.konrad.garagev3.service;
 
-import com.konrad.garagev3.model.Role;
-import com.konrad.garagev3.model.User;
+import com.konrad.garagev3.mapper.UserDtoMapper;
+import com.konrad.garagev3.model.dao.Role;
+import com.konrad.garagev3.model.dao.User;
+import com.konrad.garagev3.model.dto.UserDto;
 import com.konrad.garagev3.repository.RoleRepository;
 import com.konrad.garagev3.repository.UserRepository;
+import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.jpa.repository.Modifying;
@@ -12,6 +15,8 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.*;
+
+import static org.mapstruct.factory.Mappers.getMapper;
 
 @Service("userService")
 public class UserService {
@@ -33,7 +38,9 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
-    public User saveUser(User user) {
+    public User saveUser(UserDto userDto) {
+        UserDtoMapper userMapper = Mappers.getMapper(UserDtoMapper.class);
+        User user = userMapper.userDtoToUser(userDto);
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setActive(1);
         Role userRole = roleRepository.findByRole("ROLE_USER");
@@ -41,7 +48,9 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User SaveUserWithPrivileges(User user) {
+    public User SaveUserWithPrivileges(UserDto userDto) {
+        UserDtoMapper userMapper = Mappers.getMapper(UserDtoMapper.class);// what does it mean className.class
+        User user = userMapper.userDtoToUser(userDto);
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setActive(1);
         user.setRoles(new HashSet<Role>(user.getRoles()));
