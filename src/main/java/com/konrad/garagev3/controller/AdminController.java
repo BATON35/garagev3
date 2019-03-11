@@ -22,7 +22,7 @@ public class AdminController {
         this.userService = userService;
     }
 
-    @RequestMapping("admin")
+    @RequestMapping("/admin")
     public String admin() {
         return "admin";
     }
@@ -38,14 +38,14 @@ public class AdminController {
         }
         if (bindingResult.hasErrors()) {
             modelAndView.addObject("allRoles", userService.findAllRoles());
-            modelAndView.setViewName("user");
+            modelAndView.setViewName("addUser");
         } else {
             userService.SaveUserWithPrivileges(user);
             modelAndView.addObject("successMessage", "Dodano nowego urzytkownika");
             modelAndView.addObject("user", new User());
             modelAndView.addObject("allRoles", userService.findAllRoles());
             modelAndView.addObject("role", new Role());
-            modelAndView.setViewName("user");
+            modelAndView.setViewName("addUser");
 
         }
         return modelAndView;
@@ -58,7 +58,7 @@ public class AdminController {
         modelAndView.addObject("user", user);
         modelAndView.addObject("allRoles", userService.findAllRoles());
         modelAndView.addObject("role", new Role());
-        modelAndView.setViewName("user");
+        modelAndView.setViewName("addUser");
         return modelAndView;
     }
 
