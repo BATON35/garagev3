@@ -1,12 +1,11 @@
 package com.konrad.garagev3.model.dao;
 
-import com.sun.xml.internal.ws.developer.Serialization;
-import lombok.*;
-import org.hibernate.validator.constraints.Length;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.util.Set;
 
