@@ -71,13 +71,13 @@ public class UserController {
 //        return modelAndView;
 //    }
 
-    @DeleteMapping("/user/{id}/active/{state}")//change to put
+    @PutMapping("/user/{id}/active/{state}")
     public ModelAndView showUsers(@PathVariable(value = "id") String id, @PathVariable(value = "state", required = false) String state) {
         userService.deactivateUser(Integer.parseInt(id));
         return new ModelAndView("redirect:/user");
     }
 
-    @GetMapping("/admin/deleteUser")
+    @GetMapping("/deleteUser")
     public ModelAndView showDeleteUser() {
         ModelAndView modelAndView = new ModelAndView();
         UserDto user = new UserDto();
@@ -86,7 +86,7 @@ public class UserController {
         return modelAndView;
     }
 
-    @PostMapping("/admin/deleteUser")
+    @DeleteMapping("/user")
     public ModelAndView deleteUser(User user, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
         User userExists = userService.findUserByEmail(user.getEmail());
