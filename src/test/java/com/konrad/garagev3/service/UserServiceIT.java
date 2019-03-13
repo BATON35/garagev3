@@ -23,7 +23,6 @@ public class UserServiceIT {
     @Autowired
     UserService sut;
 
-
     @Test
     public void findUserByEmail() {
     }
