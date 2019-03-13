@@ -22,7 +22,6 @@ public class EmployeeController {
         this.ownerService = ownerService;
     }
 
-
     @PostMapping("/client")
     public ModelAndView addClient(@Valid Owner owner, Vehicle vehicle, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
