@@ -32,6 +32,15 @@ public class UserController {
         return modelAndView;
     }
 
+    @GetMapping("/deleteUser")
+    public ModelAndView showDeleteUser() {
+        ModelAndView modelAndView = new ModelAndView();
+        UserDto user = new UserDto();
+        modelAndView.addObject("user", user);
+        modelAndView.setViewName("deleteUser");
+        return modelAndView;
+    }
+
     @GetMapping("/user")
     public String showUsers(Model model) {
         model.addAttribute("users", userService.findAllUsers());
@@ -63,27 +72,11 @@ public class UserController {
         }
         return modelAndView;
     }
-//    @PostMapping("/admin/showUsers")
-//    public ModelAndView showUsersAfterDelete(@Valid User user, BindingResult bindingResult) {
-//        ModelAndView modelAndView = new ModelAndView();
-//        modelAndView.addObject("users", userService.findAllUsers());
-//        modelAndView.setViewName("showUsers");
-//        return modelAndView;
-//    }
 
     @PutMapping("/user/{id}/active/{state}")
     public ModelAndView showUsers(@PathVariable(value = "id") String id, @PathVariable(value = "state", required = false) String state) {
         userService.deactivateUser(Integer.parseInt(id));
         return new ModelAndView("redirect:/user");
-    }
-
-    @GetMapping("/deleteUser")
-    public ModelAndView showDeleteUser() {
-        ModelAndView modelAndView = new ModelAndView();
-        UserDto user = new UserDto();
-        modelAndView.addObject("user", user);
-        modelAndView.setViewName("deleteUser");
-        return modelAndView;
     }
 
     @DeleteMapping("/user")

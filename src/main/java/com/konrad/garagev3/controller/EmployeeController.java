@@ -22,13 +22,8 @@ public class EmployeeController {
         this.ownerService = ownerService;
     }
 
-    @GetMapping(value = "/employee")
-    public String employee() {
-        ModelAndView modelAndView = new ModelAndView();
-        return "employee";
-    }
 
-    @PostMapping("/employee/addClient")
+    @PostMapping("/client")
     public ModelAndView addClient(@Valid Owner owner, Vehicle vehicle, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
         Owner ownerExists = ownerService.findOwnerByEmail(owner.getEmail());
@@ -40,7 +35,7 @@ public class EmployeeController {
         return modelAndView;
     }
 
-    @GetMapping("/employee/addClient")
+    @GetMapping("/addClient")
     public String addOwner(Model model) {
         Owner owner = new Owner();
         model.addAttribute("client", owner);
