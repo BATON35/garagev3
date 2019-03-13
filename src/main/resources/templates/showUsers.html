@@ -25,23 +25,16 @@
                     <a href="/" class="nav-link">Strona Główna</a>
                 </li>
                 <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <form th:action="@{/user}">
+                    <form th:action="@{/addUser}" th:method="get">
                         <button class="btn btn-md btn-outline-success mr-3"
                                 type="Submit">Dodaj urzytkownika
                         </button>
                     </form>
                 </li>
                 <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <form th:action="@{/admin/deleteUser}">
+                    <form th:action="@{/deleteUser}">
                         <button class="btn btn-md btn-outline-success mr-3"
                                 type="Submit">Usuń urzytkownika
-                        </button>
-                    </form>
-                </li>
-                <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <form th:action="@{/admin/getUsers}">
-                        <button class="btn btn-md btn-outline-success mr-3"
-                                type="Submit">Znajdź urzytkowników
                         </button>
                     </form>
                 </li>
@@ -67,50 +60,46 @@
                     <section>
                         <div class="container">
                             <!--<form th:action="@{/admin/showUsers}" th:object="${userToDelete}" method="post">-->
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="card">
-                                            <div class="card-header">
-                                                <h4 style="color: #000000;">Lista urzytkoników</h4>
-                                                <h2><span class="text-success" th:utext="${successMessage}"></span></h2>
-                                            </div>
-                                            <div class="scrollable">
-                                                <table class="table table-striped">
-                                                    <thead class="thead-dark">
-                                                    <tr>
-                                                        <th>Id</th>
-                                                        <th>Name</th>
-                                                        <th>Email</th>
-                                                        <th></th>
-                                                    </tr>
-                                                    </thead>
-                                                    </tbody>
-                                                    <tr th:each="user : ${users}">
-                                                        <td style="color: #000000" th:text="${user.id}">
-                                                            Idddddddddddddddddddddddddddddddddddddddddddd
-                                                        </td>
-                                                        <td style="color: #000000" th:text="${user.name}">Name</td>
-                                                        <td style="color: #000000" th:text="${user.email}">Email</td>
-                                                        <td>
-                                                            <div class="form-group">
-                                                                <!-- It should be delete method-->
-                                                                <form class="form-horizontal"
-                                                                      th:action="@{/user/deactivate/{id}(id=${user.id})}" th:method="delete">
-                                                                <!--<a th:href="@{/user/deactivate/{id}(id=${user.id})}"> -->
-                                                                    <button class="btn btn-md btn-outline-success mr-3"
-                                                                            type="Submit">Skasuj urzytkownikadfaf
-                                                                    </button>
-                                                                </form>
-                                                                <!--</a>-->
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h4 style="color: #000000;">Lista urzytkoników</h4>
+                                            <h2><span class="text-success" th:utext="${successMessage}"></span></h2>
+                                        </div>
+                                        <div class="scrollable">
+                                            <table class="table table-striped">
+                                                <thead class="thead-dark">
+                                                <tr>
+                                                    <th>Id</th>
+                                                    <th>Name</th>
+                                                    <th>Email</th>
+                                                    <th></th>
+                                                </tr>
+                                                </thead>
+                                                </tbody>
+                                                <tr th:each="user : ${users}">
+                                                    <td style="color: #000000" th:text="${user.id}">
+                                                        Idddddddddddddddddddddddddddddddddddddddddddd
+                                                    </td>
+                                                    <td style="color: #000000" th:text="${user.name}">Name</td>
+                                                    <td style="color: #000000" th:text="${user.email}">Email</td>
+                                                    <td>
+                                                        <div class="form-group">
+                                                            <form class="form-horizontal" th:action="@{/user/{id}/active/{state}(id=${user.id}, state=3)}" th:method="put">
+                                                                <button class="btn btn-md btn-outline-success mr-3"
+                                                                        type="Submit">Skasuj urzytkownika
+                                                                </button>
+                                                            </form>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
                             <!--</form>-->
                         </div>
                     </section>

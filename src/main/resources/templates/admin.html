@@ -25,28 +25,28 @@
                     <a href="/" class="nav-link">Strona Główna</a>
                 </li>
                 <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <form th:action="@{/user}">
+                    <form th:action="@{/addUser}" th:method="get">
                         <button class="btn btn-md btn-outline-success mr-3"
                                 type="Submit">Dodaj urzytkownika
                         </button>
                     </form>
                 </li>
                 <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <form th:action="@{/admin/deleteUser}">
+                    <form th:action="@{/deleteUser}">
                         <button class="btn btn-md btn-outline-success mr-3"
                                 type="Submit">Usuń urzytkownika
                         </button>
                     </form>
                 </li>
                 <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <form th:action="@{/admin/showUsers}">
+                    <form th:action="@{/user}" th:method="get">
                         <button class="btn btn-md btn-outline-success mr-3"
                                 type="Submit">Wyświetl urzytkowników
                         </button>
                     </form>
                 </li>
                 <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <form th:action="@{/employee/addClient}">
+                    <form th:action="@{/addClient}">
                         <button class="btn btn-md btn-outline-success mr-3"
                                 type="Submit">Dodaj klienta
                         </button>
