@@ -2,53 +2,43 @@ package com.konrad.garagev3.service;
 
 import com.konrad.garagev3.model.dao.Role;
 import com.konrad.garagev3.model.dao.User;
-import com.konrad.garagev3.model.dao.Workshop;
 import com.konrad.garagev3.model.dto.UserDto;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static org.junit.Assert.*;
-@Ignore
-public class UserServiceIT {
-    @Autowired
-    UserService userService;
 
-//    @Autowired
-//    public UserServiceIT(UserService userService) {
-//        this.userService = userService;
-//    }
+@RunWith(SpringRunner.class)
+@SpringBootTest
+public class UserServiceIT {
+
+    @Autowired
+    UserService sut;
 
     @Test
     public void findUserByEmail() {
-        //given
-
-        //when
-
-        //then
     }
 
     @Test
     public void saveUser() {
         //given
-        Role role = new Role(1, "ROLE_ADMIN");
         UserDto userDto = UserDto.builder()
-                .email("test@mail")
-                .name("TestName")
-                .password("TestPassword")
-                .roles(Stream.of(role).collect(Collectors.toSet()))
-                .workshop(new Workshop())
+                .email("test@pl")
+                .password("test")
+                .name("testName")
                 .build();
-
         //when
-     //   User user = userService.saveUser(userDto);
+        User user = sut.saveUser(userDto);
         //then
-     //   Assert.assertEquals(user, user);
+        Assert.assertEquals(user.getEmail(), userDto.getEmail());
     }
 
     @Test

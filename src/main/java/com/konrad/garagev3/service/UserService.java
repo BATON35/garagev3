@@ -14,9 +14,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.*;
-
-import static org.mapstruct.factory.Mappers.getMapper;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.List;
 
 @Service("userService")
 public class UserService {
@@ -65,13 +66,11 @@ public class UserService {
         return roleRepository.findById(id);
     }
 
-    @Transactional
     @Modifying
     public void deleteUser(String email) {
         userRepository.deleteUserByEmail(email);
     }
-
-    @Transactional
+    
     @Modifying
     public void deleteUserById(int id) {
         userRepository.deleteUserById(id);
