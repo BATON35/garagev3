@@ -31,7 +31,7 @@ public class UserServiceIT {
         //when
         User user = sut.saveUser(userDto);
         //then
-        Assert.assertEquals(user.getEmail(), userDto.getEmail());
+        Assert.assertEquals(user.getName(), userDto.getEmail());
     }
 
     @Test

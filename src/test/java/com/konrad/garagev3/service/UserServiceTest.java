@@ -1,11 +1,10 @@
-package com.konrad.garagev3.seervice;
+package com.konrad.garagev3.service;
 
 
 import com.konrad.garagev3.model.dao.User;
 import com.konrad.garagev3.model.dto.UserDto;
 import com.konrad.garagev3.repository.RoleRepository;
 import com.konrad.garagev3.repository.UserRepository;
-import com.konrad.garagev3.service.UserService;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
