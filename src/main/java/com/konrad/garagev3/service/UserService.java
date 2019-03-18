@@ -27,6 +27,7 @@ public class UserService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
+    // TODO: 18.03.2019
     public UserService(@Qualifier("userRepository") UserRepository userRepository,
                        @Qualifier("roleRepository") RoleRepository roleRepository,
                        BCryptPasswordEncoder bCryptPasswordEncoder) {
@@ -44,8 +45,8 @@ public class UserService {
         User user = userMapper.userDtoToUser(userDto);
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setActive(1);
-//        Role userRole = roleRepository.findByRole("ROLE_USER");
-//        user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
+        Role userRole = roleRepository.findByRole("ROLE_ADMIN");
+        user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
         return userRepository.save(user);
     }
 
