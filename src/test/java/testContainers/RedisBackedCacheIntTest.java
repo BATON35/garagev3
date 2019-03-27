@@ -9,11 +9,9 @@ import org.testcontainers.containers.GenericContainer;
 
 public class RedisBackedCacheIntTest {
 
-    // rule {
     @Rule
-    public GenericContainer redis = new GenericContainer<>("redis:5.0.3-alpine")
-            .withExposedPorts(6379);
-    // }
+    public GenericContainer redis = new GenericContainer<>("mysql:5.7")
+            .withExposedPorts(3306);
 
 
     @Before

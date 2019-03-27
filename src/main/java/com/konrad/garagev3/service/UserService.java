@@ -40,6 +40,7 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
+    @Transactional
     public User saveUser(UserDto userDto) {
         UserDtoMapper userMapper = Mappers.getMapper(UserDtoMapper.class);
         User user = userMapper.userDtoToUser(userDto);
@@ -51,7 +52,7 @@ public class UserService {
     }
 
     public User SaveUserWithPrivileges(UserDto userDto) {
-        UserDtoMapper userMapper = Mappers.getMapper(UserDtoMapper.class);// what does it mean className.class
+        UserDtoMapper userMapper = Mappers.getMapper(UserDtoMapper.class);
         User user = userMapper.userDtoToUser(userDto);
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setActive(1);
@@ -68,10 +69,11 @@ public class UserService {
     }
 
     @Modifying
+    @Transactional
     public void deleteUser(String email) {
         userRepository.deleteUserByEmail(email);
     }
-    
+
     @Modifying
     public void deleteUserById(int id) {
         userRepository.deleteUserById(id);

@@ -3,6 +3,7 @@ package com.konrad.garagev3.service;
 import com.konrad.garagev3.model.dao.User;
 import com.konrad.garagev3.model.dto.UserDto;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,16 +21,20 @@ public class UserServiceIT {
     @Autowired
     UserService sut;
 
-    @WithMockUser(username = "testName", roles = {"ADMIN"})
+    @Before
+    public void cleanDatabase() {
+        if(sut.findUserByEmail("test34@pl") != null)
+        sut.deleteUser("test34@pl");
+    }
+
     @Test
     public void userWithMailNotExist() {
         Assert.assertEquals(null, sut.findUserByEmail("testEmail"));
     }
 
-    @WithMockUser(username = "testName", roles = {"ADMIN"})
     @Test
     public void userWithMailExist() {
-        Assert.assertEquals(null, sut.findUserByEmail("test@pl"));
+        Assert.assertEquals("konrad@wwww", sut.findUserByEmail("konrad@wwww").getEmail());
     }
 
     @WithMockUser(username = "testName", roles = {"ADMIN"})
