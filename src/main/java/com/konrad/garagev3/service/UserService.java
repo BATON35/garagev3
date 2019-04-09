@@ -14,10 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 @Service("userService")
 public class UserService {
@@ -27,7 +24,7 @@ public class UserService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    // TODO: 18.03.2019
+
     public UserService(@Qualifier("userRepository") UserRepository userRepository,
                        @Qualifier("roleRepository") RoleRepository roleRepository,
                        BCryptPasswordEncoder bCryptPasswordEncoder) {
@@ -50,12 +47,12 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User SaveUserWithPrivileges(UserDto userDto) {
+    public User saveUserWithPrivileges(UserDto userDto) {
         UserDtoMapper userMapper = Mappers.getMapper(UserDtoMapper.class);// what does it mean className.class
         User user = userMapper.userDtoToUser(userDto);
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setActive(1);
-        user.setRoles(new HashSet<Role>(user.getRoles()));
+        user.setRoles(new LinkedHashSet<Role>(user.getRoles()));
         return userRepository.save(user);
     }
 
@@ -67,12 +64,13 @@ public class UserService {
         return roleRepository.findById(id);
     }
 
-    @Modifying
+    @Transactional
     public void deleteUser(String email) {
         userRepository.deleteUserByEmail(email);
     }
-    
-    @Modifying
+
+
+    @Transactional
     public void deleteUserById(int id) {
         userRepository.deleteUserById(id);
     }
@@ -80,6 +78,14 @@ public class UserService {
     public User deactivateUser(int id) {
         User user = userRepository.findUserById(id);
         user.setActive(0);
+        return userRepository.save(user);
+    }
+
+    public User activateUser(int id) {
+        User user = userRepository.findUserById(id);
+        user.setActive(1);
+        // TODO: 09.04.2019 save returns object S extends User why I can't do this that
+        // return userRepository.save(userRepository.findUserById(id).setActive(1));
         return userRepository.save(user);
     }
 

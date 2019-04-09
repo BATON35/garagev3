@@ -62,7 +62,7 @@ public class UserController {
             modelAndView.addObject("role", new Role());
             modelAndView.setViewName("addUser");
         } else {
-            userService.SaveUserWithPrivileges(user);
+            userService.saveUserWithPrivileges(user);
             modelAndView.addObject("successMessage", "Dodano nowego urzytkownika");
             modelAndView.addObject("user", new UserDto());
             modelAndView.addObject("allRoles", userService.findAllRoles());

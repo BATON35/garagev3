@@ -14,19 +14,18 @@ public class Workshop implements Serializable {
     @Id
     private int id;
     private String name;
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    //    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @MapsId
     private Address address;
     @OneToMany(
             mappedBy = "workshop",
-            cascade = CascadeType.ALL,
             orphanRemoval = true
     )
     private List<Vehicle> vehicles;
-    @OneToMany(
-            mappedBy = "workshop",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
-    private List<User> users;
+//    @OneToMany(
+//            mappedBy = "workshop",
+//            orphanRemoval = true
+//    )
+//    private List<User> users;
 }

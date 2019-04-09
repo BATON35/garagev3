@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 import java.util.Set;
 
 @Data
@@ -25,12 +26,26 @@ public class User implements Serializable {
     private String password;
     private String name;
     private int active;
-    // TODO: 18.03.2019  why FetchType.EAGER is required to tests
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "workshop_id")
-    private Workshop workshop;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return active == user.active &&
+                Objects.equals(email, user.email) &&
+                Objects.equals(name, user.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(email, name, active);
+    }
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "workshop_id")
+//    private Workshop workshop;
 }

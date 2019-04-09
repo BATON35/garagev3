@@ -12,7 +12,6 @@ import java.util.List;
 public class Vehicle implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-   // @Column(name = "vehicle_id")
     private int id;
     private Date productionDate;
     private String brand;
@@ -22,7 +21,6 @@ public class Vehicle implements Serializable {
     private Workshop workshop;
     @OneToMany(
             mappedBy = "vehicle",
-            cascade = CascadeType.ALL,
             orphanRemoval = true
     )
     private List<Service> services;
