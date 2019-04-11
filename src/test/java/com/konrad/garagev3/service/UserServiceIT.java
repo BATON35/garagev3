@@ -12,9 +12,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import static com.konrad.garagev3.service.UserServiceTestData.*;
+import static java.util.Objects.isNull;
 import static org.assertj.core.api.Assertions.*;
 
 @RunWith(SpringRunner.class)
@@ -33,7 +35,7 @@ public class UserServiceIT {
 
     @Before
     public void fillInDatabase() {
-        if (sut.findUserByEmail(TEST_USER_DTO_EXIST_IN_DATABASE.getEmail()) == null) {
+        if(isNull(sut.findUserByEmail(TEST_USER_DTO_EXIST_IN_DATABASE.getEmail()))) {
             sut.saveUserWithPrivileges(TEST_USER_DTO_EXIST_IN_DATABASE);
         }
         else if(sut.findUserByEmail(TEST_USER_DTO_EXIST_IN_DATABASE.getEmail()).getActive() != 1){
@@ -88,7 +90,7 @@ public class UserServiceIT {
         Assert.assertEquals(TEST_USER_DTO_TO_SAVE.getEmail(), user.getEmail());
         Assert.assertEquals(1, user.getActive());
         Assert.assertEquals(TEST_USER_DTO_TO_SAVE.getRoles(), user.getRoles());
-        // Assert.assertEquals(TEST_USER_EXIST_IN_DATABASE, user);
+         Assert.assertEquals(TEST_USER_EXIST_IN_DATABASE, user);
     }
 
     @Test
@@ -132,7 +134,6 @@ public class UserServiceIT {
         //given
 
         //when
-        // TODO: 04.04.2019 jak łamac kod żeby był czytelny
         sut.deleteUserById(
                 sut.findUserByEmail(
                         TEST_USER_DTO_EXIST_IN_DATABASE.getEmail()).getId());
@@ -145,7 +146,6 @@ public class UserServiceIT {
     public void deactivateUser() {
         //given
         //when
-        // TODO: 09.04.2019 nie wiadomo jakie id bedzie posiadała encja???
         sut.deactivateUser(sut.findUserByEmail(TEST_USER_DTO_EXIST_IN_DATABASE.getEmail()).getId());
         //then
         Assert.assertEquals(0,sut.findUserByEmail(TEST_USER_DTO_EXIST_IN_DATABASE.getEmail()).getActive());

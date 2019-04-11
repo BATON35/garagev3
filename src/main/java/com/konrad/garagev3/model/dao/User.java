@@ -16,7 +16,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 
-public class User implements Serializable {
+public class User implements Serializable, Cloneable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -31,21 +31,21 @@ public class User implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
+    //    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "workshop_id")
+//    private Workshop workshop;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return active == user.active &&
-                Objects.equals(email, user.email) &&
+        return Objects.equals(email, user.email) &&
                 Objects.equals(name, user.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(email, name, active);
+        return Objects.hash(email, name);
     }
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "workshop_id")
-//    private Workshop workshop;
 }

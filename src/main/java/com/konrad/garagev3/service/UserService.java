@@ -84,8 +84,6 @@ public class UserService {
     public User activateUser(int id) {
         User user = userRepository.findUserById(id);
         user.setActive(1);
-        // TODO: 09.04.2019 save returns object S extends User why I can't do this that
-        // return userRepository.save(userRepository.findUserById(id).setActive(1));
         return userRepository.save(user);
     }
 

@@ -19,14 +19,14 @@ public class UserServiceTestData {
     );
 
 
-    public static final UserDto TEST_USER_DTO_TO_SAVE = UserDto.builder()
+    static final UserDto TEST_USER_DTO_TO_SAVE = UserDto.builder()
             .email("userToSave@pl")
             .password("test")
             .name("testName")
             .roles(allRoles)
             .build();
 
-    public static final User TEST_USER_EXIST_IN_DATABASE = User.builder()
+    static final User TEST_USER_EXIST_IN_DATABASE = User.builder()
             .email("userExistInDatabase@pl")
             .name("exampleTester")
             .password("exampleUserPassword")
@@ -34,7 +34,7 @@ public class UserServiceTestData {
             .roles(allRoles)
             .build();
 
-    public static final UserDto TEST_USER_DTO_EXIST_IN_DATABASE = UserDto.builder()
+     static final UserDto TEST_USER_DTO_EXIST_IN_DATABASE = UserDto.builder()
             .email("userExistInDatabaseDto@pl")
             .name("exampleTester")
             .password("exampleUserPassword")
