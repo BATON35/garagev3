@@ -26,18 +26,62 @@ public class UserServiceTestData {
             .roles(allRoles)
             .build();
 
-    static final User TEST_USER_EXIST_IN_DATABASE = User.builder()
-            .email("userExistInDatabase@pl")
-            .name("exampleTester")
-            .password("exampleUserPassword")
-            .active(1)
+    static final User TEST_USER_SAVED_IN_DATABASE = User.builder()
+            .email("userToSave@pl")
+            .password("test")
+            .name("testName")
             .roles(allRoles)
+            .active(1)
             .build();
 
-     static final UserDto TEST_USER_DTO_EXIST_IN_DATABASE = UserDto.builder()
+    static final UserDto TEST_USER_DTO_EXIST_IN_DATABASE = UserDto.builder()
             .email("userExistInDatabaseDto@pl")
             .name("exampleTester")
             .password("exampleUserPassword")
+            .roles(allRoles)
+            .build();
+    static final UserDto TEST_USER2_DTO_EXIST_IN_DATABASE = UserDto.builder()
+            .email("user2ExistInDatabaseDto@pl")
+            .name("exampleTester2")
+            .password("exampleUser2Password")
+            .roles(allRoles)
+            .build();
+    static final UserDto TEST_USER3_DTO_EXIST_IN_DATABASE = UserDto.builder()
+            .email("user3ExistInDatabaseDto@pl")
+            .name("exampleTester3")
+            .password("exampleUser3Password")
+            .roles(allRoles)
+            .build();
+    static final User TEST_USER_EXIST_IN_DATABASE = User.builder()
+            .email("userExistInDatabaseDto@pl")
+            .name("exampleTester")
+            .password("exampleUserPassword")
+            .roles(allRoles)
+            .active(1)
+            .build();
+    static final User TEST_USER2_EXIST_IN_DATABASE = User.builder()
+            .email("user2ExistInDatabaseDto@pl")
+            .name("exampleTester2")
+            .password("exampleUser2Password")
+            .roles(allRoles)
+            .active(1)
+            .build();
+    static final User TEST_USER3_EXIST_IN_DATABASE = User.builder()
+            .email("user3ExistInDatabaseDto@pl")
+            .name("exampleTester3")
+            .password("exampleUser3Password")
+            .roles(allRoles)
+            .active(1)
+            .build();
+    static final User TEST_USER = User.builder()
+            .name("user")
+            .email("test@test.com")
+            .roles(allRoles)
+            .active(1)
+            .build();
+    static final UserDto TEST_USER_DTO = UserDto.builder()
+            .name("user")
+            .email("test@testa.com")
             .roles(allRoles)
             .build();
 }

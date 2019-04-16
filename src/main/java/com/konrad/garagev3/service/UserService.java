@@ -48,7 +48,7 @@ public class UserService {
     }
 
     public User saveUserWithPrivileges(UserDto userDto) {
-        UserDtoMapper userMapper = Mappers.getMapper(UserDtoMapper.class);// what does it mean className.class
+        UserDtoMapper userMapper = Mappers.getMapper(UserDtoMapper.class);
         User user = userMapper.userDtoToUser(userDto);
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setActive(1);
@@ -88,8 +88,8 @@ public class UserService {
     }
 
     public List<User> findAllUsers() {
-        List<User> test = userRepository.findAllActiveUsers();
-        test.sort(Comparator.comparing(User::getEmail));
-        return test;
+        List<User> users = userRepository.findAllActiveUsers();
+        users.sort(Comparator.comparing(User::getEmail));
+        return users;
     }
 }

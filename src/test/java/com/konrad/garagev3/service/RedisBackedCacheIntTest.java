@@ -4,27 +4,58 @@ import com.konrad.garagev3.model.dao.Role;
 import com.konrad.garagev3.model.dao.User;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
+import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.util.TestPropertyValues;
+import org.springframework.context.ApplicationContextInitializer;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.testcontainers.containers.MySQLContainer;
+import org.testcontainers.shaded.com.google.common.collect.Lists;
 
+import java.util.Arrays;
 import java.util.LinkedHashSet;
-import java.util.Objects;
+import java.util.List;
 import java.util.Set;
 
 import static com.konrad.garagev3.service.UserServiceTestData.*;
 import static java.util.Objects.isNull;
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class UserServiceIT {
+@ContextConfiguration(initializers = RedisBackedCacheIntTest.Initializer.class)
+public class RedisBackedCacheIntTest {
+
+    public static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
+        @Override
+        public void initialize(ConfigurableApplicationContext configurableApplicationContext) {
+            System.out.println("\n\n\nIpAddress = " + mysql.getContainerIpAddress()
+                    + "\nMappedPort = " + mysql.getMappedPort(3306)
+                    + "\nPassword = " + mysql.getPassword()
+                    + "\nUserName = " + mysql.getUsername()
+                    + "\nDatabaseName = " + mysql.getDatabaseName());
+            TestPropertyValues.of("spring.datasource.url = jdbc:mysql://"
+                            + mysql.getContainerIpAddress() + ":"
+                            + mysql.getMappedPort(3306) + "/"
+                            + mysql.getDatabaseName(),
+                    "spring.datasource.username = " + mysql.getUsername(),
+                    "spring.datasource.password = " + mysql.getPassword()).applyTo(configurableApplicationContext);
+        }
+    }
 
     @Autowired
     UserService sut;
+
+    @ClassRule
+    public static MySQLContainer mysql = new MySQLContainer<>("mysql:5.7")
+            .withExposedPorts(3306);
+    //.withEnv("MYSQL_RANDOM_ROOT_PASSWORD", "true")
+    //.withStartupTimeout(Duration.ofSeconds(10));
 
     @Before
     public void cleanDatabase() {
@@ -35,10 +66,9 @@ public class UserServiceIT {
 
     @Before
     public void fillInDatabase() {
-        if(isNull(sut.findUserByEmail(TEST_USER_DTO_EXIST_IN_DATABASE.getEmail()))) {
+        if (isNull(sut.findUserByEmail(TEST_USER_DTO_EXIST_IN_DATABASE.getEmail()))) {
             sut.saveUserWithPrivileges(TEST_USER_DTO_EXIST_IN_DATABASE);
-        }
-        else if(sut.findUserByEmail(TEST_USER_DTO_EXIST_IN_DATABASE.getEmail()).getActive() != 1){
+        } else if (sut.findUserByEmail(TEST_USER_DTO_EXIST_IN_DATABASE.getEmail()).getActive() != 1) {
             sut.activateUser(sut.findUserByEmail(TEST_USER_DTO_EXIST_IN_DATABASE.getEmail()).getId());
         }
     }
@@ -83,14 +113,9 @@ public class UserServiceIT {
     public void saveUserWithPrivileges() {
         //given
         //when
-        // TODO: 04.04.2019 czy mozna ominąc jakies pola przy porównywaniu obiektow
         User user = sut.saveUserWithPrivileges(TEST_USER_DTO_TO_SAVE);
         //then
-        Assert.assertEquals(TEST_USER_DTO_TO_SAVE.getName(), user.getName());
-        Assert.assertEquals(TEST_USER_DTO_TO_SAVE.getEmail(), user.getEmail());
-        Assert.assertEquals(1, user.getActive());
-        Assert.assertEquals(TEST_USER_DTO_TO_SAVE.getRoles(), user.getRoles());
-         Assert.assertEquals(TEST_USER_EXIST_IN_DATABASE, user);
+        Assert.assertEquals(TEST_USER_SAVED_IN_DATABASE, user);
     }
 
     @Test
@@ -99,7 +124,7 @@ public class UserServiceIT {
         //when
         Set<Role> roles = new LinkedHashSet<>(sut.findAllRoles());
         //then
-        Assert.assertEquals(allRoles, roles);//dlaczego dziala skoro nie ma funkcji przyjmujacej kolekcje jako parametr
+        Assert.assertEquals(allRoles, roles);// TODO: 12.04.2019  //dlaczego dziala skoro nie ma funkcji przyjmujacej kolekcje jako parametr
     }
 
     @Test
@@ -125,8 +150,7 @@ public class UserServiceIT {
         //when
         sut.deleteUser(TEST_USER_DTO_EXIST_IN_DATABASE.getEmail());
         //then
-        Assert.assertNull(
-                sut.findUserByEmail(TEST_USER_DTO_EXIST_IN_DATABASE.getEmail()));
+        Assert.assertNull(sut.findUserByEmail(TEST_USER_DTO_EXIST_IN_DATABASE.getEmail()));
     }
 
     @Test
@@ -134,12 +158,9 @@ public class UserServiceIT {
         //given
 
         //when
-        sut.deleteUserById(
-                sut.findUserByEmail(
-                        TEST_USER_DTO_EXIST_IN_DATABASE.getEmail()).getId());
+        sut.deleteUserById(sut.findUserByEmail(TEST_USER_DTO_EXIST_IN_DATABASE.getEmail()).getId());
         //then
-        Assert.assertNull(
-                sut.findUserByEmail(TEST_USER_DTO_EXIST_IN_DATABASE.getEmail()));
+        Assert.assertNull(sut.findUserByEmail(TEST_USER_DTO_EXIST_IN_DATABASE.getEmail()));
     }
 
     @Test
@@ -148,10 +169,19 @@ public class UserServiceIT {
         //when
         sut.deactivateUser(sut.findUserByEmail(TEST_USER_DTO_EXIST_IN_DATABASE.getEmail()).getId());
         //then
-        Assert.assertEquals(0,sut.findUserByEmail(TEST_USER_DTO_EXIST_IN_DATABASE.getEmail()).getActive());
+        Assert.assertEquals(0, sut.findUserByEmail(TEST_USER_DTO_EXIST_IN_DATABASE.getEmail()).getActive());
     }
 
     @Test
     public void findAllUsers() {
+        //given
+        sut.saveUser(TEST_USER2_DTO_EXIST_IN_DATABASE);
+        sut.saveUser(TEST_USER3_DTO_EXIST_IN_DATABASE);
+        //when
+        // TODO: 15.04.2019 which list implementation was used
+        List<User> users = sut.findAllUsers();
+        //then
+        Assert.assertEquals(true, (users.containsAll(Arrays.asList(
+                TEST_USER_EXIST_IN_DATABASE, TEST_USER2_EXIST_IN_DATABASE, TEST_USER3_EXIST_IN_DATABASE))));
     }
 }
