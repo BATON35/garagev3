@@ -15,7 +15,6 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.testcontainers.containers.MySQLContainer;
-import org.testcontainers.shaded.com.google.common.collect.Lists;
 
 import java.util.Arrays;
 import java.util.LinkedHashSet;
@@ -28,8 +27,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@ContextConfiguration(initializers = RedisBackedCacheIntTest.Initializer.class)
-public class RedisBackedCacheIntTest {
+@ContextConfiguration(initializers = UserServiceIT.Initializer.class)
+public class UserServiceIT {
 
     public static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
         @Override
