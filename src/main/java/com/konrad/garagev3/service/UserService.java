@@ -24,7 +24,6 @@ public class UserService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-
     public UserService(@Qualifier("userRepository") UserRepository userRepository,
                        @Qualifier("roleRepository") RoleRepository roleRepository,
                        BCryptPasswordEncoder bCryptPasswordEncoder) {

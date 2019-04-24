@@ -6,20 +6,20 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(MockitoJUnitRunner.class)
 public class OwnerServiceTest {
-
     @Autowired
     private OwnerService sut;
 
-    @MockBean
-    private OwnerRepository ownerRepository;
+    @Mock
+    OwnerRepository ownerRepository;
 
     @Before
     public void init() {
@@ -28,13 +28,15 @@ public class OwnerServiceTest {
 
     @Test
     public void findOwnerByEmail() {
+        Owner owner1 = Owner.builder().id(3).email("afds").name("af").phoneNumber("a4123").build();
         Mockito.when(ownerRepository.findOwnerByEmail(Mockito.anyString())).thenReturn(
-                Owner.builder().email("test").build());
+                owner1);
 
-        Owner owner = sut.findOwnerByEmail("test");
 
-        Assert.assertEquals(Owner.builder().email("test").build(), owner);
+
+        Assert.assertEquals(Owner.builder().email("test").build(), sut.findOwnerByEmail("test"));
 
 
     }
+
 }
