@@ -17,7 +17,9 @@
 
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
     <div class="container">
-        <div class="navbar-brand">Panel administratora</div>
+        <div class="navbar-brand">
+            <a href="/admin" class="navbar-brand">Panel administratora</a>
+        </div>
 
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav ml-auto">
@@ -76,6 +78,7 @@
                                                 <input type="submit" value="Zatwierdz"
                                                        class="btn btn-lg btn-outline-primary btn-block">
                                             </div>
+                                            <h2><span class="text-success" th:utext="${successMessage}"></span></h2>
                                         </div>
                                     </div>
                                 </div>
