@@ -22,6 +22,11 @@ public class EmployeeController {
         this.ownerService = ownerService;
     }
 
+    @GetMapping("employee")
+    public String employee() {
+        return "employee";
+    }
+
     @PostMapping("/client")
     public ModelAndView addClient(@Valid Owner owner, Vehicle vehicle, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
@@ -41,4 +46,5 @@ public class EmployeeController {
       //  model.addAttribute("vehicle", new Vehicle());
         return "addClient";
     }
+
 }
