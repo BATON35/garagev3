@@ -21,4 +21,8 @@ public class ClientService {
     public Client saveClient(Client owner) {
         return clientRepository.save(owner);
     }
+
+    public Client findClientBySurnameAndName(String surname, String name) {
+        return clientRepository.findClientBySurnameAndName(surname, name);
+    }
 }

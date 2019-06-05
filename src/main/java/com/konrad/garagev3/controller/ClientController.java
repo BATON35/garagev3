@@ -23,10 +23,11 @@ public class ClientController {
     @PostMapping("/client")
     public ModelAndView addClient(@Valid Client client, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
-        Client clientExists = clientService.findClientByEmail(client.getEmail());
+        //Client clientExists = clientService.findClientByEmail(client.getEmail());
+        Client clientExists = clientService.findClientBySurnameAndName(client.getSurname(), client.getName());
         if (clientExists != null) {
-            bindingResult.rejectValue("email", "error.client",
-                    "Adres email: " + client.getEmail() + "  znajduje sie już w bazie danych");
+            bindingResult.rejectValue("surname", "error.client",
+                    "Klient: " + client.getName() + " " + client.getSurname() + "  znajduje sie już w bazie danych");
         }
         if (bindingResult.hasErrors()) {
             modelAndView.setViewName("addClient");
