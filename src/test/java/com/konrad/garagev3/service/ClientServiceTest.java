@@ -11,11 +11,11 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static com.konrad.garagev3.service.OwnerServiceTestData.TEST_OWNER;
+import static com.konrad.garagev3.service.ClientServiceTestData.TEST_CLIENT;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 @RunWith(MockitoJUnitRunner.class)
-public class OwnerServiceTest {
+public class ClientServiceTest {
 
     @Autowired
     private ClientService sut;
@@ -26,17 +26,17 @@ public class OwnerServiceTest {
     @Before
     public void setUp() {
         initMocks(this);
-        Mockito.when(clientRepository.findClientByEmail(TEST_OWNER.getEmail())).thenReturn(TEST_OWNER);
-        Mockito.when(clientRepository.save(TEST_OWNER)).thenReturn(TEST_OWNER);
+        Mockito.when(clientRepository.findClientByEmail(TEST_CLIENT.getEmail())).thenReturn(TEST_CLIENT);
+        Mockito.when(clientRepository.save(TEST_CLIENT)).thenReturn(TEST_CLIENT);
 
     }
 
     @Test
     public void findOwnerByEmail() {
 
-        final Client result = clientRepository.findClientByEmail(TEST_OWNER.getEmail());
+        final Client result = clientRepository.findClientByEmail(TEST_CLIENT.getEmail());
 
-        Assert.assertEquals(TEST_OWNER, result);
+        Assert.assertEquals(TEST_CLIENT, result);
 
     }
 
@@ -50,9 +50,9 @@ public class OwnerServiceTest {
     }
     @Test
     public void saveOwner() {
-        final Client result = clientRepository.save(TEST_OWNER);
+        final Client result = clientRepository.save(TEST_CLIENT);
 
-        Assert.assertEquals(TEST_OWNER, result);
+        Assert.assertEquals(TEST_CLIENT, result);
     }
 
 }
