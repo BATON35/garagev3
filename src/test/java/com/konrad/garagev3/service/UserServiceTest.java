@@ -8,15 +8,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.testcontainers.shaded.com.google.common.collect.Lists;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static com.konrad.garagev3.service.UserServiceTestData.TEST_USER;
-import static com.konrad.garagev3.service.UserServiceTestData.TEST_USER_DTO;
+import static com.konrad.garagev3.service.UserServiceTestData.*;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -31,9 +28,8 @@ public class UserServiceTest {
     private RoleRepository mockRoleRepository;
     @Mock
     private BCryptPasswordEncoder mockBCryptPasswordEncoder;
-    // TODO: 18.04.2019 is autowired necessary
+
     private UserService userServiceUnderTest;
-    private User user;
 
     @Before
     public void setUp() {
@@ -41,11 +37,9 @@ public class UserServiceTest {
         userServiceUnderTest = new UserService(mockUserRepository,
                 mockRoleRepository,
                 mockBCryptPasswordEncoder);
-        this.user = TEST_USER.builder().build();
-        Mockito.when(mockUserRepository.save(any(User.class))).thenReturn(user);
-        Mockito.when(mockUserRepository.findAllActiveUsers()).thenReturn(Arrays.asList(user));
-        Mockito.when(mockUserRepository.findByEmail(anyString())).thenReturn(user);
-
+        Mockito.when(mockUserRepository.save(any(User.class))).thenReturn(TEST_USER);
+        Mockito.when(mockUserRepository.findAllActiveUsers()).thenReturn(Arrays.asList(TEST_USER, TEST_USER_1));
+        Mockito.when(mockUserRepository.findByEmail(anyString())).thenReturn(TEST_USER);
     }
 
     @Test
@@ -69,7 +63,7 @@ public class UserServiceTest {
         final User result = userServiceUnderTest.findUserByEmail(email);
 
         // Verify the results
-        assertEquals(user, result);
+        assertEquals(TEST_USER, result);
     }
 
 
@@ -112,6 +106,6 @@ public class UserServiceTest {
     public void findAllUsers() {
         List users = userServiceUnderTest.findAllUsers();
 
-        Assert.assertEquals(null, users);
+        Assert.assertEquals(Arrays.asList(TEST_USER, TEST_USER_1), users);
     }
 }

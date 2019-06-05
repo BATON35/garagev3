@@ -104,7 +104,6 @@ public class UserServiceIT {
         Assert.assertEquals(TEST_USER_DTO_TO_SAVE.getName(), user.getName());
         Assert.assertEquals(TEST_USER_DTO_TO_SAVE.getEmail(), user.getEmail());
         Assert.assertEquals(1, user.getActive());
-        // TODO: 09.04.2019 czy tak mozna
         Assert.assertEquals(true, TEST_USER_DTO_TO_SAVE.getRoles().contains(user.getRoles().toArray()[0]));
     }
 
@@ -123,7 +122,7 @@ public class UserServiceIT {
         //when
         Set<Role> roles = new LinkedHashSet<>(sut.findAllRoles());
         //then
-        Assert.assertEquals(allRoles, roles);// TODO: 12.04.2019  //dlaczego dziala skoro nie ma funkcji przyjmujacej kolekcje jako parametr
+        Assert.assertEquals(allRoles, roles);
     }
 
     @Test

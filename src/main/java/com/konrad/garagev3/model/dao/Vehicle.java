@@ -1,5 +1,6 @@
 package com.konrad.garagev3.model.dao;
 
+import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -9,6 +10,7 @@ import java.util.List;
 
 @Data
 @Entity
+@Builder
 public class Vehicle implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,6 +27,6 @@ public class Vehicle implements Serializable {
     )
     private List<Service> services;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "owner_id")
-    private Owner owner;
+    @JoinColumn(name = "client_id")
+    private Client client;
 }
