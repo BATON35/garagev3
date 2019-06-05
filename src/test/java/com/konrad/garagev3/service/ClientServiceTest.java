@@ -28,6 +28,8 @@ public class ClientServiceTest {
         initMocks(this);
         Mockito.when(clientRepository.findClientByEmail(TEST_CLIENT.getEmail())).thenReturn(TEST_CLIENT);
         Mockito.when(clientRepository.save(TEST_CLIENT)).thenReturn(TEST_CLIENT);
+        Mockito.when(clientRepository.findClientBySurnameAndName(
+                TEST_CLIENT.getSurname(), TEST_CLIENT.getName())).thenReturn(TEST_CLIENT);
 
     }
 
@@ -55,4 +57,11 @@ public class ClientServiceTest {
         Assert.assertEquals(TEST_CLIENT, result);
     }
 
+    @Test
+    public void findClientBySurnameAndName() {
+        final Client result = clientRepository.findClientBySurnameAndName(
+                TEST_CLIENT.getSurname(), TEST_CLIENT.getName());
+
+        Assert.assertEquals(TEST_CLIENT, result);
+    }
 }
