@@ -25,7 +25,7 @@ public class ClientController {
     public ModelAndView addClient(@Valid ClientDto client, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
         //Client clientExists = clientService.findClientByEmail(client.getEmail());
-        Client clientExists = clientService.findClientBySurnameAndName(client.getSurname(), client.getName());
+        ClientDto clientExists = clientService.findClientBySurnameAndName(client.getSurname(), client.getName());
         if (clientExists != null) {
             bindingResult.rejectValue("surname", "error.client",
                     "Klient: " + client.getName() + " " + client.getSurname() + "  znajduje sie już w bazie danych");

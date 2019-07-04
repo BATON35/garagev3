@@ -1,6 +1,7 @@
 package com.konrad.garagev3.service;
 
 import com.konrad.garagev3.model.dao.Client;
+import com.konrad.garagev3.model.dto.ClientDto;
 import com.konrad.garagev3.repository.ClientRepository;
 import org.junit.Assert;
 import org.junit.Before;
@@ -35,16 +36,16 @@ public class ClientServiceTest {
     @Test
     public void findClientByEmail() {
 
-        final Client result = sut.findClientByEmail(TEST_CLIENT.getEmail());
+        final ClientDto result = sut.findClientByEmail(TEST_CLIENT.getEmail());
 
-        Assert.assertEquals(TEST_CLIENT, result);
+        Assert.assertEquals(TEST_CLIENT_DTO, result);
 
     }
 
     @Test
     public void findNonexistentClientByEmail() {
 
-        final Client result = sut.findClientByEmail("nonexistentMail@pl");
+        final ClientDto result = sut.findClientByEmail("nonexistentMail@pl");
 
         Assert.assertNull(result);
 
@@ -52,16 +53,16 @@ public class ClientServiceTest {
 
     @Test
     public void saveClient() {
-        final Client result = sut.saveClient(TEST_CLIENT_DTO);
+        final ClientDto result = sut.saveClient(TEST_CLIENT_DTO);
 
-        Assert.assertEquals(TEST_CLIENT, result);
+        Assert.assertEquals(TEST_CLIENT_DTO, result);
     }
 
     @Test
     public void findClientBySurnameAndName() {
-        final Client result = sut.findClientBySurnameAndName(
+        final ClientDto result = sut.findClientBySurnameAndName(
                 TEST_CLIENT.getSurname(), TEST_CLIENT.getName());
 
-        Assert.assertEquals(TEST_CLIENT, result);
+        Assert.assertEquals(TEST_CLIENT_DTO, result);
     }
 }

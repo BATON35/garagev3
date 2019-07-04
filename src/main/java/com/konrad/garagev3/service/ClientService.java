@@ -11,23 +11,25 @@ import org.springframework.stereotype.Service;
 @Service
 public class ClientService {
     private final ClientRepository clientRepository;
+    private final ClientDtoMapper clientMapper;
 
     @Autowired
     ClientService(ClientRepository clientRepository) {
         this.clientRepository = clientRepository;
+        clientMapper = Mappers.getMapper(ClientDtoMapper.class);
     }
 
-    public Client findClientByEmail(String email) {
-        return clientRepository.findClientByEmail(email);
+    public ClientDto findClientByEmail(String email) {
+        return clientMapper.ClientToClientDto(clientRepository.findClientByEmail(email));
     }
 
-    public Client saveClient(ClientDto clientDto) {
+    public ClientDto saveClient(ClientDto clientDto) {
         ClientDtoMapper clientMapper = Mappers.getMapper(ClientDtoMapper.class);
         Client client = clientMapper.ClientDtoToClient(clientDto);
-        return clientRepository.save(client);
+        return clientMapper.ClientToClientDto(clientRepository.save(client));
     }
 
-    public Client findClientBySurnameAndName(String surname, String name) {
-        return clientRepository.findClientBySurnameAndName(surname, name);
+    public ClientDto findClientBySurnameAndName(String surname, String name) {
+        return clientMapper.ClientToClientDto(clientRepository.findClientBySurnameAndName(surname, name));
     }
 }
