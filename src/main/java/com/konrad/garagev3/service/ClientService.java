@@ -13,8 +13,8 @@ public class ClientService {
     private final ClientRepository clientRepository;
 
     @Autowired
-    ClientService(ClientRepository ownerRepository) {
-        this.clientRepository = ownerRepository;
+    ClientService(ClientRepository clientRepository) {
+        this.clientRepository = clientRepository;
     }
 
     public Client findClientByEmail(String email) {

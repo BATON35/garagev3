@@ -9,57 +9,57 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import static com.konrad.garagev3.service.ClientServiceTestData.TEST_CLIENT;
-import static org.mockito.MockitoAnnotations.initMocks;
+import static com.konrad.garagev3.service.ClientServiceTestData.TEST_CLIENT_DTO;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ClientServiceTest {
 
-    @Autowired
+    @Mock
+    ClientRepository MockClientRepository;
+
     private ClientService sut;
 
-    @Mock
-    ClientRepository clientRepository;
-    
     @Before
     public void setUp() {
-        initMocks(this);
-        Mockito.when(clientRepository.findClientByEmail(TEST_CLIENT.getEmail())).thenReturn(TEST_CLIENT);
-        Mockito.when(clientRepository.save(TEST_CLIENT)).thenReturn(TEST_CLIENT);
-        Mockito.when(clientRepository.findClientBySurnameAndName(
+        // initMocks(this);
+        sut = new ClientService(MockClientRepository);
+        Mockito.when(MockClientRepository.findClientByEmail(TEST_CLIENT.getEmail())).thenReturn(TEST_CLIENT);
+        Mockito.when(MockClientRepository.save(TEST_CLIENT)).thenReturn(TEST_CLIENT);
+        Mockito.when(MockClientRepository.findClientBySurnameAndName(
                 TEST_CLIENT.getSurname(), TEST_CLIENT.getName())).thenReturn(TEST_CLIENT);
 
     }
 
     @Test
-    public void findOwnerByEmail() {
+    public void findClientByEmail() {
 
-        final Client result = clientRepository.findClientByEmail(TEST_CLIENT.getEmail());
+        final Client result = sut.findClientByEmail(TEST_CLIENT.getEmail());
 
         Assert.assertEquals(TEST_CLIENT, result);
 
     }
 
     @Test
-    public void findNonexistentOwnerByEmail() {
+    public void findNonexistentClientByEmail() {
 
-        final Client result = clientRepository.findClientByEmail("nonexistentMail@pl");
+        final Client result = sut.findClientByEmail("nonexistentMail@pl");
 
         Assert.assertNull(result);
 
     }
+
     @Test
-    public void saveOwner() {
-        final Client result = clientRepository.save(TEST_CLIENT);
+    public void saveClient() {
+        final Client result = sut.saveClient(TEST_CLIENT_DTO);
 
         Assert.assertEquals(TEST_CLIENT, result);
     }
 
     @Test
     public void findClientBySurnameAndName() {
-        final Client result = clientRepository.findClientBySurnameAndName(
+        final Client result = sut.findClientBySurnameAndName(
                 TEST_CLIENT.getSurname(), TEST_CLIENT.getName());
 
         Assert.assertEquals(TEST_CLIENT, result);
