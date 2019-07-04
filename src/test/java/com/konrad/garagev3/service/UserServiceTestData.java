@@ -13,8 +13,7 @@ public class UserServiceTestData {
             Arrays.asList(
                     new Role(1, "ROLE_ADMIN"),
                     new Role(2, "ROLE_USER"),
-                    new Role(3, "ROLE_CLIENT"),
-                    new Role(4, "ROLE_EMPLOYEE")
+                    new Role(3, "ROLE_EMPLOYEE")
             )
     );
 

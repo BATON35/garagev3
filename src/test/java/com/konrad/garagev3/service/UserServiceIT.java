@@ -132,14 +132,10 @@ public class UserServiceIT {
         Role roleId1 = sut.findRoleById(1);
         Role roleId2 = sut.findRoleById(2);
         Role roleId3 = sut.findRoleById(3);
-        Role roleId4 = sut.findRoleById(4);
         //then
         Assert.assertTrue(allRoles.contains(roleId1));
         Assert.assertTrue(allRoles.contains(roleId2));
         Assert.assertTrue(allRoles.contains(roleId3));
-        Assert.assertTrue(allRoles.contains(roleId4));
-
-
     }
 
     @Test
