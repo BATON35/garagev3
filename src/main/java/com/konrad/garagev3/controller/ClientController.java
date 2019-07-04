@@ -1,6 +1,7 @@
 package com.konrad.garagev3.controller;
 
 import com.konrad.garagev3.model.dao.Client;
+import com.konrad.garagev3.model.dto.ClientDto;
 import com.konrad.garagev3.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,7 +22,7 @@ public class ClientController {
     }
 
     @PostMapping("/client")
-    public ModelAndView addClient(@Valid Client client, BindingResult bindingResult) {
+    public ModelAndView addClient(@Valid ClientDto client, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
         //Client clientExists = clientService.findClientByEmail(client.getEmail());
         Client clientExists = clientService.findClientBySurnameAndName(client.getSurname(), client.getName());
@@ -44,7 +45,7 @@ public class ClientController {
         //Owner owner = Owner.builder().build();
         //   Vehicle vehicle = Vehicle.builder().build();
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("client", new Client());
+        modelAndView.addObject("clientDto", new ClientDto());
         //   modelAndView.addObject("vehicle", vehicle);
         modelAndView.setViewName("addClient");
         return modelAndView;
