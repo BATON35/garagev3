@@ -23,6 +23,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private DataSource dataSource;
 
+    @Autowired
+    private SimpleAuthenticationSuccessHandler successHandler;
+
     @Value("${spring.queries.users-query}")
     private String usersQuery;
 
@@ -52,9 +55,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/registration").permitAll()
                 .antMatchers("/employee").hasAnyAuthority("ROLE_ADMIN", "ROLE_EMPLOYEE")
                 .antMatchers("/admin/**").hasAuthority("ROLE_ADMIN").anyRequest()
-                .authenticated().and().csrf().disable().formLogin()
+                .authenticated().and().csrf().disable().formLogin().successHandler(successHandler)
                 .loginPage("/login").permitAll()
-                .defaultSuccessUrl("/index")
+                // .defaultSuccessUrl("/dupa")
                 .usernameParameter("email")
                 .passwordParameter("password")
                 .and().logout()

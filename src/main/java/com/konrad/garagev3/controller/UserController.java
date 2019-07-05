@@ -24,8 +24,7 @@ public class UserController {
     @GetMapping(value = "/addUser")
     public ModelAndView addUser() {
         ModelAndView modelAndView = new ModelAndView();
-        UserDto user = new UserDto();
-        modelAndView.addObject("user", user);
+        modelAndView.addObject("userDto", new UserDto());
         modelAndView.addObject("allRoles", userService.findAllRoles());
         modelAndView.addObject("role", new Role());
         modelAndView.setViewName("addUser");
@@ -93,7 +92,7 @@ public class UserController {
         } else {
             userService.deleteUser(user.getEmail());
             modelAndView.addObject("successMessage", "User has been deleted successfully");
-            modelAndView.addObject("user", new User());
+            modelAndView.addObject("userDto", new UserDto());
             modelAndView.setViewName("deleteUser");
 
         }

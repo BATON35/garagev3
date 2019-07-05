@@ -13,8 +13,7 @@ public class UserServiceTestData {
             Arrays.asList(
                     new Role(1, "ROLE_ADMIN"),
                     new Role(2, "ROLE_USER"),
-                    new Role(3, "ROLE_CLIENT"),
-                    new Role(4, "ROLE_EMPLOYEE")
+                    new Role(3, "ROLE_EMPLOYEE")
             )
     );
 
@@ -79,9 +78,26 @@ public class UserServiceTestData {
             .roles(allRoles)
             .active(1)
             .build();
+    static final User TEST_USER_1 = User.builder()
+            .name("user_1")
+            .email("test@test_1.com")
+            .roles(allRoles)
+            .active(1)
+            .build();
+    static final User TEST_USER_INACTIVE = User.builder()
+            .name("user_inactive")
+            .email("test@test_inactive.com")
+            .roles(allRoles)
+            .active(0)
+            .build();
     static final UserDto TEST_USER_DTO = UserDto.builder()
             .name("user")
-            .email("test@testa.com")
+            .email("test@test.com")
+            .roles(allRoles)
+            .build();
+    static final UserDto TEST_USER_DTO_1 = UserDto.builder()
+            .name("user_1")
+            .email("test@test_1.com")
             .roles(allRoles)
             .build();
 }

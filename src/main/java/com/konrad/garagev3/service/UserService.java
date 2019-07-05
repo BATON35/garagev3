@@ -22,15 +22,16 @@ public class UserService {
     private UserRepository userRepository;
     private RoleRepository roleRepository;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private UserDtoMapper userMapper;
 
     @Autowired
-
     public UserService(@Qualifier("userRepository") UserRepository userRepository,
                        @Qualifier("roleRepository") RoleRepository roleRepository,
                        BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        userMapper = Mappers.getMapper(UserDtoMapper.class);
     }
 
     public User findUserByEmail(String email) {
@@ -38,7 +39,6 @@ public class UserService {
     }
 
     public User saveUser(UserDto userDto) {
-        UserDtoMapper userMapper = Mappers.getMapper(UserDtoMapper.class);
         User user = userMapper.userDtoToUser(userDto);
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setActive(1);
@@ -47,13 +47,13 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User saveUserWithPrivileges(UserDto userDto) {
+    public UserDto saveUserWithPrivileges(UserDto userDto) {
         UserDtoMapper userMapper = Mappers.getMapper(UserDtoMapper.class);
         User user = userMapper.userDtoToUser(userDto);
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setActive(1);
         user.setRoles(new LinkedHashSet<Role>(user.getRoles()));
-        return userRepository.save(user);
+        return userMapper.userToUserDto(userRepository.save(user));
     }
 
     public List<Role> findAllRoles() {
@@ -87,9 +87,13 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public List<User> findAllUsers() {
+    public List<UserDto> findAllUsers() {
         List<User> users = userRepository.findAllActiveUsers();
         users.sort(Comparator.comparing(User::getEmail));
-        return users;
+        List<UserDto> usersDto = new ArrayList<>();
+        for (User user: users) {
+          usersDto.add(userMapper.userToUserDto(user));
+        }
+        return usersDto;
     }
 }

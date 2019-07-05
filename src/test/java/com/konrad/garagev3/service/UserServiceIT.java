@@ -2,6 +2,7 @@ package com.konrad.garagev3.service;
 
 import com.konrad.garagev3.model.dao.Role;
 import com.konrad.garagev3.model.dao.User;
+import com.konrad.garagev3.model.dto.UserDto;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -15,7 +16,6 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.testcontainers.containers.MySQLContainer;
-import org.testcontainers.shaded.com.google.common.collect.Lists;
 
 import java.util.Arrays;
 import java.util.LinkedHashSet;
@@ -28,8 +28,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@ContextConfiguration(initializers = RedisBackedCacheIntTest.Initializer.class)
-public class RedisBackedCacheIntTest {
+@ContextConfiguration(initializers = UserServiceIT.Initializer.class)
+public class UserServiceIT {
 
     public static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
         @Override
@@ -105,7 +105,6 @@ public class RedisBackedCacheIntTest {
         Assert.assertEquals(TEST_USER_DTO_TO_SAVE.getName(), user.getName());
         Assert.assertEquals(TEST_USER_DTO_TO_SAVE.getEmail(), user.getEmail());
         Assert.assertEquals(1, user.getActive());
-        // TODO: 09.04.2019 czy tak mozna
         Assert.assertEquals(true, TEST_USER_DTO_TO_SAVE.getRoles().contains(user.getRoles().toArray()[0]));
     }
 
@@ -113,9 +112,9 @@ public class RedisBackedCacheIntTest {
     public void saveUserWithPrivileges() {
         //given
         //when
-        User user = sut.saveUserWithPrivileges(TEST_USER_DTO_TO_SAVE);
+        UserDto userDto = sut.saveUserWithPrivileges(TEST_USER_DTO_TO_SAVE);
         //then
-        Assert.assertEquals(TEST_USER_SAVED_IN_DATABASE, user);
+        Assert.assertEquals(TEST_USER_DTO_TO_SAVE, userDto);
     }
 
     @Test
@@ -124,7 +123,7 @@ public class RedisBackedCacheIntTest {
         //when
         Set<Role> roles = new LinkedHashSet<>(sut.findAllRoles());
         //then
-        Assert.assertEquals(allRoles, roles);// TODO: 12.04.2019  //dlaczego dziala skoro nie ma funkcji przyjmujacej kolekcje jako parametr
+        Assert.assertEquals(allRoles, roles);
     }
 
     @Test
@@ -134,14 +133,10 @@ public class RedisBackedCacheIntTest {
         Role roleId1 = sut.findRoleById(1);
         Role roleId2 = sut.findRoleById(2);
         Role roleId3 = sut.findRoleById(3);
-        Role roleId4 = sut.findRoleById(4);
         //then
         Assert.assertTrue(allRoles.contains(roleId1));
         Assert.assertTrue(allRoles.contains(roleId2));
         Assert.assertTrue(allRoles.contains(roleId3));
-        Assert.assertTrue(allRoles.contains(roleId4));
-
-
     }
 
     @Test
@@ -175,13 +170,14 @@ public class RedisBackedCacheIntTest {
     @Test
     public void findAllUsers() {
         //given
-        sut.saveUser(TEST_USER2_DTO_EXIST_IN_DATABASE);
-        sut.saveUser(TEST_USER3_DTO_EXIST_IN_DATABASE);
+        sut.saveUserWithPrivileges(TEST_USER2_DTO_EXIST_IN_DATABASE);
+        sut.saveUserWithPrivileges(TEST_USER3_DTO_EXIST_IN_DATABASE);
         //when
         // TODO: 15.04.2019 which list implementation was used
-        List<User> users = sut.findAllUsers();
+        List<UserDto> usersDto = sut.findAllUsers();
         //then
-        Assert.assertEquals(true, (users.containsAll(Arrays.asList(
-                TEST_USER_EXIST_IN_DATABASE, TEST_USER2_EXIST_IN_DATABASE, TEST_USER3_EXIST_IN_DATABASE))));
+//        Assert.assertEquals(true, (usersDto.containsAll(Arrays.asList(
+//                TEST_USER_DTO_EXIST_IN_DATABASE, TEST_USER2_DTO_EXIST_IN_DATABASE, TEST_USER3_DTO_EXIST_IN_DATABASE))));
+        Assert.assertEquals(TEST_USER2_DTO_EXIST_IN_DATABASE, usersDto.get(0));
     }
 }

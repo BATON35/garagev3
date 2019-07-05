@@ -24,34 +24,71 @@
                 <li class="nav-item">
                     <a href="/" class="nav-link">Strona Główna</a>
                 </li>
-                <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <form th:action="@{/addUser}" th:method="get">
-                        <button class="btn btn-md btn-outline-success mr-3"
-                                type="Submit">Dodaj urzytkownika
-                        </button>
-                    </form>
-                </li>
-                <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <form th:action="@{/deleteUser}">
-                        <button class="btn btn-md btn-outline-success mr-3"
-                                type="Submit">Usuń urzytkownika
-                        </button>
-                    </form>
-                </li>
-                <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <form th:action="@{/user}" th:method="get">
-                        <button class="btn btn-md btn-outline-success mr-3"
-                                type="Submit">Wyświetl urzytkowników
-                        </button>
-                    </form>
-                </li>
-                <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <form th:action="@{/addClient}">
-                        <button class="btn btn-md btn-outline-success mr-3"
-                                type="Submit">Dodaj klienta
-                        </button>
-                    </form>
-                </li>
+
+                <div class="btn-group">
+                    <button type="button" class="btn-outline-success mr-3 dropdown-toggle" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                        Obsługa urzytkownika
+                    </button>
+                    <div class="dropdown-menu bg-dark">
+                        <div class="col-md-12 text-center">
+                            <li class="nav-item" sec:authorize="isAuthenticated()">
+                                <form th:action="@{/addUser}" th:method="get">
+                                    <button class="btn btn-md btn-outline-success mb-2"
+                                            type="Submit">Dodaj urzytkownika
+                                    </button>
+                                </form>
+                            </li>
+                            <li class="nav-item" sec:authorize="isAuthenticated()">
+                                <form th:action="@{/deleteUser}">
+                                    <button class="btn btn-md btn-outline-success mb-2"
+                                            type="Submit">Usuń urzytkownika
+                                    </button>
+                                </form>
+                            </li>
+                            <li class="nav-item" sec:authorize="isAuthenticated()">
+                                <form th:action="@{/user}" th:method="get">
+                                    <button class="btn btn-md btn-outline-success mb-2"
+                                            type="Submit">Wyświetl urzytkowników
+                                    </button>
+                                </form>
+                            </li>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="btn-group">
+                    <button type="button" class="btn-outline-success mr-3 dropdown-toggle" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                        Obsługa klienta
+                    </button>
+                    <div class="dropdown-menu bg-dark">
+                        <div class="col-md-12 text-center">
+                            <li class="nav-item" sec:authorize="isAuthenticated()">
+                                <form th:action="@{/addClient}">
+                                    <button class="btn btn-md btn-outline-success mb-2"
+                                            type="Submit">Dodaj klienta
+                                    </button>
+                                </form>
+                            </li>
+                            <li class="nav-item" sec:authorize="isAuthenticated()">
+                                <form th:action="@{/deleteClient}">
+                                    <button class="btn btn-md btn-outline-success mb-2"
+                                            type="Submit">Usuń klienta
+                                    </button>
+                                </form>
+                            </li>
+                            <li class="nav-item" sec:authorize="isAuthenticated()">
+                                <form th:action="@{/client}" th:method="get">
+                                    <button class="btn btn-md btn-outline-success mb-2"
+                                            type="Submit">Wyświetl klientow
+                                    </button>
+                                </form>
+                            </li>
+                        </div>
+                    </div>
+                </div>
+
                 <li class="nav-item" sec:authorize="isAuthenticated()">
                     <form th:action="@{/admin/Addalservice}">
                         <button class="btn btn-md btn-outline-success mr-3"
