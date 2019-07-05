@@ -92,7 +92,12 @@ public class UserServiceTestData {
             .build();
     static final UserDto TEST_USER_DTO = UserDto.builder()
             .name("user")
-            .email("test@testa.com")
+            .email("test@test.com")
+            .roles(allRoles)
+            .build();
+    static final UserDto TEST_USER_DTO_1 = UserDto.builder()
+            .name("user_1")
+            .email("test@test_1.com")
             .roles(allRoles)
             .build();
 }

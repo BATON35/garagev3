@@ -71,6 +71,20 @@
                                     </button>
                                 </form>
                             </li>
+                            <li class="nav-item" sec:authorize="isAuthenticated()">
+                                <form th:action="@{/deleteClient}">
+                                    <button class="btn btn-md btn-outline-success mb-2"
+                                            type="Submit">Usuń klienta
+                                    </button>
+                                </form>
+                            </li>
+                            <li class="nav-item" sec:authorize="isAuthenticated()">
+                                <form th:action="@{/client}" th:method="get">
+                                    <button class="btn btn-md btn-outline-success mb-2"
+                                            type="Submit">Wyświetl klientow
+                                    </button>
+                                </form>
+                            </li>
                         </div>
                     </div>
                 </div>

@@ -1,6 +1,7 @@
 package com.konrad.garagev3.service;
 
 import com.konrad.garagev3.model.dao.User;
+import com.konrad.garagev3.model.dto.UserDto;
 import com.konrad.garagev3.repository.RoleRepository;
 import com.konrad.garagev3.repository.UserRepository;
 import org.junit.Assert;
@@ -72,10 +73,10 @@ public class UserServiceTest {
         // Setup
 
         // Run the test
-        final User result = userServiceUnderTest.saveUserWithPrivileges(TEST_USER_DTO);
+        final UserDto result = userServiceUnderTest.saveUserWithPrivileges(TEST_USER_DTO);
 
         // Verify the results
-        assertEquals(TEST_USER, result);
+        assertEquals(TEST_USER_DTO, result);
     }
 
     @Test
@@ -106,6 +107,6 @@ public class UserServiceTest {
     public void findAllUsers() {
         List users = userServiceUnderTest.findAllUsers();
 
-        Assert.assertEquals(Arrays.asList(TEST_USER, TEST_USER_1), users);
+        Assert.assertEquals(Arrays.asList(TEST_USER_DTO, TEST_USER_DTO_1), users);
     }
 }

@@ -2,6 +2,7 @@ package com.konrad.garagev3.service;
 
 import com.konrad.garagev3.model.dao.Role;
 import com.konrad.garagev3.model.dao.User;
+import com.konrad.garagev3.model.dto.UserDto;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -111,9 +112,9 @@ public class UserServiceIT {
     public void saveUserWithPrivileges() {
         //given
         //when
-        User user = sut.saveUserWithPrivileges(TEST_USER_DTO_TO_SAVE);
+        UserDto userDto = sut.saveUserWithPrivileges(TEST_USER_DTO_TO_SAVE);
         //then
-        Assert.assertEquals(TEST_USER_SAVED_IN_DATABASE, user);
+        Assert.assertEquals(TEST_USER_DTO_TO_SAVE, userDto);
     }
 
     @Test
@@ -169,13 +170,14 @@ public class UserServiceIT {
     @Test
     public void findAllUsers() {
         //given
-        sut.saveUser(TEST_USER2_DTO_EXIST_IN_DATABASE);
-        sut.saveUser(TEST_USER3_DTO_EXIST_IN_DATABASE);
+        sut.saveUserWithPrivileges(TEST_USER2_DTO_EXIST_IN_DATABASE);
+        sut.saveUserWithPrivileges(TEST_USER3_DTO_EXIST_IN_DATABASE);
         //when
         // TODO: 15.04.2019 which list implementation was used
-        List<User> users = sut.findAllUsers();
+        List<UserDto> usersDto = sut.findAllUsers();
         //then
-        Assert.assertEquals(true, (users.containsAll(Arrays.asList(
-                TEST_USER_EXIST_IN_DATABASE, TEST_USER2_EXIST_IN_DATABASE, TEST_USER3_EXIST_IN_DATABASE))));
+//        Assert.assertEquals(true, (usersDto.containsAll(Arrays.asList(
+//                TEST_USER_DTO_EXIST_IN_DATABASE, TEST_USER2_DTO_EXIST_IN_DATABASE, TEST_USER3_DTO_EXIST_IN_DATABASE))));
+        Assert.assertEquals(TEST_USER2_DTO_EXIST_IN_DATABASE, usersDto.get(0));
     }
 }
