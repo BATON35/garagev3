@@ -28,6 +28,7 @@ public class UserDto {
     @Column(name = "name")
     @NotEmpty(message = "*Please provide your name")
     private String name;
+    private int active;
     private Set<Role> roles;
   //  private Workshop workshop;
 
