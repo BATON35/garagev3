@@ -11,6 +11,7 @@ import org.hibernate.validator.constraints.Length;
 import javax.persistence.Column;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import java.util.Objects;
 import java.util.Set;
 
 @Data
@@ -28,5 +29,19 @@ public class UserDto {
     @NotEmpty(message = "*Please provide your name")
     private String name;
     private Set<Role> roles;
-    private Workshop workshop;
+  //  private Workshop workshop;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserDto userDto = (UserDto) o;
+        return Objects.equals(getEmail(), userDto.getEmail()) &&
+                Objects.equals(getName(), userDto.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getEmail(), getName());
+    }
 }
