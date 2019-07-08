@@ -17,7 +17,7 @@ import java.util.Set;
 @NoArgsConstructor
 public class UserDto {
    // @Setter(AccessLevel.NONE)
-    private int id;
+   // private int id;
     @Email(message = "*Please provide a valid Email")
     @NotEmpty(message = "*Please provide an email")
     private String email;
