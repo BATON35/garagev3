@@ -69,16 +69,12 @@
                                             <table class="table table-striped">
                                                 <thead class="thead-dark">
                                                 <tr>
-                                                    <th>Id</th>
-                                                    <th>Name</th>
+                                                    <th>Imie</th>
                                                     <th>Email</th>
                                                     <th></th>
                                                 </tr>
                                                 </thead>
                                                 <tr th:each="user : ${users}">
-                                                    <td style="color: #000000" th:text="${user.id}">
-                                                        Idddddddddddddddddddddddddddddddddddddddddddd
-                                                    </td>
                                                     <td style="color: #000000" th:text="${user.name}">Name</td>
                                                     <td style="color: #000000" th:text="${user.email}">Email</td>
                                                     <td>
