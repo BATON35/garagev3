@@ -48,7 +48,7 @@ public class UserServiceTest {
         // Setup
 
         // Run the test
-        User result = userServiceUnderTest.saveUser(TEST_USER_DTO);
+        User result = userServiceUnderTest.saveUser(TEST_USER);
 
         // Verify the results
         assertEquals(TEST_USER, result);
@@ -61,10 +61,10 @@ public class UserServiceTest {
         final String email = TEST_USER.getEmail();
 
         // Run the test
-        final User result = userServiceUnderTest.findUserByEmail(email);
+        final UserDto result = userServiceUnderTest.findUserByEmail(email);
 
         // Verify the results
-        assertEquals(TEST_USER, result);
+        assertEquals(TEST_USER_DTO, result);
     }
 
 
@@ -107,6 +107,6 @@ public class UserServiceTest {
     public void findAllUsers() {
         List users = userServiceUnderTest.findAllUsers();
 
-        Assert.assertEquals(Arrays.asList(TEST_USER_DTO, TEST_USER_DTO_1), users);
+        Assert.assertEquals(Arrays.asList(TEST_USER_DTO, TEST_USER_DTO_2), users);
     }
 }

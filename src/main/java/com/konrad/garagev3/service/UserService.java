@@ -34,16 +34,15 @@ public class UserService {
         userMapper = Mappers.getMapper(UserDtoMapper.class);
     }
 
-    public User findUserByEmail(String email) {
-        return userRepository.findByEmail(email);
+    public UserDto findUserByEmail(String email) {
+        return userMapper.userToUserDto(userRepository.findByEmail(email));
     }
 
-    public User saveUser(UserDto userDto) {
-        User user = userMapper.userDtoToUser(userDto);
+    public User saveUser(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setActive(1);
         Role userRole = roleRepository.findByRole("ROLE_ADMIN");
-        user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
+        user.setRoles(new HashSet<>(Collections.singletonList(userRole)));
         return userRepository.save(user);
     }
 
@@ -52,7 +51,7 @@ public class UserService {
         User user = userMapper.userDtoToUser(userDto);
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setActive(1);
-        user.setRoles(new LinkedHashSet<Role>(user.getRoles()));
+        user.setRoles(new LinkedHashSet<>(user.getRoles()));
         return userMapper.userToUserDto(userRepository.save(user));
     }
 
@@ -60,7 +59,7 @@ public class UserService {
         return roleRepository.findAll();
     }
 
-    public Role findRoleById(int id) {
+    Role findRoleById(int id) {
         return roleRepository.findById(id);
     }
 
@@ -69,22 +68,16 @@ public class UserService {
         userRepository.deleteUserByEmail(email);
     }
 
-
-    @Transactional
-    public void deleteUserById(int id) {
-        userRepository.deleteUserById(id);
-    }
-
-    public User deactivateUser(int id) {
-        User user = userRepository.findUserById(id);
+    public UserDto deactivateUser(String email) {
+        User user = userRepository.findByEmail(email);
         user.setActive(0);
-        return userRepository.save(user);
+        return userMapper.userToUserDto(userRepository.save(user));
     }
 
-    public User activateUser(int id) {
-        User user = userRepository.findUserById(id);
+    UserDto activateUser(String email) {
+        User user = userRepository.findByEmail(email);
         user.setActive(1);
-        return userRepository.save(user);
+        return userMapper.userToUserDto(userRepository.save(user));
     }
 
     public List<UserDto> findAllUsers() {

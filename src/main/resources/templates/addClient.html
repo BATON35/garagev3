@@ -23,13 +23,17 @@
 
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a href="/" class="nav-link">Strona Główna</a>
+                <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <form th:action="@{/deleteClient}">
+                        <button class="btn btn-md btn-outline-success mr-3"
+                                type="Submit">Usuń Klienta
+                        </button>
+                    </form>
                 </li>
                 <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <form th:action="@{/employee/addClient}">
+                    <form th:action="@{/client}" th:method="get">
                         <button class="btn btn-md btn-outline-success mr-3"
-                                type="Submit">Dodaj Klienta
+                                type="Submit">Wyświetl Klientow
                         </button>
                     </form>
                 </li>
@@ -104,12 +108,10 @@
                                 </div>
                             </div>
                         </div>
-
+                    </form>
                 </div>
-                </form>
             </div>
         </div>
-    </div>
     </div>
 </header>
 
@@ -123,7 +125,5 @@
         </div>
     </div>
 </footer>
-
-</body>
 
 </html>

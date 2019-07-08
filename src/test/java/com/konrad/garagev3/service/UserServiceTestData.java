@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-public class UserServiceTestData {
+class UserServiceTestData {
     static Set<Role> allRoles = new LinkedHashSet<>(
             Arrays.asList(
                     new Role(1, "ROLE_ADMIN"),
@@ -17,16 +17,23 @@ public class UserServiceTestData {
             )
     );
 
-
-    static final UserDto TEST_USER_DTO_TO_SAVE = UserDto.builder()
-            .email("userToSave@pl")
+    static final User TEST_USER_TO_SAVE = User.builder()
+            .email("userDTOToSave@pl")
             .password("test")
             .name("testName")
             .roles(allRoles)
+            .active(1)
+            .build();
+    static final UserDto TEST_USER_DTO_TO_SAVE = UserDto.builder()
+            .email("userDTOToSave@pl")
+            .password("test")
+            .name("testName")
+            .roles(allRoles)
+            .active(1)
             .build();
 
     static final User TEST_USER_SAVED_IN_DATABASE = User.builder()
-            .email("userToSave@pl")
+            .email("userToDTOSave@pl")
             .password("test")
             .name("testName")
             .roles(allRoles)
@@ -38,18 +45,23 @@ public class UserServiceTestData {
             .name("exampleTester")
             .password("exampleUserPassword")
             .roles(allRoles)
+            .active(1)
             .build();
     static final UserDto TEST_USER2_DTO_EXIST_IN_DATABASE = UserDto.builder()
+            .id(2)
             .email("user2ExistInDatabaseDto@pl")
             .name("exampleTester2")
             .password("exampleUser2Password")
             .roles(allRoles)
+            .active(1)
             .build();
     static final UserDto TEST_USER3_DTO_EXIST_IN_DATABASE = UserDto.builder()
+            .id(3)
             .email("user3ExistInDatabaseDto@pl")
             .name("exampleTester3")
             .password("exampleUser3Password")
             .roles(allRoles)
+            .active(1)
             .build();
     static final User TEST_USER_EXIST_IN_DATABASE = User.builder()
             .email("userExistInDatabaseDto@pl")
@@ -91,13 +103,17 @@ public class UserServiceTestData {
             .active(0)
             .build();
     static final UserDto TEST_USER_DTO = UserDto.builder()
+            .id(1)
             .name("user")
             .email("test@test.com")
             .roles(allRoles)
+            .active(1)
             .build();
-    static final UserDto TEST_USER_DTO_1 = UserDto.builder()
+    static final UserDto TEST_USER_DTO_2 = UserDto.builder()
+            .id(2)
             .name("user_1")
             .email("test@test_1.com")
+            .active(1)
             .roles(allRoles)
             .build();
 }

@@ -2,10 +2,7 @@ package com.konrad.garagev3.model.dto;
 
 import com.konrad.garagev3.model.dao.Role;
 import com.konrad.garagev3.model.dao.Workshop;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.Column;
@@ -19,6 +16,8 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDto {
+   // @Setter(AccessLevel.NONE)
+    private int id;
     @Email(message = "*Please provide a valid Email")
     @NotEmpty(message = "*Please provide an email")
     private String email;

@@ -49,7 +49,7 @@ public class UserController {
     @PostMapping("/user")
     public ModelAndView showAddUser(@Valid UserDto user, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
-        User userExists = userService.findUserByEmail(user.getEmail());
+        UserDto userExists = userService.findUserByEmail(user.getEmail());
         if (userExists != null) {
             bindingResult
                     .rejectValue("email", "error.user",
@@ -72,16 +72,16 @@ public class UserController {
         return modelAndView;
     }
 
-    @PutMapping("/user/{id}/active/{state}")
-    public ModelAndView showUsers(@PathVariable(value = "id") String id, @PathVariable(value = "state", required = false) String state) {
-        userService.deactivateUser(Integer.parseInt(id));
+    @PutMapping("/user/{email}/active/{state}")
+    public ModelAndView showUsers(@PathVariable(value = "email") String email, @PathVariable(value = "state", required = false) String state) {
+        userService.deactivateUser(email);
         return new ModelAndView("redirect:/user");
     }
 
     @DeleteMapping("/user")
     public ModelAndView deleteUser(User user, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
-        User userExists = userService.findUserByEmail(user.getEmail());
+        UserDto userExists = userService.findUserByEmail(user.getEmail());
         if (userExists == null) {
             bindingResult
                     .rejectValue("email", "error.user",

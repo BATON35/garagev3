@@ -57,17 +57,13 @@
         <div class="row">
             <div class="col-md-10 m-auto text-center">
                 <div class="container">
-                    <!--<form class="form-horizontal"-->
-                    <!--th:action="@{/admin/addUser}" th:object="${user}" method="post">-->
                     <section>
                         <div class="container">
-                            <!--<form th:action="@{/admin/showUsers}" th:object="${userToDelete}" method="post">-->
                             <div class="row">
                                 <div class="col">
                                     <div class="card">
                                         <div class="card-header">
                                             <h4 style="color: #000000;">Lista urzytkoników</h4>
-                                            <h2><span class="text-success" th:utext="${successMessage}"></span></h2>
                                         </div>
                                         <div class="scrollable">
                                             <table class="table table-striped">
@@ -79,7 +75,6 @@
                                                     <th></th>
                                                 </tr>
                                                 </thead>
-                                                </tbody>
                                                 <tr th:each="user : ${users}">
                                                     <td style="color: #000000" th:text="${user.id}">
                                                         Idddddddddddddddddddddddddddddddddddddddddddd
@@ -88,7 +83,9 @@
                                                     <td style="color: #000000" th:text="${user.email}">Email</td>
                                                     <td>
                                                         <div class="form-group">
-                                                            <form class="form-horizontal" th:action="@{/user/{id}/active/{state}(id=${user.id}, state=3)}" th:method="put">
+                                                            <form class="form-horizontal"
+                                                                  th:action="@{/user/{email}/active/{state}(email=${user.email}, state=3)}"
+                                                                  th:method="put">
                                                                 <button class="btn btn-md btn-outline-success mr-3"
                                                                         type="Submit">Skasuj urzytkownika
                                                                 </button>
@@ -96,16 +93,13 @@
                                                         </div>
                                                     </td>
                                                 </tr>
-                                                </tbody>
                                             </table>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <!--</form>-->
                         </div>
                     </section>
-                    <!--</form>-->
                 </div>
             </div>
         </div>
@@ -141,6 +135,5 @@
         }
     });
 </script>
-</body>
 
 </html>

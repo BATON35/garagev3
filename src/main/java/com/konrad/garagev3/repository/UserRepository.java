@@ -12,8 +12,9 @@ import java.util.List;
 public interface UserRepository extends CrudRepository<User, Long> {
     User findByEmail(String email);
     User findUserById(int id);
+
+    // TODO: 05.07.2019 Should this method retun eny value
     void deleteUserByEmail(String email);
-    void deleteUserById(int id);
     List<User> findAll();
     @Query(value = " select * from user u where u.active = 1", nativeQuery = true)
     List<User> findAllActiveUsers();
