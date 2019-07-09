@@ -1,6 +1,5 @@
 package com.konrad.garagev3.service;
 
-import com.konrad.garagev3.model.dao.Client;
 import com.konrad.garagev3.model.dto.ClientDto;
 import com.konrad.garagev3.repository.ClientRepository;
 import org.junit.Assert;
@@ -11,8 +10,10 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static com.konrad.garagev3.service.ClientServiceTestData.TEST_CLIENT;
-import static com.konrad.garagev3.service.ClientServiceTestData.TEST_CLIENT_DTO;
+import java.util.Arrays;
+import java.util.List;
+
+import static com.konrad.garagev3.service.ClientServiceTestData.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ClientServiceTest {
@@ -30,6 +31,9 @@ public class ClientServiceTest {
         Mockito.when(MockClientRepository.save(TEST_CLIENT)).thenReturn(TEST_CLIENT);
         Mockito.when(MockClientRepository.findClientBySurnameAndName(
                 TEST_CLIENT.getSurname(), TEST_CLIENT.getName())).thenReturn(TEST_CLIENT);
+        Mockito.when(MockClientRepository.findAllActiveClients()).thenReturn(Arrays.asList(
+                TEST_CLIENT,
+                TEST_CLIENT_2));
 
     }
 
@@ -64,5 +68,12 @@ public class ClientServiceTest {
                 TEST_CLIENT.getSurname(), TEST_CLIENT.getName());
 
         Assert.assertEquals(TEST_CLIENT_DTO, result);
+    }
+
+    @Test
+    public void findAllClients() {
+        final List result = sut.findAllActiveClients();
+
+        Assert.assertEquals(Arrays.asList(TEST_CLIENT_DTO_2, TEST_CLIENT_DTO),result);
     }
 }

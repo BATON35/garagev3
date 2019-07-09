@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Client implements Serializable {
+public class Client implements Serializable, Cloneable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "client_id")
@@ -26,6 +26,7 @@ public class Client implements Serializable {
     )
     private List<Vehicle> vehicles;
     private String name;
+    private int active;
     private String surname;
     private String email;
     private String phoneNumber;

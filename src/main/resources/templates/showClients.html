@@ -27,16 +27,16 @@
                     <a href="/" class="nav-link">Strona Główna</a>
                 </li>
                 <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <form th:action="@{/addUser}" th:method="get">
+                    <form th:action="@{/addClient}" th:method="get">
                         <button class="btn btn-md btn-outline-success mr-3"
-                                type="Submit">Dodaj urzytkownika
+                                type="Submit">Dodaj klienta
                         </button>
                     </form>
                 </li>
                 <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <form th:action="@{/deleteUser}">
+                    <form th:action="@{/deleteClient}">
                         <button class="btn btn-md btn-outline-success mr-3"
-                                type="Submit">Usuń urzytkownika
+                                type="Submit">Usuń klienta
                         </button>
                     </form>
                 </li>
@@ -63,7 +63,7 @@
                                 <div class="col">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h4 style="color: #000000;">Lista urzytkoników</h4>
+                                            <h4 style="color: #000000;">Lista klientow</h4>
                                         </div>
                                         <div class="scrollable">
                                             <table class="table table-striped">
@@ -74,16 +74,16 @@
                                                     <th></th>
                                                 </tr>
                                                 </thead>
-                                                <tr th:each="user : ${users}">
-                                                    <td style="color: #000000" th:text="${user.name}">Name</td>
-                                                    <td style="color: #000000" th:text="${user.email}">Email</td>
+                                                <tr th:each="client : ${clients}">
+                                                    <td style="color: #000000" th:text="${client.name}">Name</td>
+                                                    <td style="color: #000000" th:text="${client.email}">Email</td>
                                                     <td>
                                                         <div class="form-group">
                                                             <form class="form-horizontal"
-                                                                  th:action="@{/user/{email}/active/{state}(email=${user.email}, state=3)}"
+                                                                  th:action="@{/client/{email}/active (email=${client.email})}"
                                                                   th:method="put">
                                                                 <button class="btn btn-md btn-outline-success mr-3"
-                                                                        type="Submit">Usuń urzytkownika
+                                                                        type="Submit">Usuń klienta
                                                                 </button>
                                                             </form>
                                                         </div>
@@ -120,16 +120,16 @@
         integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
         crossorigin="anonymous"></script>
 <!--<script type="text/javascript">-->
-    <!--$(".toggle-password").click(function () {-->
+<!--$(".toggle-password").click(function () {-->
 
-        <!--$(this).toggleClass("fa-eye fa-eye-slash");-->
-        <!--var input = $($(this).attr("toggle"));-->
-        <!--if (input.attr("type") == "password") {-->
-            <!--input.attr("type", "text");-->
-        <!--} else {-->
-            <!--input.attr("type", "password");-->
-        <!--}-->
-    <!--});-->
+<!--$(this).toggleClass("fa-eye fa-eye-slash");-->
+<!--var input = $($(this).attr("toggle"));-->
+<!--if (input.attr("type") == "password") {-->
+<!--input.attr("type", "text");-->
+<!--} else {-->
+<!--input.attr("type", "password");-->
+<!--}-->
+<!--});-->
 <!--</script>-->
 
 </html>

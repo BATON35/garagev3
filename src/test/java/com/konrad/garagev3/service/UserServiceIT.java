@@ -17,7 +17,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.testcontainers.containers.MySQLContainer;
 
-import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -174,7 +173,7 @@ public class UserServiceIT {
         sut.saveUserWithPrivileges(TEST_USER3_DTO_EXIST_IN_DATABASE);
         //when
         // TODO: 15.04.2019 which list implementation was used
-        List<UserDto> usersDto = sut.findAllUsers();
+        List<UserDto> usersDto = sut.findAllActiveUsers();
         //then
 //        Assert.assertEquals(true, (usersDto.containsAll(Arrays.asList(
 //                TEST_USER_DTO_EXIST_IN_DATABASE, TEST_USER2_DTO_EXIST_IN_DATABASE, TEST_USER3_DTO_EXIST_IN_DATABASE))));

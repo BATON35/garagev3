@@ -4,6 +4,7 @@ import com.konrad.garagev3.model.dao.Role;
 import com.konrad.garagev3.model.dao.Workshop;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.Column;
 import javax.validation.constraints.Email;

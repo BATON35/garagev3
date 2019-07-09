@@ -105,7 +105,7 @@ public class UserServiceTest {
 
     @Test
     public void findAllUsers() {
-        List users = userServiceUnderTest.findAllUsers();
+        List users = userServiceUnderTest.findAllActiveUsers();
 
         Assert.assertEquals(Arrays.asList(TEST_USER_DTO, TEST_USER_DTO_2), users);
     }

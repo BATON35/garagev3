@@ -8,6 +8,10 @@ import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+
 @Service
 public class ClientService {
     private final ClientRepository clientRepository;
@@ -31,5 +35,21 @@ public class ClientService {
 
     public ClientDto findClientBySurnameAndName(String surname, String name) {
         return clientMapper.ClientToClientDto(clientRepository.findClientBySurnameAndName(surname, name));
+    }
+
+    public List<ClientDto> findAllActiveClients() {
+        List<Client> clients = clientRepository.findAllActiveClients();
+        clients.sort(Comparator.comparing(Client::getEmail));
+        List clientsDTO = new ArrayList();
+        for (Client client: clients) {
+            clientsDTO.add(clientMapper.ClientToClientDto(client));
+        }
+        return clientsDTO;
+    }
+
+    public ClientDto deactivateUser(String email) {
+        Client client = clientRepository.findClientByEmail(email);
+        client.setActive(1);
+        return clientMapper.ClientToClientDto(clientRepository.save(client));
     }
 }

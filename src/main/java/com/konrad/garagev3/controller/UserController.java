@@ -42,7 +42,7 @@ public class UserController {
 
     @GetMapping("/user")
     public String showUsers(Model model) {
-        model.addAttribute("users", userService.findAllUsers());
+        model.addAttribute("users", userService.findAllActiveUsers());
         return "showUsers";
     }
 
@@ -73,7 +73,7 @@ public class UserController {
     }
 
     @PutMapping("/user/{email}/active/{state}")
-    public ModelAndView showUsers(@PathVariable(value = "email") String email, @PathVariable(value = "state", required = false) String state) {
+    public ModelAndView deactivateUser(@PathVariable(value = "email") String email, @PathVariable(value = "state", required = false) String state) {
         userService.deactivateUser(email);
         return new ModelAndView("redirect:/user");
     }

@@ -80,7 +80,7 @@ public class UserService {
         return userMapper.userToUserDto(userRepository.save(user));
     }
 
-    public List<UserDto> findAllUsers() {
+    public List<UserDto> findAllActiveUsers() {
         List<User> users = userRepository.findAllActiveUsers();
         users.sort(Comparator.comparing(User::getEmail));
         List<UserDto> usersDto = new ArrayList<>();
