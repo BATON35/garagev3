@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
@@ -31,6 +28,16 @@ public class ClientController {
         modelAndView.addObject("clientDto", new ClientDto());
         //   modelAndView.addObject("vehicle", vehicle);
         modelAndView.setViewName("addClient");
+        return modelAndView;
+    }
+
+
+    @GetMapping("/deleteClient")
+    public ModelAndView showDeleteUser() {
+        ModelAndView modelAndView = new ModelAndView();
+        ClientDto client = new ClientDto();
+        modelAndView.addObject("client", client);
+        modelAndView.setViewName("deleteClient");
         return modelAndView;
     }
 
@@ -64,4 +71,8 @@ public class ClientController {
         clientService.deactivateClient(email);
         return new ModelAndView("redirect:/client");
     }
+//    @DeleteMapping("/client")
+//    public ModelAndView deleteClient(client) {
+//
+//    }
 }

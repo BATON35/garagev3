@@ -34,8 +34,8 @@ public class UserController {
     @GetMapping("/deleteUser")
     public ModelAndView showDeleteUser() {
         ModelAndView modelAndView = new ModelAndView();
-        UserDto user = new UserDto();
-        modelAndView.addObject("user", user);
+        UserDto userDto = new UserDto();
+        modelAndView.addObject("userDto", userDto);
         modelAndView.setViewName("deleteUser");
         return modelAndView;
     }
@@ -79,9 +79,9 @@ public class UserController {
     }
 
     @DeleteMapping("/user")
-    public ModelAndView deleteUser(User user, BindingResult bindingResult) {
+    public ModelAndView deleteUser(UserDto userDto, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
-        UserDto userExists = userService.findUserByEmail(user.getEmail());
+        UserDto userExists = userService.findUserByEmail(userDto.getEmail());
         if (userExists == null) {
             bindingResult
                     .rejectValue("email", "error.user",
@@ -90,7 +90,7 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             modelAndView.setViewName("deleteUser");
         } else {
-            userService.deleteUser(user.getEmail());
+            userService.deleteUser(userDto.getEmail());
             modelAndView.addObject("successMessage", "User has been deleted successfully");
             modelAndView.addObject("userDto", new UserDto());
             modelAndView.setViewName("deleteUser");
