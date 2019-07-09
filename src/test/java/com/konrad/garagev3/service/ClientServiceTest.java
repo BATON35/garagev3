@@ -75,9 +75,4 @@ public class ClientServiceTest {
 
         Assert.assertEquals(Arrays.asList(TEST_CLIENT_DTO_2, TEST_CLIENT_DTO),result);
     }
-
-
-    @Test
-    public void deactivateClient() {
-    }
 }

@@ -40,7 +40,7 @@ public class UserServiceTest {
                 mockBCryptPasswordEncoder);
         Mockito.when(mockUserRepository.save(any(User.class))).thenReturn(TEST_USER);
         Mockito.when(mockUserRepository.findAllActiveUsers()).thenReturn(Arrays.asList(TEST_USER, TEST_USER_1));
-        Mockito.when(mockUserRepository.findByEmail(anyString())).thenReturn(TEST_USER);
+        Mockito.when(mockUserRepository.findByEmail(TEST_USER.getEmail())).thenReturn(TEST_USER);
     }
 
     @Test
@@ -101,10 +101,18 @@ public class UserServiceTest {
 
     @Test
     public void activateUser() {
+        Mockito.when(mockUserRepository
+                .findByEmail(TEST_USER_INACTIVE.getEmail()))
+                .thenReturn(TEST_USER_ACTIVE);
+
+        final UserDto result = userServiceUnderTest.activateUser(TEST_USER_INACTIVE.getEmail());
+
+        Assert.assertEquals(1, result.getActive());
     }
 
     @Test
     public void findAllUsers() {
+
         List users = userServiceUnderTest.findAllActiveUsers();
 
         Assert.assertEquals(Arrays.asList(TEST_USER_DTO, TEST_USER_DTO_2), users);
