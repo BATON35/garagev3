@@ -61,7 +61,7 @@ public class ClientController {
 
     @PutMapping("/client/{email}/active")
     public ModelAndView deactivateUser(@PathVariable(value = "email") String email) {
-        clientService.deactivateUser(email);
+        clientService.deactivateClient(email);
         return new ModelAndView("redirect:/client");
     }
 }

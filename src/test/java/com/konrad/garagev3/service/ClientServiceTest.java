@@ -34,7 +34,6 @@ public class ClientServiceTest {
         Mockito.when(MockClientRepository.findAllActiveClients()).thenReturn(Arrays.asList(
                 TEST_CLIENT,
                 TEST_CLIENT_2));
-
     }
 
     @Test
@@ -75,5 +74,10 @@ public class ClientServiceTest {
         final List result = sut.findAllActiveClients();
 
         Assert.assertEquals(Arrays.asList(TEST_CLIENT_DTO_2, TEST_CLIENT_DTO),result);
+    }
+
+
+    @Test
+    public void deactivateClient() {
     }
 }

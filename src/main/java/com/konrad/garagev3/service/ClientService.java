@@ -30,7 +30,7 @@ public class ClientService {
     public ClientDto saveClient(ClientDto clientDto) {
         ClientDtoMapper clientMapper = Mappers.getMapper(ClientDtoMapper.class);
         Client client = clientMapper.ClientDtoToClient(clientDto);
-      //  client.setActive(1);
+        client.setActive(1);
         return clientMapper.ClientToClientDto(clientRepository.save(client));
     }
 
@@ -48,7 +48,7 @@ public class ClientService {
         return clientsDTO;
     }
 
-    public ClientDto deactivateUser(String email) {
+    public ClientDto deactivateClient(String email) {
         Client client = clientRepository.findClientByEmail(email);
         client.setActive(0);
         return clientMapper.ClientToClientDto(clientRepository.save(client));

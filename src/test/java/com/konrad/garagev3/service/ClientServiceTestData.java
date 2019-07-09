@@ -5,6 +5,7 @@ import com.konrad.garagev3.model.dto.ClientDto;
 
 public class ClientServiceTestData {
     static final Client TEST_CLIENT = Client.builder()
+            .active(1)
             .email("emailTest@pl")
             .name("name")
             .surname("surname")
