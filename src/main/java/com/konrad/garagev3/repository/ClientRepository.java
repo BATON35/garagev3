@@ -11,6 +11,6 @@ import java.util.List;
 public interface ClientRepository extends JpaRepository<Client, Integer> {
     Client findClientByEmail(String email);
     Client findClientBySurnameAndName(String surname, String name);
-    @Query(value = " select * from client u where u.active = 0", nativeQuery = true)
+    @Query(value = " select * from client u where u.active = 1", nativeQuery = true)
     List<Client> findAllActiveClients();
 }
