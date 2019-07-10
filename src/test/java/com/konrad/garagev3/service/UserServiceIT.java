@@ -64,7 +64,7 @@ public class UserServiceIT {
     }
 
     @Before
-    public void fillInDatabase() {
+    public void fillDatabase() {
         if (isNull(sut.findUserByEmail(TEST_USER_DTO_EXIST_IN_DATABASE.getEmail()))) {
             sut.saveUserWithPrivileges(TEST_USER_DTO_EXIST_IN_DATABASE);
         } else if (sut.findUserByEmail(TEST_USER_DTO_EXIST_IN_DATABASE.getEmail()).getActive() != 1) {
@@ -73,26 +73,17 @@ public class UserServiceIT {
     }
 
     @Test
-    public void userWithMailNotExist() {
+    public void userNotExist() {
         Assert.assertNull(sut.findUserByEmail("mailNotExist@pl"));
     }
 
     @Test
-    public void userWithMailExist() {
+    public void userExist() {
         //given
         int active = 1;
         //when
         //then
-        Assert.assertEquals(TEST_USER_DTO_EXIST_IN_DATABASE.getName(),
-                sut.findUserByEmail(TEST_USER_DTO_EXIST_IN_DATABASE.getEmail()).getName());
-        Assert.assertEquals(TEST_USER_DTO_EXIST_IN_DATABASE.getEmail(),
-                sut.findUserByEmail(TEST_USER_DTO_EXIST_IN_DATABASE.getEmail()).getEmail());
-        Assert.assertEquals(active,
-                sut.findUserByEmail(TEST_USER_DTO_EXIST_IN_DATABASE.getEmail()).getActive());
-        Assert.assertEquals(TEST_USER_DTO_EXIST_IN_DATABASE.getRoles(),
-                sut.findUserByEmail(TEST_USER_DTO_EXIST_IN_DATABASE.getEmail()).getRoles());
-
-        assertThat(sut.findUserByEmail(TEST_USER_DTO_EXIST_IN_DATABASE.getEmail()).getActive()).isEqualTo(1);
+        Assert.assertEquals(TEST_USER_DTO_EXIST_IN_DATABASE, sut.findUserByEmail(TEST_USER_DTO_EXIST_IN_DATABASE.getEmail()));
     }
 
     @Test
