@@ -83,8 +83,7 @@ public class UserController {
         ModelAndView modelAndView = new ModelAndView();
         UserDto userExists = userService.findUserByEmail(userDto.getEmail());
         if (userExists == null) {
-            bindingResult
-                    .rejectValue("email", "error.user",
+            bindingResult.rejectValue("email", "error.user",
                             "Utzytkownik o wprowadzonym adresie email nie istnieje");
         }
         if (bindingResult.hasErrors()) {

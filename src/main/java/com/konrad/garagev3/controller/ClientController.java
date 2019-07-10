@@ -36,7 +36,7 @@ public class ClientController {
     public ModelAndView showDeleteUser() {
         ModelAndView modelAndView = new ModelAndView();
         ClientDto client = new ClientDto();
-        modelAndView.addObject("client", client);
+        modelAndView.addObject("clientDto", client);
         modelAndView.setViewName("deleteClient");
         return modelAndView;
     }
@@ -71,8 +71,23 @@ public class ClientController {
         clientService.deactivateClient(email);
         return new ModelAndView("redirect:/client");
     }
-//    @DeleteMapping("/client")
-//    public ModelAndView deleteClient(client) {
-//
-//    }
+
+    @DeleteMapping("/client")
+    public ModelAndView deleteClient(ClientDto clientDto, BindingResult bindingResult) {
+        ModelAndView modelAndView = new ModelAndView();
+        ClientDto clientExist = clientService.findClientByEmail(clientDto.getEmail());
+        if (clientExist == null) {
+            bindingResult.rejectValue("email", "error.client",
+                    "Utzytkownik o wprowadzonym adresie email nie istnieje");
+        }
+        if (bindingResult.hasErrors()) {
+            modelAndView.setViewName("deleteClient");
+        } else {
+            clientService.deleteUser(clientDto.getEmail());
+            modelAndView.addObject("successMessage", "User has been deleted successfully");
+            modelAndView.addObject("clientDto", new ClientDto());
+            modelAndView.setViewName("deleteClient");
+        }
+        return modelAndView;
+    }
 }

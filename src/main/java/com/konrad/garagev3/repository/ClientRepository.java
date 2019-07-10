@@ -10,7 +10,11 @@ import java.util.List;
 @Repository
 public interface ClientRepository extends JpaRepository<Client, Integer> {
     Client findClientByEmail(String email);
+
     Client findClientBySurnameAndName(String surname, String name);
+
     @Query(value = " select * from client u where u.active = 1", nativeQuery = true)
     List<Client> findAllActiveClients();
+
+    void deleteClientByEmail(String mail);
 }

@@ -79,10 +79,7 @@ public class UserServiceTest {
         assertEquals(TEST_USER_DTO, result);
     }
 
-    @Test
-    public void findAllRoles() {
-    }
-
+    // TODO: 10.07.2019 should we test this method(this methods don't implement new logic)
     @Test
     public void findRoleById() {
     }
@@ -97,17 +94,25 @@ public class UserServiceTest {
 
     @Test
     public void deactivateUser() {
+        Mockito.when(mockUserRepository
+                .findByEmail(TEST_USER_ACTIVE.getEmail()))
+                .thenReturn(TEST_USER_ACTIVE);
+
+        userServiceUnderTest.deactivateUser(TEST_USER_ACTIVE.getEmail());
+// TODO: 10.07.2019 How to check did  setActive from User Class is invoke. 
+        Mockito.verify(mockUserRepository).save(any(User.class));
     }
 
     @Test
     public void activateUser() {
-        Mockito.when(mockUserRepository
-                .findByEmail(TEST_USER_INACTIVE.getEmail()))
-                .thenReturn(TEST_USER_ACTIVE);
-
-        final UserDto result = userServiceUnderTest.activateUser(TEST_USER_INACTIVE.getEmail());
-
-        Assert.assertEquals(1, result.getActive());
+        // TODO: 10.07.2019 misleading test
+//        Mockito.when(mockUserRepository
+//                .findByEmail(TEST_USER_INACTIVE.getEmail()))
+//                .thenReturn(TEST_USER_INACTIVE);
+//
+//        final UserDto result = userServiceUnderTest.activateUser(TEST_USER_INACTIVE.getEmail());
+//
+//        Assert.assertEquals(1, result.getActive());
     }
 
     @Test

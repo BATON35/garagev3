@@ -63,6 +63,7 @@ public class UserService {
         return roleRepository.findById(id);
     }
 
+    // TODO: 09.07.2019 co powinna zwrocic funkcja delete 
     @Transactional
     public void deleteUser(String email) {
         userRepository.deleteUserByEmail(email);

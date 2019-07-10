@@ -29,4 +29,19 @@ public class ClientServiceTestData {
             .surname("surname2")
             .phoneNumber("4444444444")
             .build();
+    static final Client TEST_ClIENT_ACTIVE = Client.builder()
+            .email("emailTest2@pl")
+            .name("name2")
+            .surname("surname2")
+            .phoneNumber("4444444444")
+            .active(1)
+            .build();
+
+    static final Client TEST_ClIENT_ACTIVE_DTO = Client.builder()
+            .email("emailTest2@pl")
+            .name("name2")
+            .surname("surname2")
+            .phoneNumber("4444444444")
+            .active(1)
+            .build();
 }
