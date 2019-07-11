@@ -79,23 +79,20 @@ public class UserServiceIT {
 
     @Test
     public void userExist() {
-        //given
-        int active = 1;
-        //when
-        //then
-        Assert.assertEquals(TEST_USER_DTO_EXIST_IN_DATABASE, sut.findUserByEmail(TEST_USER_DTO_EXIST_IN_DATABASE.getEmail()));
+        UserDto result = sut.findUserByEmail(TEST_USER_DTO_EXIST_IN_DATABASE.getEmail());
+        Assert.assertEquals(TEST_USER_DTO_EXIST_IN_DATABASE, result);
     }
 
     @Test
     public void saveUser() {
         //given
         //when
-        User user = sut.saveUser(TEST_USER_TO_SAVE);
+        User result = sut.saveUser(TEST_USER_TO_SAVE);
         //then
-        Assert.assertEquals(TEST_USER_DTO_TO_SAVE.getName(), user.getName());
-        Assert.assertEquals(TEST_USER_DTO_TO_SAVE.getEmail(), user.getEmail());
-        Assert.assertEquals(1, user.getActive());
-        Assert.assertTrue(TEST_USER_DTO_TO_SAVE.getRoles().contains(user.getRoles().toArray()[0]));
+        Assert.assertEquals(TEST_USER_DTO_TO_SAVE.getName(), result.getName());
+        Assert.assertEquals(TEST_USER_DTO_TO_SAVE.getEmail(), result.getEmail());
+        Assert.assertEquals(1, result.getActive());
+        Assert.assertTrue(TEST_USER_DTO_TO_SAVE.getRoles().contains(result.getRoles().toArray()[0]));
     }
 
     @Test
