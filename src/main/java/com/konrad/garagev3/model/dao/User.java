@@ -17,7 +17,7 @@ import java.util.Set;
 @Entity
 
 public class User implements Serializable, Cloneable{
-
+    // TODO: 10.07.2019 czy klasa client moze rozszezac klase user - problmem jest pole haslo ktorego klient nie powinien posiadac 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_id")
