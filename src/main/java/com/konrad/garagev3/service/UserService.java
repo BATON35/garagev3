@@ -51,7 +51,7 @@ public class UserService {
         User user = userMapper.userDtoToUser(userDto);
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setActive(1);
-        user.setRoles(new LinkedHashSet<>(user.getRoles()));
+       // user.setRoles(new LinkedHashSet<>(user.getRoles()));
         return userMapper.userToUserDto(userRepository.save(user));
     }
 

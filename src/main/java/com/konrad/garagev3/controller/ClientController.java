@@ -83,7 +83,7 @@ public class ClientController {
         if (bindingResult.hasErrors()) {
             modelAndView.setViewName("deleteClient");
         } else {
-            clientService.deleteUser(clientDto.getEmail());
+            clientService.deleteClient(clientDto.getEmail());
             modelAndView.addObject("successMessage", "User has been deleted successfully");
             modelAndView.addObject("clientDto", new ClientDto());
             modelAndView.setViewName("deleteClient");

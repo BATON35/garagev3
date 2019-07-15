@@ -56,7 +56,7 @@ public class ClientService {
     }
 
     @Transactional
-    public void deleteUser(String mail) {
+    public void deleteClient(String mail) {
         clientRepository.deleteClientByEmail(mail);
     }
 

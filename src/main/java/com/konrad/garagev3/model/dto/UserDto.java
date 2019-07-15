@@ -1,21 +1,19 @@
 package com.konrad.garagev3.model.dto;
 
 import com.konrad.garagev3.model.dao.Role;
-import com.konrad.garagev3.model.dao.Workshop;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.Column;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
-import java.util.Objects;
 import java.util.Set;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(exclude = {"password", "active "})
 public class UserDto {
    // @Setter(AccessLevel.NONE)
    // private int id;
@@ -31,18 +29,18 @@ public class UserDto {
     private int active;
     private Set<Role> roles;
   //  private Workshop workshop;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        UserDto userDto = (UserDto) o;
-        return Objects.equals(getEmail(), userDto.getEmail()) &&
-                Objects.equals(getName(), userDto.getName());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getEmail(), getName());
-    }
+//
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (o == null || getClass() != o.getClass()) return false;
+//        UserDto userDto = (UserDto) o;
+//        return Objects.equals(getEmail(), userDto.getEmail()) &&
+//                Objects.equals(getName(), userDto.getName());
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(getEmail(), getName());
+//    }
 }

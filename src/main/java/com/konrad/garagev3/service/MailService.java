@@ -15,7 +15,8 @@ public class MailService {
         this.emailSender = javaMailSender;
     }
 
-    public String sendEmail(AnonymousUserQuestion anonymousUserQuestion){
+    // TODO: 11.07.2019 jak napisac (czy nalezy pisac) test dla tej metody;
+    public String sendEmail(AnonymousUserQuestion anonymousUserQuestion) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(anonymousUserQuestion.getMail());
         message.setSubject(anonymousUserQuestion.getName());

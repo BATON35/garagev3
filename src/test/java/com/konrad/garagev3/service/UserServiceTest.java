@@ -7,8 +7,10 @@ import com.konrad.garagev3.repository.UserRepository;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Arrays;
@@ -17,11 +19,9 @@ import java.util.List;
 import static com.konrad.garagev3.service.UserServiceTestData.*;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.MockitoAnnotations.initMocks;
 
 
-//@RunWith(MockitoJUnitRunner.class)
+@RunWith(MockitoJUnitRunner.class)
 public class UserServiceTest {
     @Mock
     private UserRepository mockUserRepository;
@@ -34,13 +34,14 @@ public class UserServiceTest {
 
     @Before
     public void setUp() {
-        initMocks(this);
+       // initMocks(this);
         userServiceUnderTest = new UserService(mockUserRepository,
                 mockRoleRepository,
                 mockBCryptPasswordEncoder);
         Mockito.when(mockUserRepository.save(any(User.class))).thenReturn(TEST_USER);
         Mockito.when(mockUserRepository.findAllActiveUsers()).thenReturn(Arrays.asList(TEST_USER, TEST_USER_1));
         Mockito.when(mockUserRepository.findByEmail(TEST_USER.getEmail())).thenReturn(TEST_USER);
+       // Mockito.when(mockRoleRepository.findAll()).thenReturn(new ArrayList<>(ALL_ROLES));
     }
 
     @Test

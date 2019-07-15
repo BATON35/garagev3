@@ -23,7 +23,6 @@ import java.util.Set;
 
 import static com.konrad.garagev3.service.UserServiceTestData.*;
 import static java.util.Objects.isNull;
-import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -110,7 +109,7 @@ public class UserServiceIT {
         //when
         Set<Role> roles = new LinkedHashSet<>(sut.findAllRoles());
         //then
-        Assert.assertEquals(allRoles, roles);
+        Assert.assertEquals(ALL_ROLES, roles);
     }
 
     @Test
@@ -121,11 +120,12 @@ public class UserServiceIT {
         Role roleId2 = sut.findRoleById(2);
         Role roleId3 = sut.findRoleById(3);
         //then
-        Assert.assertTrue(allRoles.contains(roleId1));
-        Assert.assertTrue(allRoles.contains(roleId2));
-        Assert.assertTrue(allRoles.contains(roleId3));
+        Assert.assertTrue(ALL_ROLES.contains(roleId1));
+        Assert.assertTrue(ALL_ROLES.contains(roleId2));
+        Assert.assertTrue(ALL_ROLES.contains(roleId3));
     }
 
+    // TODO: 11.07.2019 czy to jest poprawny test (jesli metoda findUderByEmail dziala niepoprawnie to test jest bez sensu
     @Test
     public void deleteUser() {
         //given
