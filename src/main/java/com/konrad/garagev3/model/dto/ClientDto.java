@@ -23,7 +23,8 @@ public class ClientDto {
     @Email
     private String email;
     private String phoneNumber;
-//
+
+    // TODO: 15.07.2019  czy dto powinien impelmentowac hashCode and equals
 //    @Override
 //    public boolean equals(Object o) {
 //        if (this == o) return true;
