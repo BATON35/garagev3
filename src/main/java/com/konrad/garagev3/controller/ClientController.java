@@ -72,6 +72,15 @@ public class ClientController {
         return new ModelAndView("redirect:/client");
     }
 
+    @GetMapping("/client/{email}")
+    public ModelAndView showUserDetails(@PathVariable String email) {
+        ModelAndView modelAndView = new ModelAndView();
+        ClientDto clientDto = clientService.findClientByEmail(email);
+        modelAndView.addObject(clientDto);
+        modelAndView.setViewName("clientDetails");
+        return modelAndView;
+    }
+
     @DeleteMapping("/client")
     public ModelAndView deleteClient(ClientDto clientDto, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
