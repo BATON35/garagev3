@@ -36,7 +36,14 @@
                 <li class="nav-item" sec:authorize="isAuthenticated()">
                     <form th:action="@{/deleteClient}">
                         <button class="btn btn-md btn-outline-success mr-3"
-                                type="Submit">Usuń klienta
+                                type="Submit">Usuń
+                        </button>
+                    </form>
+                </li>
+                <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <form th:action="@{/editClient}">
+                        <button class="btn btn-md btn-outline-success mr-3"
+                                type="Submit">Edytuj
                         </button>
                     </form>
                 </li>
@@ -72,6 +79,8 @@
                                                     <th>Imie</th>
                                                     <th>Email</th>
                                                     <th></th>
+                                                    <th></th>
+                                                    <th></th>
                                                 </tr>
                                                 </thead>
                                                 <tr th:each="client : ${clients}">
@@ -80,10 +89,32 @@
                                                     <td>
                                                         <div class="form-group">
                                                             <form class="form-horizontal"
+                                                                  th:action="@{/client/{email} (email=${client.email})}"
+                                                                  th:method="get">
+                                                                <button class="btn btn-md btn-outline-success mr-3"
+                                                                        type="Submit">Pokaż szczegóły
+                                                                </button>
+                                                            </form>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group">
+                                                            <form class="form-horizontal"
                                                                   th:action="@{/client/{email}/active (email=${client.email})}"
                                                                   th:method="put">
                                                                 <button class="btn btn-md btn-outline-success mr-3"
-                                                                        type="Submit">Usuń klienta
+                                                                        type="Submit">Edytuj
+                                                                </button>
+                                                            </form>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group">
+                                                            <form class="form-horizontal"
+                                                                  th:action="@{/client/{email}/active (email=${client.email})}"
+                                                                  th:method="put">
+                                                                <button class="btn btn-md btn-outline-success mr-3"
+                                                                        type="Submit">Usuń
                                                                 </button>
                                                             </form>
                                                         </div>
