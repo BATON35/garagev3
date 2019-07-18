@@ -14,7 +14,7 @@
     <link rel="stylesheet" th:href="@{/css/style.css}" href="../static/css/style.css">
     <title>Bootstrap Theme</title>
 </head>
-
+<body>
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
     <div class="container">
         <div class="navbar-brand">
@@ -65,27 +65,31 @@
                                         <div class="card-header">
                                             <h4 style="color: #000000;">Lista urzytkoników</h4>
                                         </div>
-                                        <div class="scrollable">
+                                        <div>
                                             <table class="table table-striped">
                                                 <thead class="thead-dark">
                                                 <tr>
                                                     <th>Imie</th>
-                                                    <th>Email</th>
+                                                    <th>Nazwisko</th>
+                                                    <th>Emial</th>
+                                                    <th>tel</th>
                                                     <th></th>
                                                 </tr>
                                                 </thead>
-                                                <tr th:each="user : ${users}">
-                                                    <td style="color: #000000" th:text="${user.name}">Name</td>
-                                                    <td style="color: #000000" th:text="${user.email}">Email</td>
+                                                <tr>
+                                                    <td style="color: #000000" th:text="${clientDto.name}">Name</td>
+                                                    <td style="color: #000000" th:text="${clientDto.getSurname()}">Name</td>
+                                                    <td style="color: #000000" th:text="${clientDto.email}">Email</td>
+                                                    <td style="color: #000000" th:text="${clientDto.phoneNumber}">Email</td>
                                                     <td>
                                                         <div class="form-group">
-                                                            <form class="form-horizontal"
-                                                                  th:action="@{/user/{email}/active/{state}(email=${user.email}, state=3)}"
-                                                                  th:method="put">
-                                                                <button class="btn btn-md btn-outline-success mr-3"
-                                                                        type="Submit">Usuń urzytkownika
-                                                                </button>
-                                                            </form>
+                                                            <!--<form class="form-horizontal"-->
+                                                                  <!--th:action="@{/user/{email}/active/{state}(email=${clientDto.email}, state=3)}"-->
+                                                                  <!--th:method="put">-->
+                                                                <!--<button class="btn btn-md btn-outline-success mr-3"-->
+                                                                        <!--type="Submit">Usuń urzytkownika-->
+                                                                <!--</button>-->
+                                                            <!--</form>-->
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -101,6 +105,8 @@
         </div>
     </div>
 </header>
+
+</body>
 <!-- FOOTER -->
 <footer id="main-footer" class="text-center p-4" th:replace="fragments/footer :: footer">
     <div class="container">
@@ -111,12 +117,4 @@
         </div>
     </div>
 </footer>
-<!--<script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="-->
-        <!--crossorigin="anonymous"></script>-->
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"-->
-        <!--integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"-->
-        <!--crossorigin="anonymous"></script>-->
-<!--<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"-->
-        <!--integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"-->
-        <!--crossorigin="anonymous"></script>-->
 </html>
