@@ -14,8 +14,8 @@
     <link rel="stylesheet" th:href="@{/css/style.css}" href="../static/css/style.css">
     <title>Bootstrap Theme</title>
 </head>
-
-<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+<body>
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark" th:replace="fragments/manBar :: nav">
     <div class="container">
         <div class="navbar-brand">
             <a href="/admin" class="navbar-brand">Panel administratora</a>
@@ -110,18 +110,6 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
         integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
         crossorigin="anonymous"></script>
-<script type="text/javascript">
-    $(".toggle-password").click(function () {
-
-        $(this).toggleClass("fa-eye fa-eye-slash");
-        var input = $($(this).attr("toggle"));
-        if (input.attr("type") == "password") {
-            input.attr("type", "text");
-        } else {
-            input.attr("type", "password");
-        }
-    });
-</script>
 </body>
 
 </html>

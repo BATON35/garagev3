@@ -14,8 +14,8 @@
     <link rel="stylesheet" th:href="@{/css/style.css}" href="../static/css/style.css">
     <title>Bootstrap Theme</title>
 </head>
-
-<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+<body>
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark" th:replace="fragments/manBar :: nav">
     <div class="container">
         <div class="navbar-brand">
             <a href="/admin" class="navbar-brand">Panel administratora</a>
