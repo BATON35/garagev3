@@ -58,6 +58,8 @@
         <div class="row">
             <div class="col-md-10 m-auto text-center">
                 <div class="container">
+
+
                     <section>
                         <div class="container">
                             <div class="row">
@@ -80,13 +82,45 @@
                                                     <td style="color: #000000" th:text="${user.email}">Email</td>
                                                     <td>
                                                         <div class="form-group">
-                                                            <form class="form-horizontal"
-                                                                  th:action="@{/user/{email}/active/{state}(email=${user.email}, state=3)}"
-                                                                  th:method="put">
-                                                                <button class="btn btn-md btn-outline-success mr-3"
-                                                                        type="Submit">Usuń urzytkownika
-                                                                </button>
-                                                            </form>
+                                                            <!--<form class="form-horizontal"-->
+                                                            <!--th:action="@{/user/{email}/active/{state}(email=${user.email}, state=3)}"-->
+                                                            <!--th:method="put">-->
+                                                            <!--<button class="btn btn-md btn-outline-success mr-3"-->
+                                                            <!--type="Submit">Usuń urzytkownika-->
+                                                            <!--</button>-->
+                                                            <button class="btn btn-danger" data-toggle="modal"
+                                                                    data-target="#test">delete
+                                                            </button>
+                                                            <!--</form>-->
+                                                            <!--Modal-->
+                                                            <div class="modal fade" id="test" role="dialog">
+                                                                <div class="modal-dialog" style="color: #000000;">
+                                                                    <!--Modal content-->
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h4 class="modal-title">My test</h4>
+                                                                            <button type="button" class="close"
+                                                                                    data-dismiss="modal">&times
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <p>Urzytkownik zostanie trwale usuniety z
+                                                                                bazy danych.<br>
+                                                                                Jesli jesteś pewien kliknij Zatwierdz
+                                                                            </p>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <form class="form-horizontal"
+                                                                                  th:action="@{/user/{email}/active/{state}(email=${user.email}, state=3)}"
+                                                                                  th:method="put">
+                                                                                <button class="btn btn-md btn-outline-success mr-3"
+                                                                                        type="Submit">Usuń urzytkownika
+                                                                                </button>
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </td>
                                                 </tr>
