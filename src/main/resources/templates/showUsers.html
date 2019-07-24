@@ -82,18 +82,11 @@
                                                     <td style="color: #000000" th:text="${user.email}">Email</td>
                                                     <td>
                                                         <div class="form-group">
-                                                            <!--<form class="form-horizontal"-->
-                                                            <!--th:action="@{/user/{email}/active/{state}(email=${user.email}, state=3)}"-->
-                                                            <!--th:method="put">-->
-                                                            <!--<button class="btn btn-md btn-outline-success mr-3"-->
-                                                            <!--type="Submit">Usuń urzytkownika-->
-                                                            <!--</button>-->
-                                                            <button class="btn btn-danger" data-toggle="modal"
-                                                                    data-target="#test">delete
+                                                            <button class="btn btn-outline-danger" data-toggle="modal"
+                                                                    data-target="#pupUp">Usuń
                                                             </button>
-                                                            <!--</form>-->
                                                             <!--Modal-->
-                                                            <div class="modal fade" id="test" role="dialog">
+                                                            <div class="modal fade" id="pupUp" role="dialog">
                                                                 <div class="modal-dialog" style="color: #000000;">
                                                                     <!--Modal content-->
                                                                     <div class="modal-content">
@@ -108,7 +101,7 @@
                                                                             <p th:text="'Urzytkownik  '
                                                                             + ${user.getEmail()}
                                                                             + ' zostanie trwale usuniety z bazy danych. Jesli jesteś pewien kliknij Zatwierdz'">
-                                                                                Urzytkownik zostanie trwale usuniety z
+                                                                                Urzytkownik zostanie usuniety z
                                                                                 bazy danych.<br>
                                                                                 Jesli jesteś pewien kliknij Zatwierdz
                                                                             </p>
@@ -118,12 +111,13 @@
                                                                                   th:action="@{/user/{email}/active/{state}(email=${user.email}, state=3)}"
                                                                                   th:method="put">
                                                                                 <div class="modal-footer">
-                                                                                    <button class="btn btn-md btn-outline-success mr-3"
+                                                                                    <button class="btn btn-md btn-danger mr-3"
                                                                                             type="Submit">Usuń
                                                                                         urzytkownika
                                                                                     </button>
-                                                                                    <button class="btn btn-md btn-outline-success mr-3"
-                                                                                            data-dismiss="modal">Nie usuwaj
+                                                                                    <button class="btn btn-md mr-3"
+                                                                                            data-dismiss="modal">Nie
+                                                                                        usuwaj
                                                                                     </button>
                                                                                 </div>
                                                                             </form>
