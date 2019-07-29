@@ -33,7 +33,7 @@ public class ClientController {
 
 
     @GetMapping("/deleteClient")
-    public ModelAndView showDeleteUser() {
+    public ModelAndView showDeleteClient() {
         ModelAndView modelAndView = new ModelAndView();
         ClientDto client = new ClientDto();
         modelAndView.addObject("clientDto", client);
@@ -81,6 +81,15 @@ public class ClientController {
         return modelAndView;
     }
 
+    @PutMapping("client/{email}")
+    public ModelAndView addCarToUser(@PathVariable String email) {
+        ModelAndView modelAndView = new ModelAndView();
+        ClientDto clientDto = clientService.findClientByEmail(email);
+        modelAndView.addObject(clientDto);
+        modelAndView.setViewName("addVehicle");
+        return modelAndView;
+
+    }
     @DeleteMapping("/client")
     public ModelAndView deleteClient(ClientDto clientDto, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
