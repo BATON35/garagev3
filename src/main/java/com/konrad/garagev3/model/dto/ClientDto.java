@@ -1,11 +1,11 @@
 package com.konrad.garagev3.model.dto;
 
+import com.konrad.garagev3.model.dao.Vehicle;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
-
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
-import java.util.Objects;
+import java.util.List;
 
 @Data
 @Builder
@@ -23,6 +23,7 @@ public class ClientDto {
     @Email
     private String email;
     private String phoneNumber;
+    private List<VehicleDto> vehicles;
 
     // TODO: 15.07.2019  czy dto powinien impelmentowac hashCode and equals
 //    @Override

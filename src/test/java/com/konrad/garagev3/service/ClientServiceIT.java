@@ -53,6 +53,10 @@ public class ClientServiceIT {
     }
 
     @Test
+    public void addVehicleToClient() {
+    }
+
+    @Test
     public void clientNotExist() {
         Assert.assertNull(sut.findClientByEmail("mailNotEsist@pl"));
     }

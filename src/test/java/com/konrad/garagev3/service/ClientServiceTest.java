@@ -2,15 +2,18 @@ package com.konrad.garagev3.service;
 
 import com.konrad.garagev3.model.dao.Client;
 import com.konrad.garagev3.model.dto.ClientDto;
+import com.konrad.garagev3.model.dto.VehicleDto;
 import com.konrad.garagev3.repository.ClientRepository;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
@@ -74,11 +77,11 @@ public class ClientServiceTest {
     public void findAllClients() {
         final List result = sut.findAllActiveClients();
 
-        Assert.assertEquals(Arrays.asList(TEST_CLIENT_DTO_2, TEST_CLIENT_DTO_EXIST_IN_DATABASE),result);
+        Assert.assertEquals(Arrays.asList(TEST_CLIENT_DTO_2, TEST_CLIENT_DTO_EXIST_IN_DATABASE), result);
     }
 
     @Test
-    public void deactivateClient(){
+    public void deactivateClient() {
         Mockito.when(mockClientRepository
                 .findClientByEmail(TEST_ClIENT_ACTIVE_DTO.getEmail()))
                 .thenReturn(TEST_ClIENT_ACTIVE);
@@ -88,4 +91,16 @@ public class ClientServiceTest {
         Mockito.verify(mockClientRepository).save(any(Client.class));
     }
 
+//    @Ignore("not yet ready , Please ignore.")
+//    @Test
+//    public void addVehicleToClient() {
+//        Mockito.when(mockClientRepository.save(any(Client.class)))
+//                .thenReturn(TEST_CLIENT);
+//
+//        ClientDto result = sut.addVehicleToClient(TEST_CLIENT_DTO_VEHICLE.getEmail(), TEST_CLIENT_DTO_VEHICLE.getVehicles().get(0));
+//
+//        Assert.assertEquals(TEST_CLIENT_DTO, result);
+
+
+ //   }
 }

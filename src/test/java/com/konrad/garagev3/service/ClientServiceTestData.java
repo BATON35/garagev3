@@ -1,7 +1,11 @@
 package com.konrad.garagev3.service;
 
 import com.konrad.garagev3.model.dao.Client;
+import com.konrad.garagev3.model.dao.Vehicle;
 import com.konrad.garagev3.model.dto.ClientDto;
+import com.konrad.garagev3.model.dto.VehicleDto;
+
+import java.util.Collections;
 
 public class ClientServiceTestData {
     static final Client TEST_CLIENT = Client.builder()
@@ -52,6 +56,14 @@ public class ClientServiceTestData {
             .surname("surname2")
             .phoneNumber("333333333")
             .active(1)
+            .build();
+    static final ClientDto TEST_CLIENT_DTO_VEHICLE = ClientDto.builder()
+            .email("emailTest@pl")
+            .name("name")
+            .surname("surname")
+            .phoneNumber("000000000")
+            .active(1)
+            .vehicles(Collections.singletonList(VehicleDto.builder().brand("brand").build()))
             .build();
     static final Client TEST_ClIENT_ACTIVE = Client.builder()
             .email("emailTest2@pl")

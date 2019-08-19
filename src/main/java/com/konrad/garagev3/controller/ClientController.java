@@ -1,7 +1,9 @@
 package com.konrad.garagev3.controller;
 
 import com.konrad.garagev3.model.dto.ClientDto;
+import com.konrad.garagev3.model.dto.VehicleDto;
 import com.konrad.garagev3.service.ClientService;
+import com.konrad.garagev3.service.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,10 +16,12 @@ import javax.validation.Valid;
 @Controller
 public class ClientController {
     private final ClientService clientService;
+    private final VehicleService vehicleService;
 
     @Autowired
-    ClientController(ClientService ownerService) {
+    ClientController(ClientService ownerService, VehicleService vehicleService) {
         this.clientService = ownerService;
+        this.vehicleService = vehicleService;
     }
 
     @GetMapping("/addClient")
@@ -67,13 +71,13 @@ public class ClientController {
     }
 
     @PutMapping("/client/{email}/active")
-    public ModelAndView deactivateUser(@PathVariable(value = "email") String email) {
+    public ModelAndView deactivateClient(@PathVariable(value = "email") String email) {
         clientService.deactivateClient(email);
         return new ModelAndView("redirect:/client");
     }
 
     @GetMapping("/client/{email}")
-    public ModelAndView showUserDetails(@PathVariable String email) {
+    public ModelAndView showClientDetails(@PathVariable String email) {
         ModelAndView modelAndView = new ModelAndView();
         ClientDto clientDto = clientService.findClientByEmail(email);
         modelAndView.addObject(clientDto);
@@ -81,15 +85,36 @@ public class ClientController {
         return modelAndView;
     }
 
-    @PutMapping("client/{email}")
-    public ModelAndView addCarToUser(@PathVariable String email) {
+    @GetMapping("client/{email}/vehicle")
+    public ModelAndView showAddVehicle(@PathVariable String email) {
         ModelAndView modelAndView = new ModelAndView();
         ClientDto clientDto = clientService.findClientByEmail(email);
         modelAndView.addObject(clientDto);
+        modelAndView.addObject("vehicleDto", new VehicleDto());
         modelAndView.setViewName("addVehicle");
         return modelAndView;
 
     }
+
+    @PostMapping("client/{email}/vehicle")
+    public ModelAndView addVehicleToClient(@PathVariable String email, @Valid VehicleDto vehicleDto, ClientDto clientDto, BindingResult bindingResult) {
+        ModelAndView modelAndView = new ModelAndView();
+
+        VehicleDto vehicleExists = vehicleService.findVehicleByNumberPlate(vehicleDto.getNumberPlate());
+        if (vehicleExists != null) {
+            bindingResult.rejectValue("numberPlate", "error.vehicleDto",
+                    "Pojazd o tych tablicach: " + vehicleDto.getNumberPlate() + "  znajduje sie już w bazie danych");
+        }
+        if (bindingResult.hasErrors()) {
+            modelAndView.setViewName("addVehicle");
+        } else {
+            clientService.addVehicleToClient(email, vehicleDto);
+            modelAndView.addObject("successMessage", "Dodano pojazd");
+            modelAndView.setViewName("addVehicle");
+        }
+        return modelAndView;
+    }
+
     @DeleteMapping("/client")
     public ModelAndView deleteClient(ClientDto clientDto, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();

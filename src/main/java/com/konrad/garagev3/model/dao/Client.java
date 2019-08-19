@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -30,4 +31,8 @@ public class Client implements Serializable, Cloneable {
     private String surname;
     private String email;
     private String phoneNumber;
+
+    public void addVehicle(Vehicle vehicle) {
+        this.vehicles.add(vehicle);
+    }
 }

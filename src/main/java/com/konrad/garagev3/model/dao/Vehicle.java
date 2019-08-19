@@ -1,7 +1,9 @@
 package com.konrad.garagev3.model.dao;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,6 +13,8 @@ import java.util.List;
 @Data
 @Entity
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Vehicle implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -18,6 +22,7 @@ public class Vehicle implements Serializable {
     private Date productionDate;
     private String brand;
     private String model;
+    private String numberPlate;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "workshop_id")
     private Workshop workshop;
