@@ -114,7 +114,7 @@ class UserServiceTestData {
             .roles(ALL_ROLES)
             .active(1)
             .build();
-    static final UserDto TEST_USER_DTO_2 = UserDto.builder()
+    static final UserDto TEST_USER_DTO_1 = UserDto.builder()
             .name("user_1")
             .email("test@test_1.com")
             .active(1)

@@ -14,6 +14,7 @@ public class ClientServiceTestData {
             .name("name")
             .surname("surname")
             .phoneNumber("121212112")
+            .vehicles(Collections.emptyList())
             .build();
     static final Client TEST_CLIENT_2 = Client.builder()
             .email("emailTest2@pl")
@@ -21,6 +22,7 @@ public class ClientServiceTestData {
             .surname("surname2")
             .phoneNumber("4444444444")
             .active(1)
+            .vehicles(Collections.emptyList())
             .build();
     static final ClientDto TEST_CLIENT_DTO_EXIST_IN_DATABASE = ClientDto.builder()
             .active(1)
@@ -28,6 +30,7 @@ public class ClientServiceTestData {
             .name("name")
             .surname("surname")
             .phoneNumber("121212112")
+            .vehicles(Collections.emptyList())
             .build();
     static final ClientDto TEST_CLIENT_DTO_TO_SAVE = ClientDto.builder()
             .email("toSave@pl")
@@ -42,6 +45,7 @@ public class ClientServiceTestData {
             .surname("surname2")
             .phoneNumber("4444444444")
             .active(1)
+            .vehicles(Collections.emptyList())
             .build();
     static final ClientDto TEST_CLIENT_DTO = ClientDto.builder()
             .email("emailTest@pl")
@@ -49,6 +53,7 @@ public class ClientServiceTestData {
             .surname("surname")
             .phoneNumber("000000000")
             .active(1)
+            .vehicles(Collections.emptyList())
             .build();
     static final ClientDto TEST_CLIENT_DTO_3 = ClientDto.builder()
             .email("emailTest3@pl")

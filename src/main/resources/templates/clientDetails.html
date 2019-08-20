@@ -78,17 +78,21 @@
                                                 </thead>
                                                 <tr>
                                                     <td style="color: #000000" th:text="${clientDto.name}">Name</td>
-                                                    <td style="color: #000000" th:text="${clientDto.getSurname()}">Name</td>
+                                                    <td style="color: #000000" th:text="${clientDto.getSurname()}">
+                                                        Name
+                                                    </td>
                                                     <td style="color: #000000" th:text="${clientDto.email}">Email</td>
-                                                    <td style="color: #000000" th:text="${clientDto.phoneNumber}">Email</td>
+                                                    <td style="color: #000000" th:text="${clientDto.phoneNumber}">
+                                                        Email
+                                                    </td>
                                                     <td>
                                                         <div class="form-group">
                                                             <!--<form class="form-horizontal"-->
-                                                                  <!--th:action="@{/user/{email}/active/{state}(email=${clientDto.email}, state=3)}"-->
-                                                                  <!--th:method="put">-->
-                                                                <!--<button class="btn btn-md btn-outline-success mr-3"-->
-                                                                        <!--type="Submit">Usuń urzytkownika-->
-                                                                <!--</button>-->
+                                                            <!--th:action="@{/user/{email}/active/{state}(email=${clientDto.email}, state=3)}"-->
+                                                            <!--th:method="put">-->
+                                                            <!--<button class="btn btn-md btn-outline-success mr-3"-->
+                                                            <!--type="Submit">Usuń urzytkownika-->
+                                                            <!--</button>-->
                                                             <!--</form>-->
                                                         </div>
                                                     </td>
@@ -100,6 +104,55 @@
                             </div>
                         </div>
                     </section>
+                    <p></p>
+                    <section>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5 style="color: #000000" th:text="'Auta przypisane do lienta: ' + ${clientDto.name}">Auta nalezace do </h5>
+                                        </div>
+                                        <div>
+                                            <table class="table table-striped">
+                                                <thead class="thead-dark">
+                                                <tr>
+                                                    <th>Numer rejestracyjny</th>
+                                                    <th>Marka</th>
+                                                    <th>Model</th>
+                                                    <th>VIN</th>
+                                                    <th></th>
+                                                </tr>
+                                                </thead>
+                                                <tr>
+                                                    <td style="color: #000000" th:text="${clientDto.name}">Name</td>
+                                                    <td style="color: #000000" th:text="${clientDto.getSurname()}">
+                                                        Name
+                                                    </td>
+                                                    <td style="color: #000000" th:text="${clientDto.email}">Email</td>
+                                                    <td style="color: #000000" th:text="${clientDto.phoneNumber}">
+                                                        Email
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group">
+                                                            <!--<form class="form-horizontal"-->
+                                                            <!--th:action="@{/user/{email}/active/{state}(email=${clientDto.email}, state=3)}"-->
+                                                            <!--th:method="put">-->
+                                                            <!--<button class="btn btn-md btn-outline-success mr-3"-->
+                                                            <!--type="Submit">Usuń urzytkownika-->
+                                                            <!--</button>-->
+                                                            <!--</form>-->
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
                 </div>
             </div>
         </div>

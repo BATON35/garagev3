@@ -97,7 +97,7 @@ public class ClientController {
     }
 
     @PostMapping("client/{email}/vehicle")
-    public ModelAndView addVehicleToClient(@PathVariable String email, @Valid VehicleDto vehicleDto, ClientDto clientDto, BindingResult bindingResult) {
+    public ModelAndView addVehicleToClient(@PathVariable String email, @Valid VehicleDto vehicleDto, BindingResult bindingResult, ClientDto clientDto) {
         ModelAndView modelAndView = new ModelAndView();
 
         VehicleDto vehicleExists = vehicleService.findVehicleByNumberPlate(vehicleDto.getNumberPlate());

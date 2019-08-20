@@ -4,9 +4,7 @@ import com.konrad.garagev3.model.dao.User;
 import com.konrad.garagev3.model.dto.UserDto;
 import com.konrad.garagev3.repository.RoleRepository;
 import com.konrad.garagev3.repository.UserRepository;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -34,15 +32,17 @@ public class UserServiceTest {
 
     @Before
     public void setUp() {
-       // initMocks(this);
+        // initMocks(this);
         userServiceUnderTest = new UserService(mockUserRepository,
                 mockRoleRepository,
                 mockBCryptPasswordEncoder);
         Mockito.when(mockUserRepository.save(any(User.class))).thenReturn(TEST_USER);
         Mockito.when(mockUserRepository.findAllActiveUsers()).thenReturn(Arrays.asList(TEST_USER, TEST_USER_1));
         Mockito.when(mockUserRepository.findByEmail(TEST_USER.getEmail())).thenReturn(TEST_USER);
-       // Mockito.when(mockRoleRepository.findAll()).thenReturn(new ArrayList<>(ALL_ROLES));
+//         Mockito.when(mockRoleRepository.findAll()).thenReturn(new ArrayList<>(ALL_ROLES));
     }
+
+
 
     @Test
     public void saveUser() {
@@ -117,10 +117,10 @@ public class UserServiceTest {
     }
 
     @Test
-    public void findAllUsers() {
+    public void findAllActiveUsers() {
 
         List users = userServiceUnderTest.findAllActiveUsers();
 
-        Assert.assertEquals(Arrays.asList(TEST_USER_DTO, TEST_USER_DTO_2), users);
+        Assert.assertEquals(Arrays.asList(TEST_USER_DTO, TEST_USER_DTO_1), users);
     }
 }

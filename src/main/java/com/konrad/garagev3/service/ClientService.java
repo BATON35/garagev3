@@ -69,8 +69,7 @@ public class ClientService {
     // TODO: 09.08.2019 czy metoda moze zwaracac np boolean zamiast ClientDto
     public ClientDto addVehicleToClient(String email, VehicleDto vehicleDto) {
         Client client = clientRepository.findClientByEmail(email);
-      //  client.addVehicle(vehicleDtoMapper.vehicleDtoToVehicle(vehicleDto));
-        client.setName("new name");
+        client.addVehicle(vehicleDtoMapper.vehicleDtoToVehicle(vehicleDto));
         return clientMapper.ClientToClientDto(clientRepository.save(client));
 
     }

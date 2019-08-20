@@ -20,7 +20,7 @@ public class ClientDto {
     @Length(min = 3, max = 127, message = "Pole nazwisko musi musi składać sie z co najmniej trzech liter")
     @NotEmpty(message = "Wypełnij pole nazwisko klienta")
     private String surname;
-    @Email
+    @Email(message = "Podaj poprawny adres email")
     private String email;
     private String phoneNumber;
     private List<VehicleDto> vehicles;

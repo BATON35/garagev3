@@ -34,8 +34,7 @@
                         <div class="col-md-12 align-self-center">
                             <div class="card p-4">
                                 <h1 style="color: #000000;">Dodaj pojazd</h1>
-                                <p style="color: #000000;" th:text="'vehicles  ' + ${vehicleDto}">
-                                </p>
+                                <!--<p style="color: #000000;" th:text="'vehicles  ' + ${vehicleDto}"></p>-->
                                 <div class="card-body">
                                     <hr>
                                     <div>
@@ -66,22 +65,21 @@
                                                        style="color: #FF1C19;"></label>
                                             </div>
                                         </div>
-                                        <!--<div class="col-md-7">-->
-                                        <!--<div class="form-group">-->
-                                        <!--<input type="text" th:field="*{phoneNumber}" class="form-control"-->
-                                        <!--placeholder="phoneNumber"/>-->
-                                        <!--<label th:if="${#fields.hasErrors('phoneNumber')}"-->
-                                        <!--th:errors="*{phoneNumber}"-->
-                                        <!--style="color: #FF1C19;"></label>-->
-                                        <!--</div>-->
-                                        <!--</div>-->
+                                        <div class="col-md-7">
+                                            <div class="form-group">
+                                                <input type="text" th:field="*{numberPlate}" class="form-control"
+                                                       placeholder="numer rejestracyjny"/>
+                                                <label th:if="${#fields.hasErrors('numberPlate')}" th:errors="*{numberPlate}"
+                                                       style="color: #FF1C19;"></label>
+                                            </div>
+                                        </div>
                                         <div class="col-7">
                                             <div class="form-group">
                                                 <input type="submit" value="Zatwierdz"
                                                        class="btn btn-lg btn-outline-primary btn-block">
                                             </div>
                                         </div>
-                                        <!--<h2><span class="text-success" th:utext="${successMessage}"></span></h2>-->
+                                        <h2><span class="text-success" th:utext="${successMessage}"></span></h2>
                                     </div>
                                 </div>
                             </div>
