@@ -16,6 +16,7 @@ public interface ClientRepository extends JpaRepository<Client, Integer> {
 
     @Query(value = " select * from client u where u.active = 1", nativeQuery = true)
     List<Client> findAllActiveClients();
+  //  List<Client> findByActiveIsTrue();
 
     void deleteClientByEmail(String mail);
 }

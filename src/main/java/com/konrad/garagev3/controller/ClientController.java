@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 public class ClientController {
@@ -80,6 +81,8 @@ public class ClientController {
     public ModelAndView showClientDetails(@PathVariable String email) {
         ModelAndView modelAndView = new ModelAndView();
         ClientDto clientDto = clientService.findClientByEmail(email);
+        List vehicles = vehicleService.findVehicleByClientMail(clientDto.getEmail());
+        clientDto.setVehicles(vehicles);
         modelAndView.addObject(clientDto);
         modelAndView.setViewName("clientDetails");
         return modelAndView;
@@ -108,7 +111,7 @@ public class ClientController {
         if (bindingResult.hasErrors()) {
             modelAndView.setViewName("addVehicle");
         } else {
-            clientService.addVehicleToClient(email, vehicleDto);
+            vehicleService.saveVehicle(vehicleDto, email);
             modelAndView.addObject("successMessage", "Dodano pojazd");
             modelAndView.setViewName("addVehicle");
         }

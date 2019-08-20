@@ -111,7 +111,9 @@
                                 <div class="col">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h5 style="color: #000000" th:text="'Auta przypisane do lienta: ' + ${clientDto.name}">Auta nalezace do </h5>
+                                            <h5 style="color: #000000"
+                                                th:text="'Auta przypisane do klienta: ' + ${clientDto.name}">Auta
+                                                nalezace do </h5>
                                         </div>
                                         <div>
                                             <table class="table table-striped">
@@ -120,19 +122,15 @@
                                                     <th>Numer rejestracyjny</th>
                                                     <th>Marka</th>
                                                     <th>Model</th>
-                                                    <th>VIN</th>
+                                                    <th>Data produkcji</th>
                                                     <th></th>
                                                 </tr>
                                                 </thead>
-                                                <tr>
-                                                    <td style="color: #000000" th:text="${clientDto.name}">Name</td>
-                                                    <td style="color: #000000" th:text="${clientDto.getSurname()}">
-                                                        Name
-                                                    </td>
-                                                    <td style="color: #000000" th:text="${clientDto.email}">Email</td>
-                                                    <td style="color: #000000" th:text="${clientDto.phoneNumber}">
-                                                        Email
-                                                    </td>
+                                                <tr th:each="vehicle : ${clientDto.vehicles}">
+                                                    <td style="color: #000000" th:text="${vehicle.numberPlate}">Name</td>
+                                                    <td style="color: #000000" th:text="${vehicle.brand}">Name</td>
+                                                    <td style="color: #000000" th:text="${vehicle.model}">Email</td>
+                                                    <td style="color: #000000" th:text="${vehicle.productionDate}">Email</td>
                                                     <td>
                                                         <div class="form-group">
                                                             <!--<form class="form-horizontal"-->

@@ -18,10 +18,9 @@ import java.util.List;
 public class Client implements Serializable, Cloneable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-  //  @Column(name = "client_id")
+    @Column(name = "client_id")
     private int id;
     @OneToMany(
-            mappedBy = "client",
             cascade = CascadeType.ALL,
             orphanRemoval = true,
             fetch = FetchType.EAGER
