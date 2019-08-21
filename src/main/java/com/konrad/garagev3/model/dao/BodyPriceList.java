@@ -1,7 +1,6 @@
 package com.konrad.garagev3.model.dao;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.List;
 
 @Entity
@@ -9,7 +8,7 @@ public class BodyPriceList {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private long id;
     @ManyToMany(cascade = {
             CascadeType.PERSIST,
             CascadeType.MERGE

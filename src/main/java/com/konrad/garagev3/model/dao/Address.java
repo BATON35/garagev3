@@ -4,7 +4,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @NoArgsConstructor
 @Data
@@ -12,7 +11,7 @@ import java.io.Serializable;
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private long id;
     private String city;
     private String street;
     private String postcode;

@@ -3,8 +3,6 @@ package com.konrad.garagev3.model.dao;
 import lombok.*;
 
 import javax.persistence.*;
-import java.io.Serializable;
-import java.util.Objects;
 import java.util.Set;
 
 @Data
@@ -18,7 +16,7 @@ public class User{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_id")
-    private int id;
+    private long id;
     private String email;
     private String password;
     private String name;

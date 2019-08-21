@@ -4,7 +4,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.List;
 
 @Entity
@@ -12,7 +11,7 @@ import java.util.List;
 @Data
 public class Workshop  {
     @Id
-    private int id;
+    private long id;
     private String name;
     //    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @OneToOne(fetch = FetchType.LAZY)

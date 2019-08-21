@@ -9,7 +9,6 @@ import com.konrad.garagev3.repository.UserRepository;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -59,7 +58,7 @@ public class UserService {
         return roleRepository.findAll();
     }
 
-    Role findRoleById(int id) {
+    Role findRoleById(long id) {
         return roleRepository.findById(id);
     }
 

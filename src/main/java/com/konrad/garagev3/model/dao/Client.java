@@ -6,8 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -19,7 +17,7 @@ public class Client{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "client_id")
-    private int id;
+    private long id;
     @OneToMany(
             cascade = CascadeType.ALL,
             orphanRemoval = true,
