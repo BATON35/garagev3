@@ -1,14 +1,21 @@
 package com.konrad.garagev3.model.dao;
 
+import lombok.*;
+
 import javax.persistence.*;
 import java.util.List;
 
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Data
 @Entity
+@EqualsAndHashCode
 public class BodyPriceList {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    @GeneratedValue
+    private Long id;
     @ManyToMany(cascade = {
             CascadeType.PERSIST,
             CascadeType.MERGE

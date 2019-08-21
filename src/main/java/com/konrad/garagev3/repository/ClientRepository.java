@@ -8,15 +8,15 @@ import org.springframework.stereotype.Repository;
 import javax.transaction.Transactional;
 import java.util.List;
 
-@Repository
-public interface ClientRepository extends JpaRepository<Client, Long> {
-    Client findClientByEmail(String email);
 
-    Client findClientBySurnameAndName(String surname, String name);
+public interface ClientRepository extends JpaRepository<Client, Long> {
+    Client findByEmail(String email);
+
+    Client findBySurnameAndName(String surname, String name);
 
     @Query(value = " select * from client u where u.active = 1", nativeQuery = true)
     List<Client> findAllActiveClients();
   //  List<Client> findByActiveIsTrue();
 
-    void deleteClientByEmail(String mail);
+    void deleteByEmail(String mail);
 }

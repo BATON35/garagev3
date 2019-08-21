@@ -9,11 +9,12 @@ import com.konrad.garagev3.repository.ClientRepository;
 import com.konrad.garagev3.repository.VehicleRepository;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 @Service
 public class VehicleService {
@@ -34,19 +35,22 @@ public class VehicleService {
 
     public Vehicle saveVehicle(VehicleDto vehicleDto, String mail) {
         //todo doczytac SecurityContextHolder
-        // String clientName = SecurityContextHolder.getContext().getAuthentication().getName();
-        //vehicleDto.setClient(clientRepository.findClientByEmail(clientName));
-        vehicleDto.setClient(clientRepository.findClientByEmail(mail));
+        // String clientName = SecurityContextHolder.getContext().getAuthentication().getRole();
+        //vehicleDto.setClient(clientRepository.findByEmail(clientName));
+        vehicleDto.setClient(clientRepository.findByEmail(mail));
         return vehicleRepository.save(vehicleMapper.vehicleDtoToVehicle(vehicleDto));
     }
 
-    public List findVehicleByClientMail(String email) {
-        Client client = clientRepository.findClientByEmail(email);
+    public List<VehicleDto> findVehicleByClientMail(String email) {
+        Client client = clientRepository.findByEmail(email);
         List<Vehicle> vehicles = vehicleRepository.findByClientId(client.getId());
         ArrayList vehiclesDto = new ArrayList();
         for (Vehicle vehicle : vehicles) {
             vehiclesDto.add(vehicleMapper.vehicleToVehicleDto(vehicle));
         }
-        return vehiclesDto;
+        return vehicles
+                .stream()
+                .map(vehicleMapper::vehicleToVehicleDto)
+                .collect(Collectors.toList());
     }
 }

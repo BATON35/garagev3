@@ -2,18 +2,15 @@ package com.konrad.garagev3.service;
 
 import com.konrad.garagev3.model.dao.Client;
 import com.konrad.garagev3.model.dto.ClientDto;
-import com.konrad.garagev3.model.dto.VehicleDto;
 import com.konrad.garagev3.repository.ClientRepository;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
@@ -32,9 +29,9 @@ public class ClientServiceTest {
     public void setUp() {
         // initMocks(this);
         sut = new ClientService(mockClientRepository);
-        Mockito.when(mockClientRepository.findClientByEmail(TEST_CLIENT.getEmail())).thenReturn(TEST_CLIENT);
+        Mockito.when(mockClientRepository.findByEmail(TEST_CLIENT.getEmail())).thenReturn(TEST_CLIENT);
         Mockito.when(mockClientRepository.save(TEST_CLIENT)).thenReturn(TEST_CLIENT);
-        Mockito.when(mockClientRepository.findClientBySurnameAndName(
+        Mockito.when(mockClientRepository.findBySurnameAndName(
                 TEST_CLIENT.getSurname(), TEST_CLIENT.getName())).thenReturn(TEST_CLIENT);
         Mockito.when(mockClientRepository.findAllActiveClients()).thenReturn(Arrays.asList(
                 TEST_CLIENT,
@@ -83,7 +80,7 @@ public class ClientServiceTest {
     @Test
     public void deactivateClient() {
         Mockito.when(mockClientRepository
-                .findClientByEmail(TEST_ClIENT_ACTIVE_DTO.getEmail()))
+                .findByEmail(TEST_ClIENT_ACTIVE_DTO.getEmail()))
                 .thenReturn(TEST_ClIENT_ACTIVE);
 
         sut.deactivateClient(TEST_ClIENT_ACTIVE.getEmail());

@@ -1,26 +1,26 @@
 package com.konrad.garagev3.model.dao;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
 
-@Entity
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Data
+@Entity
+@EqualsAndHashCode
 public class Workshop  {
     @Id
-    private long id;
+    @GeneratedValue
+    private Long id;
     private String name;
     //    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @OneToOne(fetch = FetchType.LAZY)
-    @MapsId
+    @JoinColumn(name = "address_id")
     private Address address;
-    @OneToMany(
-            mappedBy = "workshop",
-            orphanRemoval = true
-    )
+    @OneToMany(mappedBy = "workshop", orphanRemoval = true)
     private List<Vehicle> vehicles;
 //    @OneToMany(
 //            mappedBy = "workshop",

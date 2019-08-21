@@ -4,16 +4,15 @@ import lombok.*;
 
 import javax.persistence.*;
 
-@Data
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode
+@AllArgsConstructor
+@Builder
+@Data
 @Entity
+@EqualsAndHashCode
 public class Role {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "role_id")
-    private long id;
+    @GeneratedValue
+    private Long id;
     private String role;
 }

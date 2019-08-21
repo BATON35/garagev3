@@ -12,8 +12,10 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service("userService")
 public class UserService {
@@ -50,7 +52,7 @@ public class UserService {
         User user = userMapper.userDtoToUser(userDto);
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setActive(1);
-       // user.setRoles(new LinkedHashSet<>(user.getRoles()));
+        // user.setRoles(new LinkedHashSet<>(user.getRoles()));
         return userMapper.userToUserDto(userRepository.save(user));
     }
 
@@ -58,14 +60,13 @@ public class UserService {
         return roleRepository.findAll();
     }
 
-    Role findRoleById(long id) {
-        return roleRepository.findById(id);
+    public Role findRoleById(Long id) {
+        return roleRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Role with id " + id + " doesn't exist"));
     }
 
-    // TODO: 09.07.2019 co powinna zwrocic funkcja delete 
     @Transactional
     public void deleteUser(String email) {
-        userRepository.deleteUserByEmail(email);
+        userRepository.deleteByEmail(email);
     }
 
     public UserDto deactivateUser(String email) {
@@ -74,7 +75,7 @@ public class UserService {
         return userMapper.userToUserDto(userRepository.save(user));
     }
 
-    UserDto activateUser(String email) {
+    public UserDto activateUser(String email) {
         User user = userRepository.findByEmail(email);
         user.setActive(1);
         return userMapper.userToUserDto(userRepository.save(user));
@@ -83,10 +84,9 @@ public class UserService {
     public List<UserDto> findAllActiveUsers() {
         List<User> users = userRepository.findAllActiveUsers();
         users.sort(Comparator.comparing(User::getEmail));
-        List<UserDto> usersDto = new ArrayList<>();
-        for (User user: users) {
-          usersDto.add(userMapper.userToUserDto(user));
-        }
-        return usersDto;
+        return users
+                .stream()
+                .map(userMapper::userToUserDto)
+                .collect(Collectors.toList());
     }
 }

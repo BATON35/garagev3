@@ -1,22 +1,15 @@
 package com.konrad.garagev3.repository;
 
 import com.konrad.garagev3.model.dao.User;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository("userRepository")
-public interface UserRepository extends CrudRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, Long> {
     User findByEmail(String email);
 
-    User findUserById(long id);
-
-    // TODO: 05.07.2019 Should this method retun eny value
-    void deleteUserByEmail(String email);
-
-    List<User> findAll();
+    void deleteByEmail(String email);
 
     @Query(value = " select * from user u where u.active = 1", nativeQuery = true)
     List<User> findAllActiveUsers();

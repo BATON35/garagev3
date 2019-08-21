@@ -55,7 +55,7 @@ public class ClientController {
     @PostMapping("/client")
     public ModelAndView addClient(@Valid ClientDto client, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
-//        ClientDto clientExists = clientService.findClientBySurnameAndName(client.getSurname(), client.getName());
+//        ClientDto clientExists = clientService.findClientBySurnameAndName(client.getSurname(), client.getRole());
         ClientDto clientExists = clientService.findClientByEmail(client.getEmail());
         if (clientExists != null) {
             bindingResult.rejectValue("email", "error.client",

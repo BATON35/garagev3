@@ -7,17 +7,10 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 @SpringBootApplication
-@EntityScan(basePackages = "com.konrad.garagev3")
-public class Garagev3Application extends SpringBootServletInitializer {
+public class Garagev3Application {
 
     public static void main(String[] args) {
         SpringApplication.run(Garagev3Application.class, args);
     }
-
-    @Override
-    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-        return builder.sources(Garagev3Application.class);
-    }
-
 }
 

@@ -12,17 +12,14 @@ import java.util.Set;
 @Entity
 @EqualsAndHashCode
 public class User{
-    // TODO: 10.07.2019 czy klasa client moze rozszezac klase user - problmem jest pole haslo ktorego klient nie powinien posiadac 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "user_id")
-    private long id;
+    @GeneratedValue
+    private Long id;
     private String email;
     private String password;
     private String name;
-    private int active;
+    private Integer active;
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 }

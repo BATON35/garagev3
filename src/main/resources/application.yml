@@ -1,0 +1,44 @@
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/login?useSSL=true
+    username: root
+    password: aaaaaa
+    testWhileIdle: true
+    validationQuery: SELECT 1
+    initialization-mode: always
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQL5Dialect
+
+  queries:
+    users-query: select email, password, active from user where email=?
+    roles-query: select u.email, r.role from user u inner join user_role ur on(u.id=ur.user_id) inner join role r on(ur.role_id=r.id) where u.email=?
+
+  thymeleaf:
+    cache: false
+    mode: LEGACYHTML5
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: twojwarsztatsamochodowy@gmail.com
+    password: Aaaaaa84
+    properties:
+      mail:
+        smtp:
+          auth: true
+        starttls:
+          enable: true
+
+config:
+  stopBubbling: true
+
+lombok:
+  addLombokGeneratedAnnotation: true

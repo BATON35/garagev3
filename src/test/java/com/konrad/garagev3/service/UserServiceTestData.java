@@ -12,9 +12,9 @@ import java.util.function.ToDoubleBiFunction;
 class UserServiceTestData {
     static Set<Role> ALL_ROLES = new LinkedHashSet<>(
             Arrays.asList(
-                    new Role(1, "ROLE_ADMIN"),
-                    new Role(2, "ROLE_USER"),
-                    new Role(3, "ROLE_EMPLOYEE")
+                    new Role(1L, "ROLE_ADMIN"),
+                    new Role(2L, "ROLE_USER"),
+                    new Role(3L, "ROLE_EMPLOYEE")
             )
     );
 

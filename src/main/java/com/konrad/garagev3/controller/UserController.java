@@ -26,7 +26,7 @@ public class UserController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("userDto", new UserDto());
         modelAndView.addObject("allRoles", userService.findAllRoles());
-        modelAndView.addObject("role", new Role());
+        modelAndView.addObject("name", new Role());
         modelAndView.setViewName("addUser");
         return modelAndView;
     }
@@ -58,14 +58,14 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             modelAndView.addObject("user", new UserDto());
             modelAndView.addObject("allRoles", userService.findAllRoles());
-            modelAndView.addObject("role", new Role());
+            modelAndView.addObject("name", new Role());
             modelAndView.setViewName("addUser");
         } else {
             userService.saveUserWithPrivileges(user);
             modelAndView.addObject("successMessage", "Dodano nowego urzytkownika");
             modelAndView.addObject("user", new UserDto());
             modelAndView.addObject("allRoles", userService.findAllRoles());
-            modelAndView.addObject("role", new Role());
+            modelAndView.addObject("name", new Role());
             modelAndView.setViewName("addUser");
 
         }
