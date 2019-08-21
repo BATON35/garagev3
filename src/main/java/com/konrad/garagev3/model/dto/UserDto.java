@@ -29,18 +29,4 @@ public class UserDto {
     private int active;
     private Set<Role> roles;
   //  private Workshop workshop;
-//
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (o == null || getClass() != o.getClass()) return false;
-//        UserDto userDto = (UserDto) o;
-//        return Objects.equals(getEmail(), userDto.getEmail()) &&
-//                Objects.equals(getName(), userDto.getName());
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return Objects.hash(getEmail(), getName());
-//    }
 }

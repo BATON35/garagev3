@@ -24,22 +24,4 @@ public class ClientDto {
     private String email;
     private String phoneNumber;
     private List<VehicleDto> vehicles;
-
-    // TODO: 15.07.2019  czy dto powinien impelmentowac hashCode and equals
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (o == null || getClass() != o.getClass()) return false;
-//        ClientDto clientDto = (ClientDto) o;
-//        return getActive() == clientDto.getActive() &&
-//                Objects.equals(getName(), clientDto.getName()) &&
-//                Objects.equals(getSurname(), clientDto.getSurname()) &&
-//                Objects.equals(getEmail(), clientDto.getEmail()) &&
-//                Objects.equals(getPhoneNumber(), clientDto.getPhoneNumber());
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return Objects.hash(getName(), getActive(), getSurname(), getEmail(), getPhoneNumber());
-//    }
 }

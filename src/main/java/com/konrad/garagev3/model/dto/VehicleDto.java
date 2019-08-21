@@ -16,7 +16,7 @@ public class VehicleDto {
     private int id;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate productionDate;
-    @Length(min = 3, max = 127, message = "Pole imie musi musi składać sie z co najmniej trzech liter")
+    @Length(min = 3, max = 127, message = "Pole imie wymaga conajmniej trzech znakow")
     private String brand;
     private String model;
     private String numberPlate;
