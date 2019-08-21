@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.List;
 
 @Entity
-public class BodyPriceList implements Serializable {
+public class BodyPriceList {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

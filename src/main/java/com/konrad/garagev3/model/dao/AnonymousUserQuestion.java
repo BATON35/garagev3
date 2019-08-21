@@ -11,7 +11,7 @@ import java.io.Serializable;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AnonymousUserQuestion implements Serializable {
+public class AnonymousUserQuestion {
     private String message;
     private String name;
     private String mail;

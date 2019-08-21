@@ -10,7 +10,7 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @Data
-public class Workshop implements Serializable {
+public class Workshop  {
     @Id
     private int id;
     private String name;

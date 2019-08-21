@@ -9,7 +9,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Data
 @Entity
-public class Address implements Serializable {
+public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
