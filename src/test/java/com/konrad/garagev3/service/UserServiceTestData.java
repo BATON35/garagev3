@@ -7,7 +7,6 @@ import com.konrad.garagev3.model.dto.UserDto;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.Set;
-import java.util.function.ToDoubleBiFunction;
 
 class UserServiceTestData {
     static Set<Role> ALL_ROLES = new LinkedHashSet<>(
@@ -83,7 +82,6 @@ class UserServiceTestData {
             .roles(ALL_ROLES)
             .active(1)
             .build();
-    // TODO: 12.07.2019 problems with test occurred if roles are in local variable
     static final User TEST_USER = User.builder()
             .name("user")
             .email("test@test.com")

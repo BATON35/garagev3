@@ -4,7 +4,6 @@ import com.konrad.garagev3.mapper.ClientDtoMapper;
 import com.konrad.garagev3.mapper.VehicleDtoMapper;
 import com.konrad.garagev3.model.dao.Client;
 import com.konrad.garagev3.model.dto.ClientDto;
-import com.konrad.garagev3.model.dto.VehicleDto;
 import com.konrad.garagev3.repository.ClientRepository;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +43,7 @@ public class ClientService {
     }
 
     public List<ClientDto> findAllActiveClients() {
-        List<Client> clients = clientRepository.findAllActiveClients();
+        List<Client> clients = clientRepository.findByActiveIs(1);
         clients.sort(Comparator.comparing(Client::getEmail));
         List clientsDTO = new ArrayList();
         for (Client client : clients) {

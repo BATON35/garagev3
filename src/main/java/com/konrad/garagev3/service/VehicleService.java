@@ -35,7 +35,7 @@ public class VehicleService {
 
     public Vehicle saveVehicle(VehicleDto vehicleDto, String mail) {
         //todo doczytac SecurityContextHolder
-        // String clientName = SecurityContextHolder.getContext().getAuthentication().getRole();
+        // String clientName = SecurityContextHolder.getContext().getAuthentication().getName();
         //vehicleDto.setClient(clientRepository.findByEmail(clientName));
         vehicleDto.setClient(clientRepository.findByEmail(mail));
         return vehicleRepository.save(vehicleMapper.vehicleDtoToVehicle(vehicleDto));

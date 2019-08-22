@@ -96,10 +96,10 @@
                                             <table>
                                                 <div class="form-group">
                                                     <select th:field="*{roles}" class="form-control">
-                                                        <!--<option value="">Wybierz role</option>-->
+                                                        <!--<option value="">Wybierz name</option>-->
                                                         <option th:each="oneRole : ${allRoles}"
                                                                 th:value="${oneRole.id}"
-                                                                th:utext="${oneRole.role}"></option>
+                                                                th:utext="${oneRole.getName}"></option>
                                                     </select>
                                                 </div>
                                             </table>

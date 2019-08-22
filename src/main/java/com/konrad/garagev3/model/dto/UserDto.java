@@ -24,7 +24,7 @@ public class UserDto {
     @NotEmpty(message = "*Please provide your password")
     private String password;
     @Column(name = "name")
-    @NotEmpty(message = "*Please provide your role")
+    @NotEmpty(message = "*Please provide your name")
     private String name;
     private int active;
     private Set<Role> roles;

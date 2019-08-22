@@ -33,7 +33,7 @@ public class ClientServiceTest {
         Mockito.when(mockClientRepository.save(TEST_CLIENT)).thenReturn(TEST_CLIENT);
         Mockito.when(mockClientRepository.findBySurnameAndName(
                 TEST_CLIENT.getSurname(), TEST_CLIENT.getName())).thenReturn(TEST_CLIENT);
-        Mockito.when(mockClientRepository.findAllActiveClients()).thenReturn(Arrays.asList(
+        Mockito.when(mockClientRepository.findByActiveIs(1)).thenReturn(Arrays.asList(
                 TEST_CLIENT,
                 TEST_CLIENT_2));
     }
