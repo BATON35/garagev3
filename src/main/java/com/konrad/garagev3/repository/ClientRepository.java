@@ -2,10 +2,7 @@ package com.konrad.garagev3.repository;
 
 import com.konrad.garagev3.model.dao.Client;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Repository;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 
@@ -14,8 +11,6 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
 
     Client findBySurnameAndName(String surname, String name);
 
-    //    @Query(value = " select * from client u where u.active = 1", nativeQuery = true)
-    //List<Client> findAllActiveClients();
     // TODO: 22.08.2019 modify method to boolean parameter
     List<Client> findByActiveIs(int one);
 

@@ -82,7 +82,7 @@ public class UserService {
     }
 
     public List<UserDto> findAllActiveUsers() {
-        List<User> users = userRepository.findAllActiveUsers();
+        List<User> users = userRepository.findByActiveIs(1);
         users.sort(Comparator.comparing(User::getEmail));
         return users
                 .stream()

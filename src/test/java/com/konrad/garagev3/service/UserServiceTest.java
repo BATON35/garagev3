@@ -37,7 +37,7 @@ public class UserServiceTest {
                 mockRoleRepository,
                 mockBCryptPasswordEncoder);
         Mockito.when(mockUserRepository.save(any(User.class))).thenReturn(TEST_USER);
-        Mockito.when(mockUserRepository.findAllActiveUsers()).thenReturn(Arrays.asList(TEST_USER, TEST_USER_1));
+        Mockito.when(mockUserRepository.findByActiveIs(1)).thenReturn(Arrays.asList(TEST_USER, TEST_USER_1));
         Mockito.when(mockUserRepository.findByEmail(TEST_USER.getEmail())).thenReturn(TEST_USER);
 //         Mockito.when(mockRoleRepository.findAll()).thenReturn(new ArrayList<>(ALL_ROLES));
     }
