@@ -62,7 +62,7 @@
 <header id="page-header">
     <div class="container">
         <div class="row">
-            <div class="col-md-10 m-auto text-center">
+            <div class="col-md-12 m-auto text-center">
                 <div class="container">
                     <section>
                         <div class="container">
@@ -78,6 +78,7 @@
                                                 <tr>
                                                     <th>Imie</th>
                                                     <th>Email</th>
+                                                    <th></th>
                                                     <th></th>
                                                     <th></th>
                                                     <th></th>
@@ -104,6 +105,17 @@
                                                                   th:method="get">
                                                                 <button class="btn btn-md btn-outline-success mr-3"
                                                                         type="Submit">Dodaj pojazd
+                                                                </button>
+                                                            </form>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group">
+                                                            <form class="form-horizontal"
+                                                                  th:action="@{/editClient/{email} (email=${client.email})}"
+                                                                  th:method="get">
+                                                                <button class="btn btn-md btn-outline-success mr-3"
+                                                                        type="Submit">Edytuj dane
                                                                 </button>
                                                             </form>
                                                         </div>

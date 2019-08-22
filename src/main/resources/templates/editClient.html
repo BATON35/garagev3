@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"
+      xmlns="http://www.w3.org/1999/html">
 
 <head>
     <meta charset="UTF-8">
@@ -12,44 +13,13 @@
           integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
           crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/css/style.css}" href="../static/css/style.css">
-    <title>Bootstrap Theme</title>
+    <title>Edit Client</title>
 </head>
-<body>
-<nav class="navbar navbar-expand-sm navbar-dark bg-dark" th:replace="fragments/manBar :: nav">
-    <div class="container">
-        <div class="navbar-brand">
-            <a href="/admin" class="navbar-brand">Panel administratora</a>
-        </div>
 
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a href="/" class="nav-link">Strona Główna</a>
-                </li>
-                <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <form th:action="@{/deleteUser}">
-                        <button class="btn btn-md btn-outline-success mr-3"
-                                type="Submit">Usuń urzytkownika
-                        </button>
-                    </form>
-                </li>
-                <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <form th:action="@{/user}" th:method="get">
-                        <button class="btn btn-md btn-outline-success mr-3"
-                                type="Submit">Wyświetl urzytkowników
-                        </button>
-                    </form>
-                </li>
-                <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <form th:action="@{/logout}" method="get">
-                        <button class="btn btn-md btn-outline-danger mr-3" name="registration"
-                                type="Submit">Logout
-                        </button>
-                    </form>
-                </li>
-            </ul>
-        </div>
-    </div>
+<body>
+
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark" th:replace="fragments/manBar :: nav">
+
 </nav>
 
 <header id="page-header">
@@ -58,51 +28,46 @@
             <div class="col-md-6 m-auto text-center">
                 <div class="container">
                     <form class="form-horizontal"
-                          th:action="@{/user}" th:object="${userDto}" method="post">
+                          th:action="@{/editClient}" th:object="${clientDto}" method="post">
+
                         <div class="col-md-12 align-self-center">
                             <div class="card p-4">
-                                <h1 style="color: #000000;">Dodaj urzytkownika</h1>
+                                <h1 style="color: #000000;">Edytuj dane</h1>
                                 <div class="card-body">
                                     <hr>
                                     <div class="row justify-content-center">
                                         <div class="col-md-7">
                                             <div class="form-group">
                                                 <input type="text" th:field="*{name}" class="form-control"
-                                                       placeholder="Imie">
-                                                <label th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+                                                       placeholder="Name"/>
+                                                <label th:if="${#fields.hasErrors('surname')}" th:errors="*{name}"
+                                                       style="color: #FF1C19;"></label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <div class="form-group">
+                                                <input type="text" th:field="*{surname}" class="form-control"
+                                                       placeholder="Surname"/>
+                                                <label th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}"
                                                        style="color: #FF1C19;"></label>
                                             </div>
                                         </div>
                                         <div class="col-md-7">
                                             <div class="form-group">
                                                 <input type="text" th:field="*{email}" class="form-control"
-                                                       placeholder="Email"/>
+                                                       placeholder="emial"/>
                                                 <label th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
                                                        style="color: #FF1C19;"></label>
                                             </div>
                                         </div>
                                         <div class="col-md-7">
                                             <div class="form-group">
-                                                <input type="password" th:field="*{password}" class="form-control"
-                                                       id="password-field" placeholder="password"
-                                                       data-toggle="password"/>
-                                                <span toggle="#password-field"
-                                                      class="fa fa-fw fa-eye field-icon toggle-password"
-                                                      style="color: #000000;">
-                                                </span>
-                                                <label th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
+                                                <input type="text" th:field="*{phoneNumber}" class="form-control"
+                                                       placeholder="phoneNumber"/>
+                                                <label th:if="${#fields.hasErrors('phoneNumber')}"
+                                                       th:errors="*{phoneNumber}"
                                                        style="color: #FF1C19;"></label>
                                             </div>
-                                            <table>
-                                                <div class="form-group">
-                                                    <select th:field="*{roles}" class="form-control">
-                                                        <!--<option value="">Wybierz name</option>-->
-                                                        <option th:each="oneRole : ${allRoles}"
-                                                                th:value="${oneRole.id}"
-                                                                th:utext="${oneRole.name}"></option>
-                                                    </select>
-                                                </div>
-                                            </table>
                                         </div>
                                         <div class="col-7">
                                             <div class="form-group">
@@ -140,19 +105,5 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
         integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
         crossorigin="anonymous"></script>
-<script type="text/javascript">
-    $(".toggle-password").click(function () {
-
-        $(this).toggleClass("fa-eye fa-eye-slash");
-        var input = $($(this).attr("toggle"));
-        if (input.attr("type") == "password") {
-            input.attr("type", "password");
-        } else {
-            input.attr("type", "text");
-
-        }
-    });
-</script>
 </body>
-
 </html>

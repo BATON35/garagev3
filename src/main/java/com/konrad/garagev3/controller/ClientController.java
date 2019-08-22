@@ -77,6 +77,18 @@ public class ClientController {
         return new ModelAndView("redirect:/client");
     }
 
+    @PostMapping("/editClient")
+    public ModelAndView editClient(@Valid ClientDto clientDto) {
+        ModelAndView modelAndView = new ModelAndView();
+        ClientDto editedClient = clientService.findClientByEmail(clientDto.getEmail());
+      //  clientService.deleteClient(clientDto.getEmail());
+        clientService.saveClient(editedClient);
+        modelAndView.addObject("successMessage", "Edytowano klienta");
+        modelAndView.addObject(editedClient);
+        modelAndView.setViewName("clientDetails");
+        return modelAndView;
+    }
+
     @GetMapping("/client/{email}")
     public ModelAndView showClientDetails(@PathVariable String email) {
         ModelAndView modelAndView = new ModelAndView();
@@ -85,6 +97,18 @@ public class ClientController {
         clientDto.setVehicles(vehicles);
         modelAndView.addObject(clientDto);
         modelAndView.setViewName("clientDetails");
+        return modelAndView;
+    }
+
+
+    @GetMapping("/editClient/{email}")
+    public ModelAndView editClient(@PathVariable String email) {
+        ModelAndView modelAndView = new ModelAndView();
+        ClientDto clientDto = clientService.findClientByEmail(email);
+        List vehicles = vehicleService.findVehicleByClientMail(clientDto.getEmail());
+        clientDto.setVehicles(vehicles);
+        modelAndView.addObject(clientDto);
+        modelAndView.setViewName("editClient");
         return modelAndView;
     }
 
