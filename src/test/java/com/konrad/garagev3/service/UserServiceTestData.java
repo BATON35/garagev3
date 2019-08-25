@@ -48,6 +48,7 @@ class UserServiceTestData {
             .active(1)
             .build();
     static final UserDto TEST_USER2_DTO_EXIST_IN_DATABASE = UserDto.builder()
+            .id(2L)
             .email("user2ExistInDatabaseDto@pl")
             .name("exampleTester2")
             .password("exampleUser2Password")
@@ -55,6 +56,7 @@ class UserServiceTestData {
             .active(1)
             .build();
     static final UserDto TEST_USER3_DTO_EXIST_IN_DATABASE = UserDto.builder()
+            .id(3L)
             .email("user3ExistInDatabaseDto@pl")
             .name("exampleTester3")
             .password("exampleUser3Password")

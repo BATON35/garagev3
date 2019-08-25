@@ -9,6 +9,7 @@ import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -52,15 +53,31 @@ public class ClientService {
         return clientsDTO;
     }
 
-    public ClientDto deactivateClient(String email) {
-        Client client = clientRepository.findByEmail(email);
-        client.setActive(0);
-        return clientMapper.ClientToClientDto(clientRepository.save(client));
+    public ClientDto deactivateClient(Long id) {
+        return clientRepository.findById(id).map(client -> {
+            client.setActive(0);
+            return clientMapper.ClientToClientDto(clientRepository.save(client));
+        }).orElseThrow(() -> new EntityNotFoundException("Client with " + id + " doesn't exist"));
+//        client.setActive(0);
+//        return clientMapper.ClientToClientDto(clientRepository.save(client));
     }
 
     @Transactional
     public void deleteClient(String mail) {
         clientRepository.deleteByEmail(mail);
+
+        // clientRepository.delete(clientRepository.findByEmail(mail));
+    }
+
+    @Transactional
+    public ClientDto editClient(ClientDto clientDto) {
+        return clientRepository.findById(clientDto.getId()).map(client -> {
+            if(!client.getEmail().equals(clientDto.getEmail())){
+                client.setEmail(clientDto.getEmail());
+            }
+            client.setActive(1);
+            return clientMapper.ClientToClientDto(clientRepository.save(client));
+        }).orElseThrow(() -> new EntityNotFoundException("Client with " + clientDto.getId() + " doesn't exist"));
     }
 
 //    public ClientDto addVehicleToClient(String email, VehicleDto vehicleDto) {

@@ -13,13 +13,14 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(exclude = {"password", "active "})
+@EqualsAndHashCode(exclude = {"password", "active ", "id"})
 public class UserDto {
    // @Setter(AccessLevel.NONE)
    // private int id;
     @Email(message = "*Please provide a valid Email")
     @NotEmpty(message = "*Please provide an email")
     private String email;
+    private Long id;
     @Length(min = 5, message = "*Your password must have at least 5 characters")
     @NotEmpty(message = "*Please provide your password")
     private String password;

@@ -25,6 +25,7 @@ public class ClientServiceTestData {
             .vehicles(Collections.emptyList())
             .build();
     static final ClientDto TEST_CLIENT_DTO_EXIST_IN_DATABASE = ClientDto.builder()
+            .id(1L)
             .active(1)
             .email("emailTest@pl")
             .name("name")
@@ -33,6 +34,7 @@ public class ClientServiceTestData {
             .vehicles(Collections.emptyList())
             .build();
     static final ClientDto TEST_CLIENT_DTO_TO_SAVE = ClientDto.builder()
+            .id(1L)
             .email("toSave@pl")
             .name("nameToSave")
             .surname("toSave")

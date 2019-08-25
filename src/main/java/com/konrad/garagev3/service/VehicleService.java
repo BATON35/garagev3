@@ -11,6 +11,7 @@ import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collector;
@@ -52,5 +53,10 @@ public class VehicleService {
                 .stream()
                 .map(vehicleMapper::vehicleToVehicleDto)
                 .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public void deleteByClientId(long id) {
+        vehicleRepository.deleteByClient_id(id);
     }
 }

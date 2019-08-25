@@ -71,18 +71,21 @@ public class ClientController {
         return modelAndView;
     }
 
-    @PutMapping("/client/{email}/active")
-    public ModelAndView deactivateClient(@PathVariable(value = "email") String email) {
-        clientService.deactivateClient(email);
+    @PutMapping("/client/{id}/active")
+    public ModelAndView deactivateClient(@PathVariable Long id) {
+        clientService.deactivateClient(id);
+        return new ModelAndView("redirect:/client");
+    }
+    @GetMapping("/client/{id}/active")
+    public ModelAndView deactivateClient2(@PathVariable Long id) {
+        clientService.deactivateClient(id);
         return new ModelAndView("redirect:/client");
     }
 
     @PostMapping("/editClient")
     public ModelAndView editClient(@Valid ClientDto clientDto) {
         ModelAndView modelAndView = new ModelAndView();
-        ClientDto editedClient = clientService.findClientByEmail(clientDto.getEmail());
-      //  clientService.deleteClient(clientDto.getEmail());
-        clientService.saveClient(editedClient);
+        ClientDto editedClient = clientService.editClient(clientDto);
         modelAndView.addObject("successMessage", "Edytowano klienta");
         modelAndView.addObject(editedClient);
         modelAndView.setViewName("clientDetails");
@@ -153,6 +156,7 @@ public class ClientController {
         if (bindingResult.hasErrors()) {
             modelAndView.setViewName("deleteClient");
         } else {
+            vehicleService.deleteByClientId(clientService.findClientByEmail(clientDto.getEmail()).getId());
             clientService.deleteClient(clientDto.getEmail());
             modelAndView.addObject("successMessage", "User has been deleted successfully");
             modelAndView.addObject("clientDto", new ClientDto());
