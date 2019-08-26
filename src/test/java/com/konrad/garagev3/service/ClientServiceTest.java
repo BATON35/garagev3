@@ -11,11 +11,15 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.testcontainers.shaded.com.google.common.collect.Lists;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static com.konrad.garagev3.service.ClientServiceTestData.*;
+import static java.util.Arrays.*;
 import static org.mockito.ArgumentMatchers.any;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -34,9 +38,10 @@ public class ClientServiceTest {
         Mockito.when(mockClientRepository.save(any(Client.class))).thenReturn(TEST_CLIENT);
         Mockito.when(mockClientRepository.findBySurnameAndName(
                 TEST_CLIENT.getSurname(), TEST_CLIENT.getName())).thenReturn(TEST_CLIENT);
-        Mockito.when(mockClientRepository.findByActiveIs(1)).thenReturn(Arrays.asList(
-                TEST_CLIENT,
-                TEST_CLIENT_2));
+        Mockito.when(mockClientRepository.findByActiveIs(1)).thenReturn(Arrays.asList(TEST_CLIENT, TEST_CLIENT_2));
+//        Mockito.when(mockClientRepository.findByActiveIs(1)).thenReturn(Arrays.asList(
+//                TEST_CLIENT,
+//                TEST_CLIENT_2));
     }
 
     @Test
@@ -74,16 +79,14 @@ public class ClientServiceTest {
     @Test
     public void findAllClients() {
         final List result = sut.findAllActiveClients();
-
         Assert.assertEquals(Arrays.asList(TEST_CLIENT_DTO_2, TEST_CLIENT_DTO_EXIST_IN_DATABASE), result);
     }
 
     @Test
-    @Ignore
     public void deactivateClient() {
         Mockito.when(mockClientRepository
-                .findByEmail(TEST_ClIENT_ACTIVE_DTO.getEmail()))
-                .thenReturn(TEST_ClIENT_ACTIVE);
+                .findById(TEST_ClIENT_ACTIVE_DTO.getId()))
+                .thenReturn(Optional.ofNullable(TEST_ClIENT_ACTIVE));
 
         sut.deactivateClient(TEST_ClIENT_ACTIVE.getId());
 

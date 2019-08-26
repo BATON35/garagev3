@@ -7,6 +7,7 @@ import com.konrad.garagev3.model.dto.VehicleDto;
 
 import java.util.Collections;
 
+
 public class ClientServiceTestData {
     static final Client TEST_CLIENT = Client.builder()
             .active(1)
@@ -42,6 +43,7 @@ public class ClientServiceTestData {
             .active(1)
             .build();
     static final ClientDto TEST_CLIENT_DTO_2 = ClientDto.builder()
+            .id(2L)
             .email("emailTest2@pl")
             .name("name2")
             .surname("surname2")
@@ -73,6 +75,7 @@ public class ClientServiceTestData {
             .vehicles(Collections.singletonList(VehicleDto.builder().brand("brand").build()))
             .build();
     static final Client TEST_ClIENT_ACTIVE = Client.builder()
+            .id(1L)
             .email("emailTest2@pl")
             .name("name2")
             .surname("surname2")
@@ -81,6 +84,7 @@ public class ClientServiceTestData {
             .build();
 
     static final Client TEST_ClIENT_ACTIVE_DTO = Client.builder()
+            .id(1L)
             .email("emailTest2@pl")
             .name("name2")
             .surname("surname2")
