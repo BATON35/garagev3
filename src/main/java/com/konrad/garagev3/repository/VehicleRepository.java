@@ -8,7 +8,7 @@ import java.util.List;
 public interface VehicleRepository extends JpaRepository<Vehicle, Long> {
     Vehicle findByNumberPlate(String numberPlate);
 
-    void deleteByClient_id(long id);
+    void deleteByClientId(Long id);
 
     List<Vehicle> findByClientId(Long id);
 }

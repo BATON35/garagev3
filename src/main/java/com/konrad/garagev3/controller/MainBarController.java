@@ -8,7 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class MainBarController {
@@ -19,39 +18,39 @@ public class MainBarController {
         this.mailService = mailService;
     }
 
-    @RequestMapping(value = "/")
+    @GetMapping
     public String visitingCard() {
         return "visitingCard";
     }
 
-    @RequestMapping(value = "/about")
+    @GetMapping("/about")
     public String about() {
         return "about";
     }
 
-    @GetMapping(value = "/contact")
+    @GetMapping("/contact")
     public String contact(Model model) {
         model.addAttribute("mailData", new AnonymousUserQuestion());
         return "contact";
     }
 
-    @PostMapping(value = "/contact")
+    @PostMapping("/contact")
     public String contact2(Model model, @ModelAttribute("mailData") AnonymousUserQuestion anonymousUserQuestion) {
         mailService.sendEmail(anonymousUserQuestion);
         return "contact";
     }
 
-    @RequestMapping(value = "/services")
+    @GetMapping("/services")
     public String services() {
         return "services";
     }
 
-    @RequestMapping("/index")
+    @GetMapping("/index")
     public String index() {
         return "index";
     }
 
-    @RequestMapping("/blog")
+    @GetMapping("/blog")
     public String blog() {
         return "blog";
     }

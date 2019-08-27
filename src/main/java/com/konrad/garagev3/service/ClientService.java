@@ -29,18 +29,18 @@ public class ClientService {
     }
 
     public ClientDto findClientByEmail(String email) {
-        return clientMapper.ClientToClientDto(clientRepository.findByEmail(email));
+        return clientMapper.clientToClientDto(clientRepository.findByEmail(email));
     }
 
     public ClientDto saveClient(ClientDto clientDto) {
         ClientDtoMapper clientMapper = Mappers.getMapper(ClientDtoMapper.class);
-        Client client = clientMapper.ClientDtoToClient(clientDto);
+        Client client = clientMapper.clientDtoToClient(clientDto);
         client.setActive(1);
-        return clientMapper.ClientToClientDto(clientRepository.save(client));
+        return clientMapper.clientToClientDto(clientRepository.save(client));
     }
 
     public ClientDto findClientBySurnameAndName(String surname, String name) {
-        return clientMapper.ClientToClientDto(clientRepository.findBySurnameAndName(surname, name));
+        return clientMapper.clientToClientDto(clientRepository.findBySurnameAndName(surname, name));
     }
 
     public List<ClientDto> findAllActiveClients() {
@@ -48,7 +48,7 @@ public class ClientService {
         clients.sort(Comparator.comparing(Client::getEmail));
         List clientsDTO = new ArrayList();
         for (Client client : clients) {
-            clientsDTO.add(clientMapper.ClientToClientDto(client));
+            clientsDTO.add(clientMapper.clientToClientDto(client));
         }
         return clientsDTO;
     }
@@ -56,10 +56,10 @@ public class ClientService {
     public ClientDto deactivateClient(Long id) {
         return clientRepository.findById(id).map(client -> {
             client.setActive(0);
-            return clientMapper.ClientToClientDto(clientRepository.save(client));
+            return clientMapper.clientToClientDto(clientRepository.save(client));
         }).orElseThrow(() -> new EntityNotFoundException("Client with " + id + " doesn't exist"));
 //        client.setActive(0);
-//        return clientMapper.ClientToClientDto(clientRepository.save(client));
+//        return clientMapper.clientToClientDto(clientRepository.save(client));
     }
 
     @Transactional
@@ -76,14 +76,14 @@ public class ClientService {
                 client.setEmail(clientDto.getEmail());
             }
             client.setActive(1);
-            return clientMapper.ClientToClientDto(clientRepository.save(client));
+            return clientMapper.clientToClientDto(clientRepository.save(client));
         }).orElseThrow(() -> new EntityNotFoundException("Client with " + clientDto.getId() + " doesn't exist"));
     }
 
 //    public ClientDto addVehicleToClient(String email, VehicleDto vehicleDto) {
 //        Client client = clientRepository.findByEmail(email);
 //        client.addVehicle(vehicleDtoMapper.vehicleDtoToVehicle(vehicleDto));
-//        return clientMapper.ClientToClientDto(clientRepository.save(client));
+//        return clientMapper.clientToClientDto(clientRepository.save(client));
 //
 //    }
 }

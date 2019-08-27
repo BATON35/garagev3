@@ -18,6 +18,7 @@ import java.util.List;
 public class ClientController {
     private final ClientService clientService;
     private final VehicleService vehicleService;
+    private static final String CLIENT_DTO = "clientDto";
 
     @Autowired
     ClientController(ClientService ownerService, VehicleService vehicleService) {
@@ -30,7 +31,7 @@ public class ClientController {
         //Owner owner = Owner.builder().build();
         //   Vehicle vehicle = Vehicle.builder().build();
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("clientDto", new ClientDto());
+        modelAndView.addObject(CLIENT_DTO, new ClientDto());
         //   modelAndView.addObject("vehicle", vehicle);
         modelAndView.setViewName("addClient");
         return modelAndView;
@@ -41,7 +42,7 @@ public class ClientController {
     public ModelAndView showDeleteClient() {
         ModelAndView modelAndView = new ModelAndView();
         ClientDto client = new ClientDto();
-        modelAndView.addObject("clientDto", client);
+        modelAndView.addObject(CLIENT_DTO, client);
         modelAndView.setViewName("deleteClient");
         return modelAndView;
     }
@@ -72,12 +73,13 @@ public class ClientController {
     }
 
     @PutMapping("/client/{id}/active")
-    public ModelAndView deactivateClient(@PathVariable Long id) {
+    public ModelAndView deactivateClientPut(@PathVariable Long id) {
         clientService.deactivateClient(id);
         return new ModelAndView("redirect:/client");
     }
+
     @GetMapping("/client/{id}/active")
-    public ModelAndView deactivateClient2(@PathVariable Long id) {
+    public ModelAndView deactivateClient(@PathVariable Long id) {
         clientService.deactivateClient(id);
         return new ModelAndView("redirect:/client");
     }
@@ -159,7 +161,7 @@ public class ClientController {
             vehicleService.deleteByClientId(clientService.findClientByEmail(clientDto.getEmail()).getId());
             clientService.deleteClient(clientDto.getEmail());
             modelAndView.addObject("successMessage", "User has been deleted successfully");
-            modelAndView.addObject("clientDto", new ClientDto());
+            modelAndView.addObject(CLIENT_DTO, new ClientDto());
             modelAndView.setViewName("deleteClient");
         }
         return modelAndView;

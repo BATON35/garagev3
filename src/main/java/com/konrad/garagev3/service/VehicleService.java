@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @Service
@@ -57,6 +56,6 @@ public class VehicleService {
 
     @Transactional
     public void deleteByClientId(long id) {
-        vehicleRepository.deleteByClient_id(id);
+        vehicleRepository.deleteByClientId(id);
     }
 }
