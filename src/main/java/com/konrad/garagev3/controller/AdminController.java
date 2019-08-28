@@ -3,12 +3,12 @@ package com.konrad.garagev3.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
-@Controller
+//@Controller
 public class AdminController {
 
-    @GetMapping("/admin")
-    public String admin() {
-        return "admin";
-    }
+//    @GetMapping("/admin")
+//    public String admin() {
+//        return "admin";
+//    }
 
 }
