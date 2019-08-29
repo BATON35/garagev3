@@ -17,8 +17,8 @@ public class Service {
     private Long id;
     @ManyToMany(mappedBy = "services")
     private List<BodyPriceList> bodyPriceLists;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "vehicle_id")
-    private Vehicle vehicle;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "vehicle_id")
+//    private Vehicle vehicle;
     private String description;
 }

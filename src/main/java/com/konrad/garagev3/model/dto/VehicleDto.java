@@ -14,8 +14,8 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class VehicleDto {
     private Long id;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate productionDate;
+ //   @DateTimeFormat(pattern = "yyyy-MM-dd")
+   // private LocalDate productionDate;
     @Length(min = 3, max = 127, message = "Pole imie wymaga conajmniej trzech znakow")
     private String brand;
     private String model;

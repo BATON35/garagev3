@@ -16,15 +16,15 @@ public class Vehicle {
     @Id
     @GeneratedValue
     private Long id;
-    private Date productionDate;
+  //  private Date productionDate;
     private String brand;
     private String model;
     private String numberPlate;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "workshop_id")
-    private Workshop workshop;
-    @OneToMany(mappedBy = "vehicle", orphanRemoval = true)
-    private List<Service> services;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "workshop_id")
+//    private Workshop workshop;
+//    @OneToMany(mappedBy = "vehicle", orphanRemoval = true)
+//    private List<Service> services;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn
     private Client client;

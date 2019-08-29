@@ -14,7 +14,7 @@ public class ClientServiceTestData {
             .name("name")
             .surname("surname")
             .phoneNumber("121212112")
-            .vehicles(Collections.emptyList())
+            .vehicles(Collections.emptySet())
             .build();
     static final Client TEST_CLIENT_2 = Client.builder()
             .email("emailTest2@pl")
@@ -22,18 +22,18 @@ public class ClientServiceTestData {
             .surname("surname2")
             .phoneNumber("4444444444")
             .active(1)
-            .vehicles(Collections.emptyList())
+            .vehicles(Collections.emptySet())
             .build();
-    static final ClientDto TEST_CLIENT_DTO_EXIST_IN_DATABASE = ClientDto.builder()
+    static final Client TEST_CLIENT_EXIST_IN_DATABASE = Client.builder()
             .id(1L)
             .active(1)
             .email("emailTest@pl")
             .name("name")
             .surname("surname")
             .phoneNumber("121212112")
-            .vehicles(Collections.emptyList())
+            .vehicles(Collections.emptySet())
             .build();
-    static final ClientDto TEST_CLIENT_DTO_TO_SAVE = ClientDto.builder()
+    static final Client TEST_CLIENT_TO_SAVE = Client.builder()
             .id(1L)
             .email("toSave@pl")
             .name("nameToSave")
@@ -48,7 +48,7 @@ public class ClientServiceTestData {
             .surname("surname2")
             .phoneNumber("4444444444")
             .active(1)
-            .vehicles(Collections.emptyList())
+            .vehicles(Collections.emptySet())
             .build();
     static final ClientDto TEST_CLIENT_DTO = ClientDto.builder()
             .email("emailTest@pl")
@@ -56,7 +56,7 @@ public class ClientServiceTestData {
             .surname("surname")
             .phoneNumber("000000000")
             .active(1)
-            .vehicles(Collections.emptyList())
+            .vehicles(Collections.emptySet())
             .build();
     static final ClientDto TEST_CLIENT_DTO_3 = ClientDto.builder()
             .email("emailTest3@pl")
@@ -71,7 +71,7 @@ public class ClientServiceTestData {
             .surname("surname")
             .phoneNumber("000000000")
             .active(1)
-            .vehicles(Collections.singletonList(VehicleDto.builder().brand("brand").build()))
+            .vehicles(Collections.singleton(VehicleDto.builder().brand("brand").build()))
             .build();
     static final Client TEST_ClIENT_ACTIVE = Client.builder()
             .id(1L)

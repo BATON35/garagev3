@@ -26,7 +26,7 @@ public class UserService {
 
     private UserRepository userRepository;
     private RoleRepository roleRepository;
-//    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    //    private BCryptPasswordEncoder bCryptPasswordEncoder;
     private UserDtoMapper userMapper;
 
     @Autowired
@@ -43,7 +43,7 @@ public class UserService {
     }
 
     public User saveUser(User user) {
-     //   user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        //   user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setActive(1);
         Role userRole = roleRepository.findByName("ROLE_ADMIN");
         user.setRoles(new HashSet<>(Collections.singletonList(userRole)));
@@ -53,7 +53,7 @@ public class UserService {
     public UserDto saveUserWithPrivileges(UserDto userDto) {
         UserDtoMapper userMapper = Mappers.getMapper(UserDtoMapper.class);
         User user = userMapper.userDtoToUser(userDto);
-      //  user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        //  user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setActive(1);
         // user.setRoles(new LinkedHashSet<>(user.getRoles()));
         return userMapper.userToUserDto(userRepository.save(user));
@@ -93,18 +93,15 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-    public UserDto findById(Long id) {
-        return userMapper.userToUserDto(userRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("User with id" + id + " doesn't exist")));
+    public User findById(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("User with id" + id + " doesn't exist"));
     }
 
-    public Page<UserDto> findAll(@PageableDefault Pageable pageable) {
+    public Page<User> findAll(@PageableDefault Pageable pageable) {
         Page<User> users = userRepository.findAll(pageable);
-        Page<UserDto> usersDto = new PageImpl<UserDto>(users.getContent()
-                .stream()
-                .map(userMapper::userToUserDto)
-                .collect(Collectors.toList()), users.getPageable(), users.getContent().size());
-        return usersDto;
+        Page<User> pageUsers = new PageImpl<>(users.getContent(), users.getPageable(), users.getContent().size());
+        return pageUsers;
     }
 
     public void deleteUser(Long id) {

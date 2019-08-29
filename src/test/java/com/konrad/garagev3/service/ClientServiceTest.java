@@ -45,7 +45,7 @@ public class ClientServiceTest {
 
         final ClientDto result = sut.findClientByEmail(TEST_CLIENT.getEmail());
 
-        Assert.assertEquals(TEST_CLIENT_DTO_EXIST_IN_DATABASE, result);
+        Assert.assertEquals(TEST_CLIENT_EXIST_IN_DATABASE, result);
     }
 
     @Test
@@ -59,9 +59,9 @@ public class ClientServiceTest {
 
     @Test
     public void saveClient() {
-        final ClientDto result = sut.saveClient(TEST_CLIENT_DTO_EXIST_IN_DATABASE);
+        final Client result = sut.saveClient(TEST_CLIENT_EXIST_IN_DATABASE);
 
-        Assert.assertEquals(TEST_CLIENT_DTO_EXIST_IN_DATABASE, result);
+        Assert.assertEquals(TEST_CLIENT_EXIST_IN_DATABASE, result);
     }
 
     @Test
@@ -69,13 +69,13 @@ public class ClientServiceTest {
         final ClientDto result = sut.findClientBySurnameAndName(
                 TEST_CLIENT.getSurname(), TEST_CLIENT.getName());
 
-        Assert.assertEquals(TEST_CLIENT_DTO_EXIST_IN_DATABASE, result);
+        Assert.assertEquals(TEST_CLIENT_EXIST_IN_DATABASE, result);
     }
 
     @Test
     public void findAllClients() {
         final List result = sut.findAllActiveClients();
-        Assert.assertEquals(Arrays.asList(TEST_CLIENT_DTO_2, TEST_CLIENT_DTO_EXIST_IN_DATABASE), result);
+        Assert.assertEquals(Arrays.asList(TEST_CLIENT_DTO_2, TEST_CLIENT_EXIST_IN_DATABASE), result);
     }
 
     @Test

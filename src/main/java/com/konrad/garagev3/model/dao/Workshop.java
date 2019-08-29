@@ -20,8 +20,8 @@ public class Workshop  {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "address_id")
     private Address address;
-    @OneToMany(mappedBy = "workshop", orphanRemoval = true)
-    private List<Vehicle> vehicles;
+//    @OneToMany(mappedBy = "workshop", orphanRemoval = true)
+//    private List<Vehicle> vehicles;
 //    @OneToMany(
 //            mappedBy = "workshop",
 //            orphanRemoval = true

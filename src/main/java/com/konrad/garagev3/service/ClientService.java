@@ -7,6 +7,9 @@ import com.konrad.garagev3.model.dto.ClientDto;
 import com.konrad.garagev3.repository.ClientRepository;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -32,11 +35,9 @@ public class ClientService {
         return clientMapper.clientToClientDto(clientRepository.findByEmail(email));
     }
 
-    public ClientDto saveClient(ClientDto clientDto) {
-        ClientDtoMapper clientMapper = Mappers.getMapper(ClientDtoMapper.class);
-        Client client = clientMapper.clientDtoToClient(clientDto);
+    public Client saveClient(Client client) {
         client.setActive(1);
-        return clientMapper.clientToClientDto(clientRepository.save(client));
+        return client;
     }
 
     public ClientDto findClientBySurnameAndName(String surname, String name) {
@@ -72,7 +73,7 @@ public class ClientService {
     @Transactional
     public ClientDto editClient(ClientDto clientDto) {
         return clientRepository.findById(clientDto.getId()).map(client -> {
-            if(!client.getEmail().equals(clientDto.getEmail())){
+            if (!client.getEmail().equals(clientDto.getEmail())) {
                 client.setEmail(clientDto.getEmail());
             }
             client.setActive(1);
@@ -80,10 +81,25 @@ public class ClientService {
         }).orElseThrow(() -> new EntityNotFoundException("Client with " + clientDto.getId() + " doesn't exist"));
     }
 
-//    public ClientDto addVehicleToClient(String email, VehicleDto vehicleDto) {
-//        Client client = clientRepository.findByEmail(email);
-//        client.addVehicle(vehicleDtoMapper.vehicleDtoToVehicle(vehicleDto));
-//        return clientMapper.clientToClientDto(clientRepository.save(client));
-//
-//    }
+    public ClientDto findById(Long id) {
+        return clientMapper.clientToClientDto(
+                clientRepository.findById(id)
+                        .orElseThrow(() -> new EntityNotFoundException("Client with " + id + " doesn't exist")));
+    }
+
+    public Page<Client> findAll(@PageableDefault Pageable pageable) {
+        Page<Client> clients = clientRepository.findAll(pageable);
+//        Page<Client> clientsDto = new PageImpl<>(
+//                clients.getContent()
+//                        .stream()
+//                        .map(clientMapper::clientToClientDto)
+//                        .collect(Collectors.toList()),
+//                clients.getPageable(),
+//                clients.getContent().size());
+        return clients;
+    }
+
+    public void deleteClient(Long id) {
+        clientRepository.deleteById(id);
+    }
 }

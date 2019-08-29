@@ -4,13 +4,17 @@ import com.konrad.garagev3.mapper.VehicleDtoMapper;
 import com.konrad.garagev3.model.dao.Client;
 import com.konrad.garagev3.model.dao.Vehicle;
 import com.konrad.garagev3.model.dto.VehicleDto;
-
 import com.konrad.garagev3.repository.ClientRepository;
 import com.konrad.garagev3.repository.VehicleRepository;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,12 +37,11 @@ public class VehicleService {
         return vehicleMapper.vehicleToVehicleDto(vehicleRepository.findByNumberPlate(numberPlate));
     }
 
-    public Vehicle saveVehicle(VehicleDto vehicleDto, String mail) {
+    public Vehicle saveVehicle(Vehicle vehicle) {
         //todo doczytac SecurityContextHolder
         // String clientName = SecurityContextHolder.getContext().getAuthentication().getName();
         //vehicleDto.setClient(clientRepository.findByEmail(clientName));
-        vehicleDto.setClient(clientRepository.findByEmail(mail));
-        return vehicleRepository.save(vehicleMapper.vehicleDtoToVehicle(vehicleDto));
+        return vehicleRepository.save(vehicle);
     }
 
     public List<VehicleDto> findVehicleByClientMail(String email) {
@@ -57,5 +60,25 @@ public class VehicleService {
     @Transactional
     public void deleteByClientId(long id) {
         vehicleRepository.deleteByClientId(id);
+    }
+
+    public Vehicle findById(Long id) {
+        return vehicleRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("User with id" + id + " doesn't exist"));
+    }
+
+    public Page<Vehicle> findAll(@PageableDefault Pageable pageable) {
+        Page<Vehicle> vehicles = vehicleRepository.findAll(pageable);
+        Page<Vehicle> pageVehicles = new PageImpl<>(vehicles.getContent(), vehicles.getPageable(), vehicles.getContent().size());
+        return pageVehicles;
+    }
+
+    public VehicleDto saveUser(VehicleDto vehicleDto) {
+        Vehicle vehicle = vehicleRepository.save(vehicleMapper.vehicleDtoToVehicle(vehicleDto));
+        return vehicleMapper.vehicleToVehicleDto(vehicle);
+    }
+
+    public void deleteVehicle(Long id) {
+        vehicleRepository.deleteById(id);
     }
 }

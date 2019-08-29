@@ -1,11 +1,11 @@
 package com.konrad.garagev3.model.dto;
 
-import com.konrad.garagev3.model.dao.Vehicle;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
-import java.util.List;
+import java.util.Set;
 
 @Data
 @Builder
@@ -24,5 +24,5 @@ public class ClientDto {
     @Email(message = "Podaj poprawny adres email")
     private String email;
     private String phoneNumber;
-    private List<VehicleDto> vehicles;
+    private Set<VehicleDto> vehicles;
 }
