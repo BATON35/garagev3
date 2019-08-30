@@ -1,6 +1,6 @@
 package com.konrad.garagev3.service;
 
-import com.konrad.garagev3.mapper.VehicleDtoMapper;
+import com.konrad.garagev3.mapper.VehicleMapper;
 import com.konrad.garagev3.model.dao.Client;
 import com.konrad.garagev3.model.dao.Vehicle;
 import com.konrad.garagev3.model.dto.VehicleDto;
@@ -24,17 +24,17 @@ import java.util.stream.Collectors;
 public class VehicleService {
     private final VehicleRepository vehicleRepository;
     private final ClientRepository clientRepository;
-    private final VehicleDtoMapper vehicleMapper;
+    private final VehicleMapper vehicleMapper;
 
     @Autowired
     VehicleService(VehicleRepository vehicleRepository, ClientRepository clientRepository) {
         this.vehicleRepository = vehicleRepository;
         this.clientRepository = clientRepository;
-        this.vehicleMapper = Mappers.getMapper(VehicleDtoMapper.class);
+        this.vehicleMapper = Mappers.getMapper(VehicleMapper.class);
     }
 
     public VehicleDto findVehicleByNumberPlate(String numberPlate) {
-        return vehicleMapper.vehicleToVehicleDto(vehicleRepository.findByNumberPlate(numberPlate));
+        return vehicleMapper.toVehicleDto(vehicleRepository.findByNumberPlate(numberPlate));
     }
 
     public Vehicle saveVehicle(Vehicle vehicle) {
@@ -49,11 +49,11 @@ public class VehicleService {
         List<Vehicle> vehicles = vehicleRepository.findByClientId(client.getId());
         ArrayList vehiclesDto = new ArrayList();
         for (Vehicle vehicle : vehicles) {
-            vehiclesDto.add(vehicleMapper.vehicleToVehicleDto(vehicle));
+            vehiclesDto.add(vehicleMapper.toVehicleDto(vehicle));
         }
         return vehicles
                 .stream()
-                .map(vehicleMapper::vehicleToVehicleDto)
+                .map(vehicleMapper::toVehicleDto)
                 .collect(Collectors.toList());
     }
 
@@ -74,8 +74,8 @@ public class VehicleService {
     }
 
     public VehicleDto saveUser(VehicleDto vehicleDto) {
-        Vehicle vehicle = vehicleRepository.save(vehicleMapper.vehicleDtoToVehicle(vehicleDto));
-        return vehicleMapper.vehicleToVehicleDto(vehicle);
+        Vehicle vehicle = vehicleRepository.save(vehicleMapper.toToVehicle(vehicleDto));
+        return vehicleMapper.toVehicleDto(vehicle);
     }
 
     public void deleteVehicle(Long id) {

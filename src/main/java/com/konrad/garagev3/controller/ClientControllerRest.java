@@ -1,6 +1,6 @@
 package com.konrad.garagev3.controller;
 
-import com.konrad.garagev3.mapper.ClientDtoMapper;
+import com.konrad.garagev3.mapper.ClientMapper;
 import com.konrad.garagev3.model.dao.Client;
 import com.konrad.garagev3.model.dto.ClientDto;
 import com.konrad.garagev3.service.ClientService;
@@ -14,12 +14,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/clients")
 public class ClientControllerRest {
     private final ClientService clientService;
-    private final ClientDtoMapper clientDtoMapper;
+    private final ClientMapper clientDtoMapper;
 
     @Autowired
     public ClientControllerRest(ClientService clientService) {
         this.clientService = clientService;
-        clientDtoMapper = Mappers.getMapper(ClientDtoMapper.class);
+        clientDtoMapper = Mappers.getMapper(ClientMapper.class);
     }
 
 
@@ -30,19 +30,19 @@ public class ClientControllerRest {
 
     @GetMapping
     public Page<ClientDto> getList(Pageable pageable) {
-        return clientService.findAll(pageable).map(clientDtoMapper::clientToClientDto);
+        return clientService.findAll(pageable).map(clientDtoMapper::toClientDto);
     }
 
     @PostMapping
     public ClientDto save(@RequestBody ClientDto clientDto) {
-        Client client = clientDtoMapper.clientDtoToClient(clientDto);
-        return clientDtoMapper.clientToClientDto(clientService.saveClient(client));
+        Client client = clientDtoMapper.toToClient(clientDto);
+        return clientDtoMapper.toClientDto(clientService.saveClient(client));
     }
 
     @PutMapping
     public ClientDto update(@RequestBody ClientDto clientDto) {
-        Client client = clientDtoMapper.clientDtoToClient(clientDto);
-        return clientDtoMapper.clientToClientDto(clientService.saveClient(client));
+        Client client = clientDtoMapper.toToClient(clientDto);
+        return clientDtoMapper.toClientDto(clientService.saveClient(client));
     }
 
     @DeleteMapping("/{id}")

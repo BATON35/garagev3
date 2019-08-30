@@ -1,6 +1,7 @@
 package com.konrad.garagev3.controller;
 
-import com.konrad.garagev3.mapper.VehicleDtoMapper;
+import com.konrad.garagev3.mapper.VehicleMapper;
+import com.konrad.garagev3.model.dao.Vehicle;
 import com.konrad.garagev3.model.dto.VehicleDto;
 import com.konrad.garagev3.service.VehicleService;
 import org.mapstruct.factory.Mappers;
@@ -13,34 +14,34 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/vehicles")
 public class VehicleControllerRest {
     private final VehicleService vehicleService;
-    private final VehicleDtoMapper vehicleMapper;
+    private final VehicleMapper vehicleMapper;
 
     @Autowired
     public VehicleControllerRest(VehicleService vehicleService) {
         this.vehicleService = vehicleService;
-        this.vehicleMapper = Mappers.getMapper(VehicleDtoMapper.class);
+        this.vehicleMapper = Mappers.getMapper(VehicleMapper.class);
     }
 
     @GetMapping("/{id}")
     public VehicleDto getById(@PathVariable Long id) {
-        return vehicleMapper.vehicleToVehicleDto(vehicleService.findById(id));
+        return vehicleMapper.toVehicleDto(vehicleService.findById(id));
     }
 
     @GetMapping
     public Page<VehicleDto> getList(Pageable pageable) {
-        return vehicleService.findAll(pageable).map(vehicleMapper::vehicleToVehicleDto);
+        return vehicleService.findAll(pageable).map(vehicleMapper::toVehicleDto);
     }
 
     @PostMapping
     public VehicleDto save(@RequestBody VehicleDto vehicleDto) {
-        return vehicleMapper.vehicleToVehicleDto(vehicleService.saveVehicle(
-                vehicleMapper.vehicleDtoToVehicle(vehicleDto)));
+        Vehicle vehicle = vehicleService.saveVehicle(vehicleMapper.toToVehicle(vehicleDto));
+        return vehicleMapper.toVehicleDto(vehicle);
     }
 
     @PutMapping
     public VehicleDto update(@RequestBody VehicleDto vehicleDto) {
-        return vehicleMapper.vehicleToVehicleDto(vehicleService.saveVehicle(
-                vehicleMapper.vehicleDtoToVehicle(vehicleDto)));
+        Vehicle vehicle = vehicleService.saveVehicle(vehicleMapper.toToVehicle(vehicleDto));
+        return vehicleMapper.toVehicleDto(vehicle);
     }
 
     @DeleteMapping("/{id}")

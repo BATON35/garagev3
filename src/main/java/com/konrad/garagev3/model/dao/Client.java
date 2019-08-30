@@ -2,10 +2,7 @@ package com.konrad.garagev3.model.dao;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.Set;
 
 @NoArgsConstructor
@@ -18,8 +15,7 @@ public class Client {
     @Id
     @GeneratedValue
     private Long id;
-    // @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    @OneToMany(mappedBy = "client")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<Vehicle> vehicles;
     private String name;
     private Integer active;

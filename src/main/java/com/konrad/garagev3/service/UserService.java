@@ -1,6 +1,6 @@
 package com.konrad.garagev3.service;
 
-import com.konrad.garagev3.mapper.UserDtoMapper;
+import com.konrad.garagev3.mapper.UserMapper;
 import com.konrad.garagev3.model.dao.Role;
 import com.konrad.garagev3.model.dao.User;
 import com.konrad.garagev3.model.dto.UserDto;
@@ -27,7 +27,7 @@ public class UserService {
     private UserRepository userRepository;
     private RoleRepository roleRepository;
     //    private BCryptPasswordEncoder bCryptPasswordEncoder;
-    private UserDtoMapper userMapper;
+    private UserMapper userMapper;
 
     @Autowired
     public UserService(@Qualifier("userRepository") UserRepository userRepository,
@@ -35,11 +35,11 @@ public class UserService {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
 //        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-        userMapper = Mappers.getMapper(UserDtoMapper.class);
+        userMapper = Mappers.getMapper(UserMapper.class);
     }
 
     public UserDto findUserByEmail(String email) {
-        return userMapper.userToUserDto(userRepository.findByEmail(email));
+        return userMapper.toUserDto(userRepository.findByEmail(email));
     }
 
     public User saveUser(User user) {
@@ -51,21 +51,21 @@ public class UserService {
     }
 
     public UserDto saveUserWithPrivileges(UserDto userDto) {
-        UserDtoMapper userMapper = Mappers.getMapper(UserDtoMapper.class);
-        User user = userMapper.userDtoToUser(userDto);
+        UserMapper userMapper = Mappers.getMapper(UserMapper.class);
+        User user = userMapper.toToUser(userDto);
         //  user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setActive(1);
         // user.setRoles(new LinkedHashSet<>(user.getRoles()));
-        return userMapper.userToUserDto(userRepository.save(user));
+        return userMapper.toUserDto(userRepository.save(user));
     }
 
     public List<Role> findAllRoles() {
         return roleRepository.findAll();
     }
 
-    public Role findRoleById(Long id) {
-        return roleRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Role with id " + id + " doesn't exist"));
-    }
+//    public Role findRoleById(Long id) {
+//        return roleRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Role with id " + id + " doesn't exist"));
+//    }
 
     @Transactional
     public void deleteUser(String email) {
@@ -75,13 +75,13 @@ public class UserService {
     public UserDto deactivateUser(String email) {
         User user = userRepository.findByEmail(email);
         user.setActive(0);
-        return userMapper.userToUserDto(userRepository.save(user));
+        return userMapper.toUserDto(userRepository.save(user));
     }
 
     public UserDto activateUser(String email) {
         User user = userRepository.findByEmail(email);
         user.setActive(1);
-        return userMapper.userToUserDto(userRepository.save(user));
+        return userMapper.toUserDto(userRepository.save(user));
     }
 
     public List<UserDto> findAllActiveUsers() {
@@ -89,7 +89,7 @@ public class UserService {
         users.sort(Comparator.comparing(User::getEmail));
         return users
                 .stream()
-                .map(userMapper::userToUserDto)
+                .map(userMapper::toUserDto)
                 .collect(Collectors.toList());
     }
 

@@ -5,8 +5,8 @@ import com.konrad.garagev3.model.dto.ClientDto;
 import org.mapstruct.Mapper;
 
 @Mapper
-public interface ClientDtoMapper {
-    ClientDto clientToClientDto(Client client);
+public interface ClientMapper {
+    ClientDto toClientDto(Client client);
 
-    Client clientDtoToClient(ClientDto clientDto);
+    Client toToClient(ClientDto clientDto);
 }

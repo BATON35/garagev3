@@ -48,7 +48,7 @@ public class ClientServiceTestData {
             .surname("surname2")
             .phoneNumber("4444444444")
             .active(1)
-            .vehicles(Collections.emptySet())
+            //.vehicles(Collections.emptySet())
             .build();
     static final ClientDto TEST_CLIENT_DTO = ClientDto.builder()
             .email("emailTest@pl")
@@ -56,7 +56,7 @@ public class ClientServiceTestData {
             .surname("surname")
             .phoneNumber("000000000")
             .active(1)
-            .vehicles(Collections.emptySet())
+           // .vehicles(Collections.emptySet())
             .build();
     static final ClientDto TEST_CLIENT_DTO_3 = ClientDto.builder()
             .email("emailTest3@pl")
@@ -71,7 +71,7 @@ public class ClientServiceTestData {
             .surname("surname")
             .phoneNumber("000000000")
             .active(1)
-            .vehicles(Collections.singleton(VehicleDto.builder().brand("brand").build()))
+            //.vehicles(Collections.singleton(VehicleDto.builder().brand("brand").build()))
             .build();
     static final Client TEST_ClIENT_ACTIVE = Client.builder()
             .id(1L)

@@ -28,7 +28,7 @@ class UserServiceTestData {
             .email("userDTOToSave@pl")
             .password("test")
             .name("testName")
-            .roles(ALL_ROLES)
+            //.roles(ALL_ROLES)
             .active(1)
             .build();
 
@@ -44,7 +44,7 @@ class UserServiceTestData {
             .email("userExistInDatabaseDto@pl")
             .name("exampleTester")
             .password("exampleUserPassword")
-            .roles(ALL_ROLES)
+            //.roles(ALL_ROLES)
             .active(1)
             .build();
     static final UserDto TEST_USER2_DTO_EXIST_IN_DATABASE = UserDto.builder()
@@ -52,7 +52,7 @@ class UserServiceTestData {
             .email("user2ExistInDatabaseDto@pl")
             .name("exampleTester2")
             .password("exampleUser2Password")
-            .roles(ALL_ROLES)
+         //   .roles(ALL_ROLES)
             .active(1)
             .build();
     static final UserDto TEST_USER3_DTO_EXIST_IN_DATABASE = UserDto.builder()
@@ -60,7 +60,7 @@ class UserServiceTestData {
             .email("user3ExistInDatabaseDto@pl")
             .name("exampleTester3")
             .password("exampleUser3Password")
-            .roles(ALL_ROLES)
+      //      .roles(ALL_ROLES)
             .active(1)
             .build();
     static final User TEST_USER_EXIST_IN_DATABASE = User.builder()
@@ -111,13 +111,13 @@ class UserServiceTestData {
     static final UserDto TEST_USER_DTO = UserDto.builder()
             .name("user")
             .email("test@test.com")
-            .roles(ALL_ROLES)
+            //.roles(ALL_ROLES)
             .active(1)
             .build();
     static final UserDto TEST_USER_DTO_1 = UserDto.builder()
             .name("user_1")
             .email("test@test_1.com")
             .active(1)
-            .roles(ALL_ROLES)
+           // .roles(ALL_ROLES)
             .build();
 }

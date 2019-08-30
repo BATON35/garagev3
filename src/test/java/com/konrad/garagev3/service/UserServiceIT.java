@@ -82,18 +82,18 @@ public class UserServiceIT {
         Assert.assertEquals(TEST_USER_DTO_EXIST_IN_DATABASE, result);
     }
 
-    @Test
-    public void saveUser() {
-        //given
-        //when
-        User result = sut.saveUser(TEST_USER_TO_SAVE);
-        //then
-        Assert.assertEquals(TEST_USER_DTO_TO_SAVE.getName(), result.getName());
-        Assert.assertEquals(TEST_USER_DTO_TO_SAVE.getEmail(), result.getEmail());
-      //  Integer active = result.getActive();
-      //  Assert.assertEquals(1, active);
-        Assert.assertTrue(TEST_USER_DTO_TO_SAVE.getRoles().contains(result.getRoles().toArray()[0]));
-    }
+//    @Test
+//    public void saveUser() {
+//        //given
+//        //when
+//        User result = sut.saveUser(TEST_USER_TO_SAVE);
+//        //then
+//        Assert.assertEquals(TEST_USER_DTO_TO_SAVE.getName(), result.getName());
+//        Assert.assertEquals(TEST_USER_DTO_TO_SAVE.getEmail(), result.getEmail());
+//      //  Integer active = result.getActive();
+//      //  Assert.assertEquals(1, active);
+//        Assert.assertTrue(TEST_USER_DTO_TO_SAVE.getRoles().contains(result.getRoles().toArray()[0]));
+//    }
 
     @Test
     public void saveUserWithPrivileges() {
@@ -113,18 +113,18 @@ public class UserServiceIT {
         Assert.assertEquals(ALL_ROLES, roles);
     }
 
-    @Test
-    public void findRoleById() {
-        //given
-        //when
-        Role roleId1 = sut.findRoleById(1L);
-        Role roleId2 = sut.findRoleById(2L);
-        Role roleId3 = sut.findRoleById(3L);
-        //then
-        Assert.assertTrue(ALL_ROLES.contains(roleId1));
-        Assert.assertTrue(ALL_ROLES.contains(roleId2));
-        Assert.assertTrue(ALL_ROLES.contains(roleId3));
-    }
+//    @Test
+//    public void findRoleById() {
+//        //given
+//        //when
+//        Role roleId1 = sut.findRoleById(1L);
+//        Role roleId2 = sut.findRoleById(2L);
+//        Role roleId3 = sut.findRoleById(3L);
+//        //then
+//        Assert.assertTrue(ALL_ROLES.contains(roleId1));
+//        Assert.assertTrue(ALL_ROLES.contains(roleId2));
+//        Assert.assertTrue(ALL_ROLES.contains(roleId3));
+//    }
 
     // TODO: 11.07.2019 czy to jest poprawny test (jesli metoda findUderByEmail dziala niepoprawnie to test jest bez sensu
     @Test

@@ -1,7 +1,7 @@
 package com.konrad.garagev3.service;
 
-import com.konrad.garagev3.mapper.ClientDtoMapper;
-import com.konrad.garagev3.mapper.VehicleDtoMapper;
+import com.konrad.garagev3.mapper.ClientMapper;
+import com.konrad.garagev3.mapper.VehicleMapper;
 import com.konrad.garagev3.model.dao.Client;
 import com.konrad.garagev3.model.dto.ClientDto;
 import com.konrad.garagev3.repository.ClientRepository;
@@ -21,27 +21,27 @@ import java.util.List;
 @Service
 public class ClientService {
     private final ClientRepository clientRepository;
-    private final ClientDtoMapper clientMapper;
-    private final VehicleDtoMapper vehicleDtoMapper;
+    private final ClientMapper clientMapper;
+    private final VehicleMapper vehicleMapper;
 
     @Autowired
     public ClientService(ClientRepository clientRepository) {
         this.clientRepository = clientRepository;
-        clientMapper = Mappers.getMapper(ClientDtoMapper.class);
-        vehicleDtoMapper = Mappers.getMapper(VehicleDtoMapper.class);
+        clientMapper = Mappers.getMapper(ClientMapper.class);
+        vehicleMapper = Mappers.getMapper(VehicleMapper.class);
     }
 
     public ClientDto findClientByEmail(String email) {
-        return clientMapper.clientToClientDto(clientRepository.findByEmail(email));
+        return clientMapper.toClientDto(clientRepository.findByEmail(email));
     }
 
     public Client saveClient(Client client) {
         client.setActive(1);
-        return client;
+        return clientRepository.save(client);
     }
 
     public ClientDto findClientBySurnameAndName(String surname, String name) {
-        return clientMapper.clientToClientDto(clientRepository.findBySurnameAndName(surname, name));
+        return clientMapper.toClientDto(clientRepository.findBySurnameAndName(surname, name));
     }
 
     public List<ClientDto> findAllActiveClients() {
@@ -49,7 +49,7 @@ public class ClientService {
         clients.sort(Comparator.comparing(Client::getEmail));
         List clientsDTO = new ArrayList();
         for (Client client : clients) {
-            clientsDTO.add(clientMapper.clientToClientDto(client));
+            clientsDTO.add(clientMapper.toClientDto(client));
         }
         return clientsDTO;
     }
@@ -57,10 +57,10 @@ public class ClientService {
     public ClientDto deactivateClient(Long id) {
         return clientRepository.findById(id).map(client -> {
             client.setActive(0);
-            return clientMapper.clientToClientDto(clientRepository.save(client));
+            return clientMapper.toClientDto(clientRepository.save(client));
         }).orElseThrow(() -> new EntityNotFoundException("Client with " + id + " doesn't exist"));
 //        client.setActive(0);
-//        return clientMapper.clientToClientDto(clientRepository.save(client));
+//        return clientMapper.toClientDto(clientRepository.save(client));
     }
 
     @Transactional
@@ -77,12 +77,12 @@ public class ClientService {
                 client.setEmail(clientDto.getEmail());
             }
             client.setActive(1);
-            return clientMapper.clientToClientDto(clientRepository.save(client));
+            return clientMapper.toClientDto(clientRepository.save(client));
         }).orElseThrow(() -> new EntityNotFoundException("Client with " + clientDto.getId() + " doesn't exist"));
     }
 
     public ClientDto findById(Long id) {
-        return clientMapper.clientToClientDto(
+        return clientMapper.toClientDto(
                 clientRepository.findById(id)
                         .orElseThrow(() -> new EntityNotFoundException("Client with " + id + " doesn't exist")));
     }
@@ -92,7 +92,7 @@ public class ClientService {
 //        Page<Client> clientsDto = new PageImpl<>(
 //                clients.getContent()
 //                        .stream()
-//                        .map(clientMapper::clientToClientDto)
+//                        .map(clientMapper::toClientDto)
 //                        .collect(Collectors.toList()),
 //                clients.getPageable(),
 //                clients.getContent().size());
