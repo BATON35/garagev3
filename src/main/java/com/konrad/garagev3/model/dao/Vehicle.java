@@ -25,7 +25,6 @@ public class Vehicle {
 //    private Workshop workshop;
 //    @OneToMany(mappedBy = "vehicle", orphanRemoval = true)
 //    private List<Service> services;
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn
+    @ManyToOne()
     private Client client;
 }

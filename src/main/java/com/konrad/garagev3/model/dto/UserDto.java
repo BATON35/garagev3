@@ -4,6 +4,7 @@ import com.konrad.garagev3.model.dao.Role;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
+
 import javax.persistence.Column;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;

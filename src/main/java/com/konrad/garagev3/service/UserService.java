@@ -1,5 +1,9 @@
 package com.konrad.garagev3.service;
 
+//import com.konrad.garagev3.configuration.JwtTokenProvider;
+
+import com.konrad.garagev3.configuration.JwtTokenProvider;
+import com.konrad.garagev3.exception.CustomException;
 import com.konrad.garagev3.mapper.UserMapper;
 import com.konrad.garagev3.model.dao.Role;
 import com.konrad.garagev3.model.dao.User;
@@ -12,29 +16,43 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@Service("userService")
+
+@Service
 public class UserService {
 
     private UserRepository userRepository;
     private RoleRepository roleRepository;
-    //    private BCryptPasswordEncoder bCryptPasswordEncoder;
     private UserMapper userMapper;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
+
 
     @Autowired
     public UserService(@Qualifier("userRepository") UserRepository userRepository,
                        @Qualifier("roleRepository") RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
-//        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         userMapper = Mappers.getMapper(UserMapper.class);
     }
 
@@ -106,5 +124,24 @@ public class UserService {
 
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
+    }
+
+    public String signin(String username, String password) {
+        try {
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+            return jwtTokenProvider.createToken(username, new ArrayList<>(userRepository.findByName(username).getRoles()));
+        } catch (AuthenticationException e) {
+            throw new CustomException("Invalid username/password supplied", HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+    }
+    public String signup(User user) {
+        User userExist = userRepository.findByName(user.getName());
+        if (userExist == null) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            userRepository.save(user);
+            return jwtTokenProvider.createToken(user.getName(), Collections.singletonList(roleRepository.findByName("ROLE_ADMIN")));
+        } else {
+            throw new CustomException("Username is already in use", HttpStatus.UNPROCESSABLE_ENTITY);
+        }
     }
 }

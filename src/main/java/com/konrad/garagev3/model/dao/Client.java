@@ -16,6 +16,7 @@ public class Client {
     @GeneratedValue
     private Long id;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @JoinColumn(name = "client_id")
     private Set<Vehicle> vehicles;
     private String name;
     private Integer active;

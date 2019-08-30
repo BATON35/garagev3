@@ -1,12 +1,11 @@
 package com.konrad.garagev3.model.dto;
 
-import com.konrad.garagev3.model.dao.Client;
-import com.konrad.garagev3.model.dao.Workshop;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDate;
 
 @Data
 @Builder
@@ -21,7 +20,8 @@ public class VehicleDto {
     private String model;
     private String numberPlate;
 //    private Workshop workshop;
-    private Client client;
+ //   private long Client_id;
+ //   private Client client;
     //private List<Service> services;
 
 

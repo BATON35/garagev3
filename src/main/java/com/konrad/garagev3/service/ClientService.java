@@ -8,6 +8,7 @@ import com.konrad.garagev3.repository.ClientRepository;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
@@ -89,14 +90,8 @@ public class ClientService {
 
     public Page<Client> findAll(@PageableDefault Pageable pageable) {
         Page<Client> clients = clientRepository.findAll(pageable);
-//        Page<Client> clientsDto = new PageImpl<>(
-//                clients.getContent()
-//                        .stream()
-//                        .map(clientMapper::toClientDto)
-//                        .collect(Collectors.toList()),
-//                clients.getPageable(),
-//                clients.getContent().size());
-        return clients;
+        Page<Client> pageClient = new PageImpl<>(clients.getContent(), clients.getPageable(), clients.getContent().size());
+        return pageClient;
     }
 
     public void deleteClient(Long id) {

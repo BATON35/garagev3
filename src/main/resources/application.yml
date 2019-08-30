@@ -3,7 +3,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/login?useSSL=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
     username: root
-    password: aaaaaa
+    password: aaaaaa84
     testWhileIdle: true
     validationQuery: SELECT 1
     initialization-mode: always
