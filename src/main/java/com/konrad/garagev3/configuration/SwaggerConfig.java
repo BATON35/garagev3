@@ -32,7 +32,7 @@ public class SwaggerConfig {
                 .apiInfo(metadata())//
                 .useDefaultResponseMessages(false)//
                 .securitySchemes(new ArrayList<>(Arrays.asList(new ApiKey("Bearer %token", "Authorization", "Header"))))//
-                .tags(new Tag("users", "Operations about users"))//
+                .tags(new Tag("users", "Thymeleaf controller"))//
                 .genericModelSubstitutes(Optional.class);
 
     }
