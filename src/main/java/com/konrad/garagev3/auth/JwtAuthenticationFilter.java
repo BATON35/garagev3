@@ -43,19 +43,19 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             stringJoiner.add(authority.getAuthority());
         }
         claims.put("authorities", stringJoiner.toString());
-        Date date = new Date(System.currentTimeMillis() + 1000000);
-        String tocken = Jwts.builder()
+        Date date = new Date(System.currentTimeMillis() + 1_000_000);
+        String token = Jwts.builder()
                 .setClaims(claims)
                 .setSubject(((UserDetails) authResult.getPrincipal()).getUsername())
                 .setExpiration(date)
                 .signWith(SignatureAlgorithm.HS512, "test33")
                 .compact();
-        response.addHeader("Authorisation", "Bearer " + tocken);
+        response.addHeader("Authorisation", "Bearer " + token);
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 
         PrintWriter printWriter = response.getWriter();
         Map<String, String> responseBody = new HashMap<>();
-        responseBody.put("tocken", tocken);
+        responseBody.put("token", token);
         responseBody.put("expirationDate", date.toString());
         new ObjectMapper().writeValue(printWriter, responseBody);
     }

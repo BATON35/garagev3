@@ -12,6 +12,7 @@ import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -45,13 +46,15 @@ public class UserControllerRest {
     }
 
     @PutMapping
+    @PreAuthorize("isAuthenticated()")
     public UserDto update(@RequestBody UserDto userDto) {
         User user = userMapper.toToUser(userDto);
         return userMapper.toUserDto(userService.saveUser(user));
     }
 
-    @DeleteMapping
-    public void delete(Long id) {
+    @DeleteMapping("{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public void delete(@PathVariable Long id) {
         userService.deleteUser(id);
     }
 

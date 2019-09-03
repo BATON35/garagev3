@@ -17,6 +17,7 @@ public class User{
     private Long id;
     private String email;
     private String password;
+    @Column(unique = true)
     private String name;
     private Integer active;
     @ManyToMany(fetch = FetchType.EAGER)
