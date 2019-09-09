@@ -4,19 +4,16 @@ import com.konrad.garagev3.mapper.UserMapper;
 import com.konrad.garagev3.model.dao.User;
 import com.konrad.garagev3.model.dto.UserDto;
 import com.konrad.garagev3.service.UserService;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/users")
+//@CrossOrigin(origins = "http://localhost:4200", maxAge = 10_000)
 public class UserControllerRest {
 
     private final UserService userService;
@@ -34,9 +31,9 @@ public class UserControllerRest {
         return userMapper.toUserDto(userService.findById(id));
     }
 
-    @GetMapping
-    public Page<UserDto> getList(Pageable pageable) {
-        return userService.findAll(pageable).map(userMapper::toUserDto);
+    @GetMapping("/{page}/{size}")
+    public Page<UserDto> getList(@PathVariable Integer page, @PathVariable Integer size) {
+        return userService.findAll(PageRequest.of(page, size)).map(userMapper::toUserDto);
     }
 
     @PostMapping
@@ -49,6 +46,7 @@ public class UserControllerRest {
     @PreAuthorize("isAuthenticated()")
     public UserDto update(@RequestBody UserDto userDto) {
         User user = userMapper.toToUser(userDto);
+
         return userMapper.toUserDto(userService.saveUser(user));
     }
 

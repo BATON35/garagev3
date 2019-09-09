@@ -20,10 +20,9 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
-import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -35,8 +34,6 @@ public class UserService {
     private UserMapper userMapper;
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
-
-
 
 
     @Autowired
@@ -54,8 +51,16 @@ public class UserService {
     public User saveUser(User user) {
         //   user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setActive(1);
-        Role userRole = roleRepository.findByName("ROLE_USER");
-        user.setRoles(new HashSet<>(Collections.singletonList(userRole)));
+//        Role userRole = roleRepository.findByName("ROLE_USER");
+//        user.setRoles(new HashSet<>(Collections.singletonList(userRole)));
+//        if(userRepository.findById(user.getId()) != null)
+//        System.out.println("/n/n/n" + userRepository.findByEmail(user.getEmail()).getPassword() +"/n/n/n");
+        Optional<User> userById = userRepository.findById(user.getId());
+        if (userById.isPresent()) {
+            if (userById.get().getPassword().equals(user.getPassword())) {
+                return userRepository.save(user);
+            }
+        }
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
@@ -110,7 +115,7 @@ public class UserService {
 
     public Page<User> findAll(@PageableDefault Pageable pageable) {
         Page<User> users = userRepository.findAll(pageable);
-        Page<User> pageUsers = new PageImpl<>(users.getContent(), users.getPageable(), users.getContent().size());
+        Page<User> pageUsers = new PageImpl<>(users.getContent(), users.getPageable(), users.getTotalElements());
         return pageUsers;
     }
 
