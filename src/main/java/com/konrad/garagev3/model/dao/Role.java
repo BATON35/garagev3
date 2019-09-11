@@ -11,14 +11,9 @@ import javax.persistence.*;
 @Data
 @Entity
 @EqualsAndHashCode
-public class Role implements GrantedAuthority {
+public class Role {
     @Id
     @GeneratedValue
     private Long id;
     private String name;
-
-    @Override
-    public String getAuthority() {
-        return name;
-    }
 }

@@ -43,7 +43,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             stringJoiner.add(authority.getAuthority());
         }
         claims.put("authorities", stringJoiner.toString());
-        Date date = new Date(System.currentTimeMillis() + 1_000_000);
+        Date date = new Date(System.currentTimeMillis() + 60_000 * 60 * 2);
         String token = Jwts.builder()
                 .setClaims(claims)
                 .setSubject(((UserDetails) authResult.getPrincipal()).getUsername())

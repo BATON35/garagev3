@@ -3,10 +3,12 @@ package com.konrad.garagev3.controller;
 import com.konrad.garagev3.mapper.ClientMapper;
 import com.konrad.garagev3.model.dao.Client;
 import com.konrad.garagev3.model.dto.ClientDto;
+import com.konrad.garagev3.model.dto.UserDto;
 import com.konrad.garagev3.service.ClientService;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,9 +30,9 @@ public class ClientControllerRest {
         return clientService.findById(id);
     }
 
-    @GetMapping
-    public Page<ClientDto> getList(Pageable pageable) {
-        return clientService.findAll(pageable).map(clientDtoMapper::toClientDto);
+    @GetMapping("/{page}/{size}")
+    public Page<ClientDto> getList(@PathVariable Integer page, @PathVariable Integer size) {
+        return clientService.findAll(PageRequest.of(page, size)).map(clientDtoMapper::toClientDto);
     }
 
     @PostMapping

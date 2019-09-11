@@ -22,6 +22,7 @@ import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -49,17 +50,21 @@ public class UserService {
     }
 
     public User saveUser(User user) {
-        //   user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setActive(1);
-//        Role userRole = roleRepository.findByName("ROLE_USER");
-//        user.setRoles(new HashSet<>(Collections.singletonList(userRole)));
-//        if(userRepository.findById(user.getId()) != null)
-//        System.out.println("/n/n/n" + userRepository.findByEmail(user.getEmail()).getPassword() +"/n/n/n");
+        if(user.getRoles() != null && !user.getRoles().isEmpty()){
+            user.setRoles(user.getRoles().stream()
+                    .map(role -> roleRepository.findByName(role.getName()))
+                    .filter(Objects::nonNull)
+                    .collect(Collectors.toSet()));
+        }
+
+        if (user.getId() == null) {
+            user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+            return userRepository.save(user);
+        }
         Optional<User> userById = userRepository.findById(user.getId());
-        if (userById.isPresent()) {
-            if (userById.get().getPassword().equals(user.getPassword())) {
-                return userRepository.save(user);
-            }
+        if (userById.isPresent() && userById.get().getPassword().equals(user.getPassword())) {
+            return userRepository.save(user);
         }
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
