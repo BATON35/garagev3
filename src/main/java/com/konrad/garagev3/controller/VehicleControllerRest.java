@@ -32,15 +32,15 @@ public class VehicleControllerRest {
         return vehicleService.findAll(pageable).map(vehicleMapper::toVehicleDto);
     }
 
-    @PostMapping
-    public VehicleDto save(@RequestBody VehicleDto vehicleDto) {
-        Vehicle vehicle = vehicleService.saveVehicle(vehicleMapper.toToVehicle(vehicleDto));
+    @PostMapping("/{clientId}")
+    public VehicleDto save(@RequestBody VehicleDto vehicleDto, @PathVariable Long clientId) {
+        Vehicle vehicle = vehicleService.saveVehicle(vehicleMapper.toToVehicle(vehicleDto), clientId);
         return vehicleMapper.toVehicleDto(vehicle);
     }
 
     @PutMapping
     public VehicleDto update(@RequestBody VehicleDto vehicleDto) {
-        Vehicle vehicle = vehicleService.saveVehicle(vehicleMapper.toToVehicle(vehicleDto));
+        Vehicle vehicle = vehicleService.update(vehicleMapper.toToVehicle(vehicleDto));
         return vehicleMapper.toVehicleDto(vehicle);
     }
 

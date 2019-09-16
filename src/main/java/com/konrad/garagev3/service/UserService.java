@@ -15,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -51,7 +52,7 @@ public class UserService {
 
     public User saveUser(User user) {
         user.setActive(1);
-        if(user.getRoles() != null && !user.getRoles().isEmpty()){
+        if (user.getRoles() != null && !user.getRoles().isEmpty()) {
             user.setRoles(user.getRoles().stream()
                     .map(role -> roleRepository.findByName(role.getName()))
                     .filter(Objects::nonNull)
@@ -129,4 +130,7 @@ public class UserService {
     }
 
 
+    public User getinfo() {
+        return userRepository.findByName(SecurityContextHolder.getContext().getAuthentication().getName());
+    }
 }

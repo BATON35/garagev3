@@ -37,10 +37,19 @@ public class VehicleService {
         return vehicleMapper.toVehicleDto(vehicleRepository.findByNumberPlate(numberPlate));
     }
 
-    public Vehicle saveVehicle(Vehicle vehicle) {
+    public Vehicle saveVehicle(Vehicle vehicle, Long clientId) {
         //todo doczytac SecurityContextHolder
         // String clientName = SecurityContextHolder.getContext().getAuthentication().getName();
-        //vehicleDto.setClient(clientRepository.findByEmail(clientName));
+        return clientRepository.findById(clientId).map(client -> {
+            vehicle.setClient(client);
+            return vehicleRepository.save(vehicle);
+        }).orElseThrow(() -> new EntityNotFoundException("client with id " + clientId + " dosen't exist"));
+
+    }
+
+    public Vehicle update(Vehicle vehicle) {
+        Client client = clientRepository.findByVehicles(vehicle);
+        vehicle.setClient(client);
         return vehicleRepository.save(vehicle);
     }
 

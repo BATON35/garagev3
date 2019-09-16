@@ -1,6 +1,7 @@
 package com.konrad.garagev3.repository;
 
 import com.konrad.garagev3.model.dao.Client;
+import com.konrad.garagev3.model.dao.Vehicle;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -15,4 +16,6 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
     List<Client> findByActiveIs(int one);
 
     void deleteByEmail(String mail);
+
+    Client findByVehicles(Vehicle vehicle);
 }

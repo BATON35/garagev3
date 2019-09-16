@@ -50,4 +50,6 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
     }
 
+
+
 }

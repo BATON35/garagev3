@@ -90,7 +90,7 @@ public class ClientService {
 
     public Page<Client> findAll(@PageableDefault Pageable pageable) {
         Page<Client> clients = clientRepository.findAll(pageable);
-        Page<Client> pageClient = new PageImpl<>(clients.getContent(), clients.getPageable(), clients.getContent().size());
+        Page<Client> pageClient = new PageImpl<>(clients.getContent(), clients.getPageable(), clients.getTotalElements());
         return pageClient;
     }
 

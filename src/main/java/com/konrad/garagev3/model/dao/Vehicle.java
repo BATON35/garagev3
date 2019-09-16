@@ -1,10 +1,12 @@
 package com.konrad.garagev3.model.dao;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -25,6 +27,25 @@ public class Vehicle {
 //    private Workshop workshop;
 //    @OneToMany(mappedBy = "vehicle", orphanRemoval = true)
 //    private List<Service> services;
-    @ManyToOne()
+    @ManyToOne
+    @JoinColumn(name = "client_id")
+    @JsonBackReference
+    @EqualsAndHashCode.Exclude
     private Client client;
+
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (o == null || getClass() != o.getClass()) return false;
+//        Vehicle vehicle = (Vehicle) o;
+//        return Objects.equals(id, vehicle.id) &&
+//                Objects.equals(brand, vehicle.brand) &&
+//                Objects.equals(model, vehicle.model) &&
+//                Objects.equals(numberPlate, vehicle.numberPlate);
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(id, brand, model, numberPlate);
+//    }
 }
