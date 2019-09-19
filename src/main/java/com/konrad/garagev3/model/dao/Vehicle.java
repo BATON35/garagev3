@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -22,6 +23,7 @@ public class Vehicle {
     private String brand;
     private String model;
     private String numberPlate;
+    private LocalDate overviewDate;
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "workshop_id")
 //    private Workshop workshop;
