@@ -19,16 +19,16 @@ public class Vehicle {
     @Id
     @GeneratedValue
     private Long id;
-  //  private Date productionDate;
+    //  private Date productionDate;
     private String brand;
     private String model;
     private String numberPlate;
     private LocalDate overviewDate;
-//    @ManyToOne(fetch = FetchType.LAZY)
+    //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "workshop_id")
 //    private Workshop workshop;
-//    @OneToMany(mappedBy = "vehicle", orphanRemoval = true)
-//    private List<Service> services;
+    @OneToMany(mappedBy = "vehicle", orphanRemoval = true,fetch = FetchType.EAGER)
+    private List<Service> services;
     @ManyToOne
     @JoinColumn(name = "client_id")
     @JsonBackReference

@@ -1,12 +1,13 @@
 package com.konrad.garagev3.scheduler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.konrad.garagev3.model.dao.MailTemplate;
+import com.konrad.garagev3.model.dao.Template;
 import com.konrad.garagev3.model.dao.Vehicle;
-import com.konrad.garagev3.repository.MailTemplateRepository;
+import com.konrad.garagev3.repository.TemplateRepository;
 import com.konrad.garagev3.repository.VehicleRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -30,27 +31,29 @@ public class VehicleMailer {
     @Autowired
     private VehicleRepository vehicleRepository;
     @Autowired
-    private MailTemplateRepository mailTemplateRepository;
+    private TemplateRepository templateRepository;
     @Autowired
+    @Qualifier("htmlTemplateEngine")
     private TemplateEngine templateEngine;
     @Autowired
     private ObjectMapper objectMapper;
 
     // @Scheduled(cron = "0 0 9 1/1 * ? *")
-    @Scheduled(fixedRate = 1000)
+    @Scheduled(fixedRate = 1000000)
     public void sendMail() {
-        MailTemplate vehicle_overview_remaider = mailTemplateRepository.findByType("vehicle_overview_Remaider");
+        Template vehicle_checkup_remainder = templateRepository.findByType("vehicle_checkup_remainder");
         List<Vehicle> vehicles = vehicleRepository.findByOverviewDate(LocalDate.now());
         vehicles.forEach(vehicle -> {
             String email = vehicle.getClient().getEmail();
             Context context = new Context(Locale.forLanguageTag("pl"), objectMapper.convertValue(vehicle, Map.class));
-            String mailMessage = templateEngine.process(vehicle_overview_remaider.getTemplate(), context);
+            context.setVariable("vehicle", vehicle);
+            String mailMessage = templateEngine.process(vehicle_checkup_remainder.getTemplate(), context);
             MimeMessage mimeMessage = javaMailSender.createMimeMessage();
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
             try {
                 mimeMessageHelper.setTo(email);
                 mimeMessageHelper.setText(mailMessage);
-                mimeMessageHelper.setSubject("do zmiany");
+                mimeMessageHelper.setSubject("Witaj " + vehicle.getClient().getEmail());
                 javaMailSender.send(mimeMessage);
             } catch (MessagingException e) {
                 log.error(e.getMessage(), e);

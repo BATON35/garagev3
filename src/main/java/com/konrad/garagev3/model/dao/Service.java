@@ -15,10 +15,10 @@ public class Service {
     @Id
     @GeneratedValue
     private Long id;
-    @ManyToMany(mappedBy = "services")
-    private List<BodyPriceList> bodyPriceLists;
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "vehicle_id")
-//    private Vehicle vehicle;
+//    @ManyToMany(mappedBy = "services")
+//    private List<BodyPriceList> bodyPriceLists;
+    @ManyToOne
+    @JoinColumn(name = "vehicle_id")
+    private Vehicle vehicle;
     private String description;
 }
