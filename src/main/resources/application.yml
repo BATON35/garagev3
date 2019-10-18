@@ -8,6 +8,7 @@ spring:
     validationQuery: SELECT 1
     initialization-mode: always
 
+
   jpa:
 #    generate-ddl: true
     show-sql: true

@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Checkup email</title>
+</head>
+<style>
+    div {
+        margin: 25px;
+    }
+</style>
+<body style="margin: 0; padding: 0;">
+
+<tr>
+    <table align="center" border="1" cellpadding="0" cellspacing="10" width="600">
+        <tr>
+            <td>
+                <h3 align="center">Twoj warsztat samochodowy</h3>
+                <img src="../static/img/image1.jpg" alt="Creating Email Magic" width="600"  style="display: block;" />
+                <img src='cid:nazwaZdjecia'>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 25px 25px 25px 25px;" th:text="${vehicle.brand}">
+                asdfadsf
+            </td>
+        </tr>
+        <tr>
+            <td bgcolor="#ee4c50">
+                <table border="1" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td>
+                            <div>
+                                <p> Adres:</p>
+                                <p> 93 - 419  Łódź</p>
+                                <p> ul: Nazwa ulicy numer</p>
+                                <p> tel. 506-236-719</p>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</tr>
+
+</body>
+</html>
+

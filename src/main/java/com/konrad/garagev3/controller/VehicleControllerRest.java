@@ -48,4 +48,9 @@ public class VehicleControllerRest {
     public void delete(Long id) {
         vehicleService.deleteVehicle(id);
     }
+
+    @PatchMapping("/{id}")
+    public void toggleNotification(@PathVariable Long id){
+        vehicleService.toggleNotification(id);
+    }
 }

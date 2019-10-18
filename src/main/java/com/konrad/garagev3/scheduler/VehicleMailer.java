@@ -38,8 +38,8 @@ public class VehicleMailer {
     @Autowired
     private ObjectMapper objectMapper;
 
-    // @Scheduled(cron = "0 0 9 1/1 * ? *")
-    @Scheduled(fixedRate = 1000000)
+     @Scheduled(cron = "0 0 9 1/1 * ?")
+    //@Scheduled(fixedRate = 10_000)
     public void sendMail() {
         Template vehicle_checkup_remainder = templateRepository.findByType("vehicle_checkup_remainder");
         List<Vehicle> vehicles = vehicleRepository.findByOverviewDate(LocalDate.now());
@@ -54,6 +54,9 @@ public class VehicleMailer {
                 mimeMessageHelper.setTo(email);
                 mimeMessageHelper.setText(mailMessage);
                 mimeMessageHelper.setSubject("Witaj " + vehicle.getClient().getEmail());
+//                mimeMessageHelper.addInline("nazwaZdjecja.jpg", new ClassPathResource("sciezka"));
+//                mimeMessageHelper.addAttachment("myDocument.pdf", new ClassPathResource("doc/myDocument.pdf"));
+
                 javaMailSender.send(mimeMessage);
             } catch (MessagingException e) {
                 log.error(e.getMessage(), e);

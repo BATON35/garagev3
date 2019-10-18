@@ -46,8 +46,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         "/swagger-ui.html",
                         "/webjars/**")
                 .permitAll()
-//                .anyRequest()
-//                .authenticated()
+                .and()
+                .authorizeRequests()
+                .antMatchers(HttpMethod.POST,
+                        "/api/users")
+                .permitAll()
+                .anyRequest()
+                .authenticated()
                 .and()
                 .headers()
                 .frameOptions()
@@ -71,6 +76,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         corsConfiguration.addAllowedMethod(HttpMethod.PUT);
         corsConfiguration.addAllowedMethod(HttpMethod.DELETE);
         corsConfiguration.addAllowedMethod(HttpMethod.OPTIONS);
+        corsConfiguration.addAllowedMethod(HttpMethod.PATCH);
         UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource = new UrlBasedCorsConfigurationSource();
         urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", corsConfiguration.applyPermitDefaultValues());
         return urlBasedCorsConfigurationSource;

@@ -126,7 +126,7 @@ public class UserServiceIT {
 //        Assert.assertTrue(ALL_ROLES.contains(roleId3));
 //    }
 
-    // TODO: 11.07.2019 czy to jest poprawny test (jesli metoda findUderByEmail dziala niepoprawnie to test jest bez sensu
+
     @Test
     public void deleteUser() {
         //given

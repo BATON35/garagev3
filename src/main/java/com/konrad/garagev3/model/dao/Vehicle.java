@@ -34,6 +34,7 @@ public class Vehicle {
     @JsonBackReference
     @EqualsAndHashCode.Exclude
     private Client client;
+    private boolean notification;
 
 //    @Override
 //    public boolean equals(Object o) {

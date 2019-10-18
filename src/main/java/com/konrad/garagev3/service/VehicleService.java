@@ -90,4 +90,11 @@ public class VehicleService {
     public void deleteVehicle(Long id) {
         vehicleRepository.deleteById(id);
     }
+
+    public void toggleNotification(Long vehicleId) {
+        vehicleRepository.findById(vehicleId).ifPresent(vehicle -> {
+            vehicle.setNotification(!vehicle.isNotification());
+            vehicleRepository.save(vehicle);
+        });
+    }
 }

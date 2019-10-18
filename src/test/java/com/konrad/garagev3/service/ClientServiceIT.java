@@ -56,55 +56,55 @@ public class ClientServiceIT {
     @Test
     public void addVehicleToClient() {
     }
-
-    @Test
-    public void clientNotExist() {
-        Assert.assertNull(sut.findClientByEmail("mailNotEsist@pl"));
-    }
-
-    @Test
-    public void findExistClientByEmail() {
-        ClientDto result = sut.findClientByEmail(TEST_CLIENT_EXIST_IN_DATABASE.getEmail());
-        Assert.assertEquals(TEST_CLIENT_EXIST_IN_DATABASE, result);
-    }
-
-    @Test
-    public void saveClient() {
-        Client result = sut.saveClient(TEST_CLIENT_TO_SAVE);
-        Assert.assertEquals(TEST_CLIENT_TO_SAVE, result);
-
-        sut.deleteClient(TEST_CLIENT_TO_SAVE.getEmail());
-    }
-    @Test
-    public void deleteClient() {
-        sut.deleteClient(TEST_CLIENT_EXIST_IN_DATABASE.getEmail());
-        Assert.assertNull(sut.findClientByEmail(TEST_CLIENT_EXIST_IN_DATABASE.getEmail()));
-    }
-
-    @Test
-    public void findClientBySurnameAndName() {
-        String surname = TEST_CLIENT_EXIST_IN_DATABASE.getSurname();
-        String name = TEST_CLIENT_EXIST_IN_DATABASE.getName();
-        ClientDto result = sut.findClientBySurnameAndName(surname,name);
-        Assert.assertEquals(TEST_CLIENT_EXIST_IN_DATABASE, result);
-
-    }
-
-    @Test
-    public void findAllActiveClients() {
-        sut.deleteClient(TEST_CLIENT_EXIST_IN_DATABASE.getEmail());
-        sut.deleteClient(TEST_CLIENT_TO_SAVE.getEmail());
-
-        sut.saveClient(TEST_CLIENT);
-        sut.saveClient(TEST_CLIENT_2);
-
-        List<ClientDto> result = sut.findAllActiveClients();
-
-        Assert.assertEquals(Arrays.asList(TEST_CLIENT_DTO_2 ,TEST_CLIENT_DTO), result);
-
-        sut.deleteClient(TEST_CLIENT_DTO.getEmail());
-        sut.deleteClient(TEST_CLIENT_DTO_2.getEmail());
-    }
+//
+//    @Test
+//    public void clientNotExist() {
+//        Assert.assertNull(sut.findClientByEmail("mailNotEsist@pl"));
+//    }
+//
+//    @Test
+//    public void findExistClientByEmail() {
+//        ClientDto result = sut.findClientByEmail(TEST_CLIENT_EXIST_IN_DATABASE.getEmail());
+//        Assert.assertEquals(TEST_CLIENT_EXIST_IN_DATABASE, result);
+//    }
+//
+//    @Test
+//    public void saveClient() {
+//        Client result = sut.saveClient(TEST_CLIENT_TO_SAVE);
+//        Assert.assertEquals(TEST_CLIENT_TO_SAVE, result);
+//
+//        sut.deleteClient(TEST_CLIENT_TO_SAVE.getEmail());
+//    }
+//    @Test
+//    public void deleteClient() {
+//        sut.deleteClient(TEST_CLIENT_EXIST_IN_DATABASE.getEmail());
+//        Assert.assertNull(sut.findClientByEmail(TEST_CLIENT_EXIST_IN_DATABASE.getEmail()));
+//    }
+//
+//    @Test
+//    public void findClientBySurnameAndName() {
+//        String surname = TEST_CLIENT_EXIST_IN_DATABASE.getSurname();
+//        String name = TEST_CLIENT_EXIST_IN_DATABASE.getName();
+//        ClientDto result = sut.findClientBySurnameAndName(surname,name);
+//        Assert.assertEquals(TEST_CLIENT_EXIST_IN_DATABASE, result);
+//
+//    }
+//
+//    @Test
+//    public void findAllActiveClients() {
+//        sut.deleteClient(TEST_CLIENT_EXIST_IN_DATABASE.getEmail());
+//        sut.deleteClient(TEST_CLIENT_TO_SAVE.getEmail());
+//
+//        sut.saveClient(TEST_CLIENT);
+//        sut.saveClient(TEST_CLIENT_2);
+//
+//        List<ClientDto> result = sut.findAllActiveClients();
+//
+//        Assert.assertEquals(Arrays.asList(TEST_CLIENT_DTO_2 ,TEST_CLIENT_DTO), result);
+//
+//        sut.deleteClient(TEST_CLIENT_DTO.getEmail());
+//        sut.deleteClient(TEST_CLIENT_DTO_2.getEmail());
+//    }
 
 //    @Test
 //    @Ignore

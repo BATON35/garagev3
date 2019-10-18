@@ -5,6 +5,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.time.LocalDate;
 
 
 @Data
@@ -13,15 +16,18 @@ import org.hibernate.validator.constraints.Length;
 @AllArgsConstructor
 public class VehicleDto {
     private Long id;
- //   @DateTimeFormat(pattern = "yyyy-MM-dd")
-   // private LocalDate productionDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate productionDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate overviewDate;
     @Length(min = 3, max = 127, message = "Pole imie wymaga conajmniej trzech znakow")
     private String brand;
     private String model;
     private String numberPlate;
+    private boolean notification;
 //    private Workshop workshop;
- //   private long Client_id;
- //   private Client client;
+    //   private long Client_id;
+    //   private Client client;
     //private List<Service> services;
 
 
