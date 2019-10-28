@@ -12,6 +12,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/clients")
 public class ClientControllerRest {
@@ -24,6 +26,15 @@ public class ClientControllerRest {
         clientDtoMapper = Mappers.getMapper(ClientMapper.class);
     }
 
+    @GetMapping("/search")
+    public Page<ClientDto> searchClients(@RequestParam String searchText, @RequestParam Integer page, @RequestParam Integer size) {
+        return clientService.searchClients(searchText, PageRequest.of(page, size));
+    }
+
+    @GetMapping("/autoComplete")
+    public List<String> autocomplete(@RequestParam String text) {
+        return clientService.autocompleteClients(text);
+    }
 
     @GetMapping("/{id}")
     public ClientDto getById(@PathVariable Long id) {
@@ -51,4 +62,6 @@ public class ClientControllerRest {
     public void delete(@PathVariable Long id) {
         clientService.deleteClient(id);
     }
+
+
 }

@@ -28,31 +28,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     @Qualifier("userDetailsServiceImpl")
     private UserDetailsService userDetailsService;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors()
                 .and()
                 .csrf()
-                .ignoringAntMatchers("/api/**", "/login")
-                .and()
-                .authorizeRequests()
-                .antMatchers(
-                        HttpMethod.GET,
-                        "/swagger-ui.html",
-                        "/v2/api-docs",
-                        "/v2/api-docs/**",
-                        "/swagger-resources/**",
-                        "/swagger-ui.html",
-                        "/webjars/**")
-                .permitAll()
-                .and()
-                .authorizeRequests()
-                .antMatchers(HttpMethod.POST,
-                        "/api/users")
-                .permitAll()
-                .anyRequest()
-                .authenticated()
+                .ignoringAntMatchers("/**")
                 .and()
                 .headers()
                 .frameOptions()
@@ -64,19 +48,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService);
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
     }
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
-//        corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
-        corsConfiguration.addAllowedMethod(HttpMethod.GET);
-        corsConfiguration.addAllowedMethod(HttpMethod.POST);
-        corsConfiguration.addAllowedMethod(HttpMethod.PUT);
-        corsConfiguration.addAllowedMethod(HttpMethod.DELETE);
-        corsConfiguration.addAllowedMethod(HttpMethod.OPTIONS);
-        corsConfiguration.addAllowedMethod(HttpMethod.PATCH);
+        corsConfiguration.addAllowedMethod("*");
         UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource = new UrlBasedCorsConfigurationSource();
         urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", corsConfiguration.applyPermitDefaultValues());
         return urlBasedCorsConfigurationSource;

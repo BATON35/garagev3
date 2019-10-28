@@ -1,7 +1,5 @@
 package com.konrad.garagev3.service;
 
-//import com.konrad.garagev3.configuration.JwtTokenProvider;
-
 import com.konrad.garagev3.mapper.UserMapper;
 import com.konrad.garagev3.model.dao.Role;
 import com.konrad.garagev3.model.dao.User;
@@ -16,7 +14,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -35,7 +33,7 @@ public class UserService {
     private RoleRepository roleRepository;
     private UserMapper userMapper;
     @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private PasswordEncoder passwordEncoder;
 
 
     @Autowired
@@ -60,14 +58,14 @@ public class UserService {
         }
 
         if (user.getId() == null) {
-            user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
             return userRepository.save(user);
         }
         Optional<User> userById = userRepository.findById(user.getId());
         if (userById.isPresent() && userById.get().getPassword().equals(user.getPassword())) {
             return userRepository.save(user);
         }
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 

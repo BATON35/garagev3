@@ -9,15 +9,16 @@ import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ClientService {
@@ -46,13 +47,11 @@ public class ClientService {
     }
 
     public List<ClientDto> findAllActiveClients() {
-        List<Client> clients = clientRepository.findByActiveIs(1);
-        clients.sort(Comparator.comparing(Client::getEmail));
-        List clientsDTO = new ArrayList();
-        for (Client client : clients) {
-            clientsDTO.add(clientMapper.toClientDto(client));
-        }
-        return clientsDTO;
+        return clientRepository.findByActiveIs(1)
+                .stream()
+                .map(clientMapper::toClientDto)
+                .sorted(Comparator.comparing(ClientDto::getEmail))
+                .collect(Collectors.toList());
     }
 
     public ClientDto deactivateClient(Long id) {
@@ -74,7 +73,7 @@ public class ClientService {
     @Transactional
     public ClientDto editClient(ClientDto clientDto) {
         return clientRepository.findById(clientDto.getId()).map(client -> {
-            if (!client.getEmail().equals(clientDto.getEmail())) {
+            if (clientDto.getEmail() != null && !client.getEmail().equals(clientDto.getEmail())) {
                 client.setEmail(clientDto.getEmail());
             }
             client.setActive(1);
@@ -97,4 +96,20 @@ public class ClientService {
     public void deleteClient(Long id) {
         clientRepository.deleteById(id);
     }
+
+    public Page<ClientDto> searchClients(String searchText, PageRequest pageRequest) {
+        Page<Client> clients = clientRepository.findByNameContainsOrEmailContains(searchText, searchText, pageRequest);
+        return new PageImpl<>(clients.getContent()
+                .stream()
+                .map(clientMapper::toClientDto)
+                .collect(Collectors.toList()), clients.getPageable(), clients.getTotalElements());
+    }
+
+    public List<String> autocompleteClients(String searchText) {
+        List<String> byAutoCompleteEmail = clientRepository.findByAutoCompleteEmail(searchText);
+        List<String> byAutoCompleteName = clientRepository.findByAutoCompleteName(searchText);
+        byAutoCompleteEmail.addAll(byAutoCompleteName);
+        return byAutoCompleteEmail;
+    }
+
 }

@@ -4,6 +4,7 @@ import com.konrad.garagev3.exeption.TemplateParseExeption;
 import com.konrad.garagev3.model.dao.Template;
 import com.konrad.garagev3.repository.TemplateRepository;
 import com.lowagie.text.DocumentException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import java.io.*;
 import java.util.Locale;
 
 @Service
+@Slf4j
 public class PDFService {
     @Autowired
     private TemplateRepository templateRepository;
@@ -36,7 +38,7 @@ public class PDFService {
             iTextRenderer.finishPDF();
             return byteArrayOutputStream.toByteArray();
         } catch (DocumentException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
         }
         throw new TemplateParseExeption("PDF can not be generated");
     }
