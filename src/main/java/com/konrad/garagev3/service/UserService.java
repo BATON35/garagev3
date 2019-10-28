@@ -3,6 +3,7 @@ package com.konrad.garagev3.service;
 import com.konrad.garagev3.mapper.UserMapper;
 import com.konrad.garagev3.model.dao.Role;
 import com.konrad.garagev3.model.dao.User;
+import com.konrad.garagev3.model.dto.ClientDto;
 import com.konrad.garagev3.model.dto.UserDto;
 import com.konrad.garagev3.repository.RoleRepository;
 import com.konrad.garagev3.repository.UserRepository;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -128,7 +130,16 @@ public class UserService {
     }
 
 
-    public User getinfo() {
+    public User getInfo() {
         return userRepository.findByName(SecurityContextHolder.getContext().getAuthentication().getName());
     }
+
+    public Page<UserDto> searchUsers(String searchText, PageRequest pageRequest) {
+        Page<User> users = userRepository.findByNameContainsOrEmailContains(searchText, searchText, pageRequest);
+        return new PageImpl<>(users.getContent()
+                .stream()
+                .map(userMapper::toUserDto)
+                .collect(Collectors.toList()), users.getPageable(), users.getTotalElements());
+    }
 }
+

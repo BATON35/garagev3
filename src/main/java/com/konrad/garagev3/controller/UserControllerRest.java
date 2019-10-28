@@ -25,10 +25,14 @@ public class UserControllerRest {
         this.userService = userService;
         userMapper = Mappers.getMapper(UserMapper.class);
     }
+    @GetMapping("/search")
+    public Page<UserDto> searchUsers(@RequestParam String searchText, @RequestParam Integer page, @RequestParam Integer size) {
+        return userService.searchUsers(searchText, PageRequest.of(page, size));
+    }
 
     @GetMapping("/info")
     public UserDto userInfo() {
-        return userMapper.toUserDto(userService.getinfo());
+        return userMapper.toUserDto(userService.getInfo());
     }
 
     @GetMapping("/{id}")
