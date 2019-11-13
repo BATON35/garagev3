@@ -11,14 +11,18 @@ import java.util.List;
 @Data
 @Entity
 @EqualsAndHashCode
-public class Service {
+public class ServicePart {
     @Id
     @GeneratedValue
     private Long id;
-//    @ManyToMany(mappedBy = "services")
-//    private List<BodyPriceList> bodyPriceLists;
+
     @ManyToOne
-    @JoinColumn(name = "vehicle_id")
-    private Vehicle vehicle;
-    private String description;
+    private CarService carService;
+
+    @ManyToMany
+    @JoinTable
+    private List<Part> parts;
+
+    @ManyToOne
+    private Worker worker;
 }

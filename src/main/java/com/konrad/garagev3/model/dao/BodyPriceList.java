@@ -24,5 +24,5 @@ public class BodyPriceList {
             joinColumns = @JoinColumn(name = "rate_id"),
             inverseJoinColumns = @JoinColumn(name = "service_id")
     )
-    private List<Service> services;
+    private List<CarService> carServices;
 }

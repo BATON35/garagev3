@@ -27,8 +27,8 @@ public class Vehicle {
     //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "workshop_id")
 //    private Workshop workshop;
-    @OneToMany(mappedBy = "vehicle", orphanRemoval = true,fetch = FetchType.EAGER)
-    private List<Service> services;
+    @OneToMany( orphanRemoval = true,fetch = FetchType.EAGER)
+    private List<ServicePart> servicesPart;
     @ManyToOne
     @JoinColumn(name = "client_id")
     @JsonBackReference
