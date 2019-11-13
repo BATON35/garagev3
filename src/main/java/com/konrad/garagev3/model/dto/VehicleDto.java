@@ -28,7 +28,7 @@ public class VehicleDto {
 //    private Workshop workshop;
     //   private long Client_id;
     //   private Client client;
-    //private List<Service> services;
+    //private List<CarService> carServices;
 
 
 }

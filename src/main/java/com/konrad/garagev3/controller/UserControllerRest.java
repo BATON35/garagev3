@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/users")
-//@CrossOrigin(origins = "http://localhost:4200", maxAge = 10_000)
 public class UserControllerRest {
 
     private final UserService userService;
@@ -25,25 +24,26 @@ public class UserControllerRest {
         this.userService = userService;
         userMapper = Mappers.getMapper(UserMapper.class);
     }
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/search")
     public Page<UserDto> searchUsers(@RequestParam String searchText, @RequestParam Integer page, @RequestParam Integer size) {
         return userService.searchUsers(searchText, PageRequest.of(page, size));
     }
-
     @GetMapping("/info")
     public UserDto userInfo() {
         return userMapper.toUserDto(userService.getInfo());
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/{id}")
-
     public UserDto getById(@PathVariable Long id) {
         return userMapper.toUserDto(userService.findById(id));
     }
 
-    @GetMapping("/{page}/{size}")
-    public Page<UserDto> getList(@PathVariable Integer page, @PathVariable Integer size) {
-        return userService.findAll(PageRequest.of(page, size)).map(userMapper::toUserDto);
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/{page}/{size}/{hasRole}")
+    public Page<UserDto> getUserList(@PathVariable Integer page, @PathVariable Integer size, @PathVariable Boolean hasRole) {
+        return userService.findAll(PageRequest.of(page, size), hasRole).map(userMapper::toUserDto);
     }
 
     @PostMapping
@@ -51,17 +51,16 @@ public class UserControllerRest {
         User user = userMapper.toToUser(userDto);
         return userMapper.toUserDto(userService.saveUser(user));
     }
-
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping
-    @PreAuthorize("isAuthenticated()")
+
     public UserDto update(@RequestBody UserDto userDto) {
         User user = userMapper.toToUser(userDto);
 
         return userMapper.toUserDto(userService.saveUser(user));
     }
-
-    @DeleteMapping("{id}")
     @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("{id}")
     public void delete(@PathVariable Long id) {
         userService.deleteUser(id);
     }

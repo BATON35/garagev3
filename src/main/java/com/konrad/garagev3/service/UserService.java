@@ -31,11 +31,12 @@ import java.util.stream.Collectors;
 @Service
 public class UserService {
 
-    private UserRepository userRepository;
+    private UserRepository<User> userRepository;
     private RoleRepository roleRepository;
     private UserMapper userMapper;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    private String name;
 
 
     @Autowired
@@ -116,11 +117,16 @@ public class UserService {
 
     public User findById(Long id) {
         return userRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("User with id" + id + " doesn't exist"));
+                .orElseThrow(() -> new EntityNotFoundException("User with id " + id + " doesn't exist"));
     }
 
-    public Page<User> findAll(@PageableDefault Pageable pageable) {
-        Page<User> users = userRepository.findAll(pageable);
+    public Page<User> findAll(@PageableDefault Pageable pageable, Boolean hasRole) {
+        Page<User> users;
+        if (hasRole) {
+            users = userRepository.findByRoleIsNull(pageable);
+        } else {
+            users = userRepository.findAll(pageable);
+        }
         Page<User> pageUsers = new PageImpl<>(users.getContent(), users.getPageable(), users.getTotalElements());
         return pageUsers;
     }
@@ -131,7 +137,9 @@ public class UserService {
 
 
     public User getInfo() {
-        return userRepository.findByName(SecurityContextHolder.getContext().getAuthentication().getName());
+        name = SecurityContextHolder.getContext().getAuthentication().getName();
+        return userRepository.findByName(name)
+                .orElseThrow(()-> new EntityNotFoundException("User with name + " + name + " doesn't exist"));
     }
 
     public Page<UserDto> searchUsers(String searchText, PageRequest pageRequest) {

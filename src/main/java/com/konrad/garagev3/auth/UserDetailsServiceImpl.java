@@ -2,18 +2,18 @@ package com.konrad.garagev3.auth;
 
 import com.konrad.garagev3.model.dao.User;
 import com.konrad.garagev3.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
@@ -21,15 +21,18 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        User user = userRepository.findByName(userName);
-        if (user == null) {
-            throw new UsernameNotFoundException(userName);
+        try {
+            return (org.springframework.security.core.userdetails.User) userRepository.findByName(userName)
+                    .map(user -> new org.springframework.security.core.userdetails.User(((User) user).getName(), ((User) user).getPassword(), ((User) user).getRoles()
+                            .stream()
+                            .map(role -> new SimpleGrantedAuthority(role.getName()))
+                            .collect(Collectors.toList())))
+                    .orElseThrow(() -> new UsernameNotFoundException("user with userName " + userName + " doesn't exist"));
+        } catch (Throwable throwable) {
+            log.error(throwable.getMessage(), throwable);
+            throw new UsernameNotFoundException("user name " + userName);
         }
-        List<GrantedAuthority> grantedAuthorities = user.getRoles()
-                .stream()
-                .map(role -> new SimpleGrantedAuthority(role.getName()))
-                .collect(Collectors.toList());
-        return new org.springframework.security.core.userdetails.User(user.getName(), user.getPassword(), grantedAuthorities);
+
     }
 
 }

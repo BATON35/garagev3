@@ -2,20 +2,24 @@ package com.konrad.garagev3.repository;
 
 import com.konrad.garagev3.model.dao.User;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
-public interface UserRepository extends JpaRepository<User, Long> {
-    User findByEmail(String email);
+public interface UserRepository<T extends User> extends JpaRepository<T, Long> {
+    T findByEmail(String email);
 
     void deleteByEmail(String email);
 
-    List<User> findByActiveIs(int one);
+    List<T> findByActiveIs(int one);
 
-    User findByName(String username);
+    Optional<T> findByName(String username);
 
-    Page<User> findByNameContainsOrEmailContains(String name, String email, Pageable pageable);
+    Page<T> findByNameContainsOrEmailContains(String name, String email, Pageable pageable);
+
+    @Query(value = "select * from user left join user_role on user.id = user_role.user_id where role_id is null", nativeQuery = true)
+    Page<T> findByRoleIsNull(Pageable pageable);
 }
