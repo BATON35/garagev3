@@ -1,12 +1,13 @@
 package com.konrad.garagev3.model.dao;
 
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import java.util.Set;
 
 @Data
-@Builder
+@SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -15,14 +16,15 @@ import java.util.Set;
 public class User{
     @Id
     @GeneratedValue
-    private Long id;
+    protected Long id;
     @Column(unique = true)
-    private String email;
-    private String password;
+    protected String email;
+    protected String password;
     @Column(unique = true)
-    private String name;
-    private Integer active;
+    protected String name;
+    protected String surname;
+    protected Integer active;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles;
+    protected Set<Role> roles;
 }

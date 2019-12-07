@@ -26,22 +26,4 @@ public class Client {
     private String surname;
     private String email;
     private String phoneNumber;
-
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (o == null || getClass() != o.getClass()) return false;
-//        Client client = (Client) o;
-//        return Objects.equals(id, client.id) &&
-//                Objects.equals(name, client.name) &&
-//                Objects.equals(active, client.active) &&
-//                Objects.equals(surname, client.surname) &&
-//                Objects.equals(email, client.email) &&
-//                Objects.equals(phoneNumber, client.phoneNumber);
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return Objects.hash(id, name, active, surname, email, phoneNumber);
-//    }
 }

@@ -14,4 +14,6 @@ public interface VehicleRepository extends JpaRepository<Vehicle, Long> {
     List<Vehicle> findByClientId(Long id);
 
     List<Vehicle> findByOverviewDate(LocalDate currentDate);
+
+    List<Vehicle> findByNumberPlateContaining(String text);
 }

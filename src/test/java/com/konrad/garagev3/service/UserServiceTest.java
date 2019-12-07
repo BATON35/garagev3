@@ -32,11 +32,11 @@ public class UserServiceTest {
 //
 //
 //    @Test
-//    public void saveUser() {
+//    public void SaveVehicle() {
 //        // Setup
 //
 //        // Run the test
-//        User result = userServiceUnderTest.saveUser(TEST_USER);
+//        User result = userServiceUnderTest.SaveVehicle(TEST_USER);
 //
 //        // Verify the results
 //        assertEquals(TEST_USER, result);

@@ -38,29 +38,29 @@ public class ClientControllerRest {
     }
 
     @GetMapping("/{id}")
-    public ClientDto getById(@PathVariable Long id) {
+    public ClientDto getClientById(@PathVariable Long id) {
         return clientService.findById(id);
     }
 
     @GetMapping("/{page}/{size}")
-    public Page<ClientDto> getList(@PathVariable Integer page, @PathVariable Integer size) {
+    public Page<ClientDto> getClientList(@PathVariable Integer page, @PathVariable Integer size) {
         return clientService.findAll(PageRequest.of(page, size)).map(clientDtoMapper::toClientDto);
     }
 
     @PostMapping
-    public ClientDto save(@RequestBody ClientDto clientDto) {
+    public ClientDto saveClient(@RequestBody ClientDto clientDto) {
         Client client = clientDtoMapper.toToClient(clientDto);
         return clientDtoMapper.toClientDto(clientService.saveClient(client));
     }
 
     @PutMapping
-    public ClientDto update(@RequestBody ClientDto clientDto) {
+    public ClientDto updateClient(@RequestBody ClientDto clientDto) {
         Client client = clientDtoMapper.toToClient(clientDto);
         return clientDtoMapper.toClientDto(clientService.saveClient(client));
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
+    public void deleteClient(@PathVariable Long id) {
         clientService.deleteClient(id);
     }
 

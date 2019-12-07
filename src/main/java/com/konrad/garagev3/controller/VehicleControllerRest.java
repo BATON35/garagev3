@@ -3,12 +3,15 @@ package com.konrad.garagev3.controller;
 import com.konrad.garagev3.mapper.VehicleMapper;
 import com.konrad.garagev3.model.dao.Vehicle;
 import com.konrad.garagev3.model.dto.VehicleDto;
+import com.konrad.garagev3.model.dto.WorkerDto;
 import com.konrad.garagev3.service.VehicleService;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/vehicles")
@@ -23,29 +26,33 @@ public class VehicleControllerRest {
     }
 
     @GetMapping("/{id}")
-    public VehicleDto getById(@PathVariable Long id) {
+    public VehicleDto getVehicleById(@PathVariable Long id) {
         return vehicleMapper.toVehicleDto(vehicleService.findById(id));
     }
 
     @GetMapping
-    public Page<VehicleDto> getList(Pageable pageable) {
+    public Page<VehicleDto> getVehicleList(Pageable pageable) {
         return vehicleService.findAll(pageable).map(vehicleMapper::toVehicleDto);
+    }
+    @GetMapping("/autoComplete")
+    public List<VehicleDto> autocompleteVehicle(@RequestParam String text) {
+        return vehicleService.autocompleteWorker(text);
     }
 
     @PostMapping("/{clientId}")
-    public VehicleDto save(@RequestBody VehicleDto vehicleDto, @PathVariable Long clientId) {
-        Vehicle vehicle = vehicleService.saveVehicle(vehicleMapper.toToVehicle(vehicleDto), clientId);
+    public VehicleDto saveVehicle(@RequestBody VehicleDto vehicleDto, @PathVariable Long clientId) {
+        Vehicle vehicle = vehicleService.saveVehicle(vehicleMapper.toVehicle(vehicleDto), clientId);
         return vehicleMapper.toVehicleDto(vehicle);
     }
 
     @PutMapping
-    public VehicleDto update(@RequestBody VehicleDto vehicleDto) {
-        Vehicle vehicle = vehicleService.update(vehicleMapper.toToVehicle(vehicleDto));
+    public VehicleDto updateVehicle(@RequestBody VehicleDto vehicleDto) {
+        Vehicle vehicle = vehicleService.update(vehicleMapper.toVehicle(vehicleDto));
         return vehicleMapper.toVehicleDto(vehicle);
     }
 
     @DeleteMapping("/{id}")
-    public void delete(Long id) {
+    public void deleteVehicle(@PathVariable Long id) {
         vehicleService.deleteVehicle(id);
     }
 

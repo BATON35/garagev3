@@ -82,8 +82,9 @@ public class VehicleService {
         return pageVehicles;
     }
 
-    public VehicleDto saveUser(VehicleDto vehicleDto) {
-        Vehicle vehicle = vehicleRepository.save(vehicleMapper.toToVehicle(vehicleDto));
+
+    public VehicleDto SaveVehicle(VehicleDto vehicleDto) {
+        Vehicle vehicle = vehicleRepository.save(vehicleMapper.toVehicle(vehicleDto));
         return vehicleMapper.toVehicleDto(vehicle);
     }
 
@@ -96,5 +97,12 @@ public class VehicleService {
             vehicle.setNotification(!vehicle.isNotification());
             vehicleRepository.save(vehicle);
         });
+    }
+
+    public List<VehicleDto> autocompleteWorker(String text) {
+        return vehicleRepository.findByNumberPlateContaining(text)
+                .stream()
+                .map(vehicleMapper::toVehicleDto)
+                .collect(Collectors.toList());
     }
 }
