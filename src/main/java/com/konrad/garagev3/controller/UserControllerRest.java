@@ -36,7 +36,7 @@ public class UserControllerRest {
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/{id}")
-    public UserDto getById(@PathVariable Long id) {
+    public UserDto getUserById(@PathVariable Long id) {
         return userMapper.toUserDto(userService.findById(id));
     }
 
@@ -47,21 +47,19 @@ public class UserControllerRest {
     }
 
     @PostMapping
-    public UserDto save(@RequestBody UserDto userDto) {
-        User user = userMapper.toToUser(userDto);
+    public UserDto saveUser(@RequestBody UserDto userDto) {
+        User user = userMapper.toUser(userDto);
         return userMapper.toUserDto(userService.saveUser(user));
     }
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping
-
-    public UserDto update(@RequestBody UserDto userDto) {
-        User user = userMapper.toToUser(userDto);
-
+    public UserDto updateUser(@RequestBody UserDto userDto) {
+        User user = userMapper.toUser(userDto);
         return userMapper.toUserDto(userService.saveUser(user));
     }
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("{id}")
-    public void delete(@PathVariable Long id) {
+    public void deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
     }
 

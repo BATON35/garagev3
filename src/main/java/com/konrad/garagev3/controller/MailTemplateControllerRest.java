@@ -14,12 +14,12 @@ public class MailTemplateControllerRest {
     private MailTemplateService mailTemplateService;
 
     @PostMapping
-    public Template save(@RequestBody Template template) {
+    public Template saveMailTemplate(@RequestBody Template template) {
        return mailTemplateService.save(template);
     }
 
     @PutMapping
-    public Template update(@RequestBody Template template) {
+    public Template updateMailTemplate(@RequestBody Template template) {
         return mailTemplateService.update(template);
     }
     @GetMapping("/{page}/[size}")
@@ -29,7 +29,7 @@ public class MailTemplateControllerRest {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
+    public void deleteMailTemplate(@PathVariable Long id) {
         mailTemplateService.delete(id);
     }
 }

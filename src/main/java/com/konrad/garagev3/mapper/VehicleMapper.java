@@ -8,5 +8,5 @@ import org.mapstruct.Mapper;
 public interface VehicleMapper {
     VehicleDto toVehicleDto(Vehicle vehicle);
 
-    Vehicle toToVehicle(VehicleDto vehicleDto);
+    Vehicle toVehicle(VehicleDto vehicleDto);
 }

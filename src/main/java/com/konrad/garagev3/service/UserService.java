@@ -3,7 +3,6 @@ package com.konrad.garagev3.service;
 import com.konrad.garagev3.mapper.UserMapper;
 import com.konrad.garagev3.model.dao.Role;
 import com.konrad.garagev3.model.dao.User;
-import com.konrad.garagev3.model.dto.ClientDto;
 import com.konrad.garagev3.model.dto.UserDto;
 import com.konrad.garagev3.repository.RoleRepository;
 import com.konrad.garagev3.repository.UserRepository;
@@ -74,7 +73,7 @@ public class UserService {
 
     public UserDto saveUserWithPrivileges(UserDto userDto) {
         UserMapper userMapper = Mappers.getMapper(UserMapper.class);
-        User user = userMapper.toToUser(userDto);
+        User user = userMapper.toUser(userDto);
         //  user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setActive(1);
         // user.setRoles(new LinkedHashSet<>(user.getRoles()));

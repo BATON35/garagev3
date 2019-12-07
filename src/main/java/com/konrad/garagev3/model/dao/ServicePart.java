@@ -25,4 +25,7 @@ public class ServicePart {
 
     @ManyToOne
     private Worker worker;
+
+    @ManyToOne
+    private Vehicle vehicle;
 }

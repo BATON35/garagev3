@@ -24,9 +24,6 @@ public class Vehicle {
     private String model;
     private String numberPlate;
     private LocalDate overviewDate;
-    //    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "workshop_id")
-//    private Workshop workshop;
     @OneToMany( orphanRemoval = true,fetch = FetchType.EAGER)
     private List<ServicePart> servicesPart;
     @ManyToOne
@@ -35,20 +32,4 @@ public class Vehicle {
     @EqualsAndHashCode.Exclude
     private Client client;
     private boolean notification;
-
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (o == null || getClass() != o.getClass()) return false;
-//        Vehicle vehicle = (Vehicle) o;
-//        return Objects.equals(id, vehicle.id) &&
-//                Objects.equals(brand, vehicle.brand) &&
-//                Objects.equals(model, vehicle.model) &&
-//                Objects.equals(numberPlate, vehicle.numberPlate);
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return Objects.hash(id, brand, model, numberPlate);
-//    }
 }

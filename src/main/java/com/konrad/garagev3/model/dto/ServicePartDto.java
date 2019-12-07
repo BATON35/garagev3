@@ -13,4 +13,5 @@ public class ServicePartDto {
     private List<Long> partIds;
     private Long workerId;
     private Long ServiceId;
+    private String vehicleNumberPlate;
 }

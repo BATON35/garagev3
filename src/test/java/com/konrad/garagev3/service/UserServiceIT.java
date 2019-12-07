@@ -83,10 +83,10 @@ public class UserServiceIT {
     }
 
 //    @Test
-//    public void saveUser() {
+//    public void SaveVehicle() {
 //        //given
 //        //when
-//        User result = sut.saveUser(TEST_USER_TO_SAVE);
+//        User result = sut.SaveVehicle(TEST_USER_TO_SAVE);
 //        //then
 //        Assert.assertEquals(TEST_USER_DTO_TO_SAVE.getName(), result.getName());
 //        Assert.assertEquals(TEST_USER_DTO_TO_SAVE.getEmail(), result.getEmail());
