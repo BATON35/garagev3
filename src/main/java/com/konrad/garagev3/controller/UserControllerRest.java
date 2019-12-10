@@ -24,6 +24,8 @@ public class UserControllerRest {
         this.userService = userService;
         userMapper = Mappers.getMapper(UserMapper.class);
     }
+
+
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/search")
     public Page<UserDto> searchUsers(@RequestParam String searchText, @RequestParam Integer page, @RequestParam Integer size) {

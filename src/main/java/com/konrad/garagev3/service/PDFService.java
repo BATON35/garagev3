@@ -2,6 +2,7 @@ package com.konrad.garagev3.service;
 
 import com.konrad.garagev3.exeption.TemplateParseExeption;
 import com.konrad.garagev3.model.dao.Template;
+import com.konrad.garagev3.model.dao.Vehicle;
 import com.konrad.garagev3.repository.TemplateRepository;
 import com.lowagie.text.DocumentException;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +14,9 @@ import org.thymeleaf.context.Context;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 
 import java.io.*;
+import java.util.Collections;
 import java.util.Locale;
+import java.util.Map;
 
 @Service
 @Slf4j
@@ -27,7 +30,9 @@ public class PDFService {
     public byte[] generatePDF() throws TemplateParseExeption {
         Template vehicle_checkup_remainder = templateRepository.findByType("vehicle_checkup_remainder");
         Context context = new Context(Locale.forLanguageTag("pl"));
-        context.setVariable("vehicle.name", "vehicle");
+//        context.setVariable("vehicle.name", "vehicle");
+//        context.setVariable("vehicle.brand", "vehicleBrand");
+        context.setVariable("vehicle", Vehicle.builder().brand("test").build());
         String mailMessage = templateEngine.process(vehicle_checkup_remainder.getTemplate(), context);
         try {
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
