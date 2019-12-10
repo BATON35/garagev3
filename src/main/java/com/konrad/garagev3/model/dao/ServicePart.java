@@ -1,8 +1,11 @@
 package com.konrad.garagev3.model.dao;
 
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @NoArgsConstructor
@@ -11,10 +14,14 @@ import java.util.List;
 @Data
 @Entity
 @EqualsAndHashCode
+@EntityListeners(AuditingEntityListener.class)
 public class ServicePart {
     @Id
     @GeneratedValue
     private Long id;
+
+    @CreatedDate
+    private LocalDateTime createdDate;
 
     @ManyToOne
     private CarService carService;

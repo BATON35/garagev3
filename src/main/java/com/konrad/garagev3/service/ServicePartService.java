@@ -1,7 +1,9 @@
 package com.konrad.garagev3.service;
 
 import com.konrad.garagev3.mapper.ServicePartMapper;
+import com.konrad.garagev3.mapper.ServicePartResponseMapper;
 import com.konrad.garagev3.model.dao.ServicePart;
+import com.konrad.garagev3.model.dto.ServicePartResponseDto;
 import com.konrad.garagev3.repository.*;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ServicePartService {
@@ -23,13 +26,15 @@ public class ServicePartService {
     private ServicePartRepository servicePartRepository;
     private VehicleRepository vehicleRepository;
     private final ServicePartMapper servicePartMapper;
+    private final ServicePartResponseMapper servicePartResponseMapper;
 
     @Autowired
     public ServicePartService(WorkerRepository workerRepository,
                               PartRepository partRepository,
                               CarServiceRepository carServiceRepository,
                               ServicePartRepository servicePartRepository,
-                              VehicleRepository vehicleRepository
+                              VehicleRepository vehicleRepository,
+                              ServicePartResponseMapper servicePartResponseMapper
                               ) {
         this.workerRepository = workerRepository;
         this.partRepository = partRepository;
@@ -37,6 +42,7 @@ public class ServicePartService {
         this.servicePartRepository = servicePartRepository;
         this.vehicleRepository = vehicleRepository;
         this.servicePartMapper = Mappers.getMapper(ServicePartMapper.class);
+        this.servicePartResponseMapper = servicePartResponseMapper;
     }
 
     public ServicePart saveServicePart(Long workerId, List<Long> partIds, Long serviceID, String numberPlate) {
@@ -73,6 +79,13 @@ public class ServicePartService {
 
     public void deleteServicePart(Long id) {
         servicePartRepository.deleteById(id);
+    }
+
+    public List<ServicePartResponseDto> getHistory(Long vehicleId) {
+        return servicePartRepository.findByVehicleId(vehicleId)
+                .stream()
+                .map(servicePartResponseMapper::toServicePartResponse)
+                .collect(Collectors.toList());
     }
 
 }
