@@ -9,7 +9,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class ServicePartDto {
+public class JobDto {
     private List<Long> partIds;
     private Long workerId;
     private Long ServiceId;
