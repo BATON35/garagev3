@@ -3,7 +3,7 @@ package com.konrad.garagev3.service;
 import com.konrad.garagev3.mapper.JobMapper;
 import com.konrad.garagev3.mapper.ServicePartResponseMapper;
 import com.konrad.garagev3.model.dao.Job;
-import com.konrad.garagev3.model.dto.ServicePartResponseDto;
+import com.konrad.garagev3.model.dto.JobResponseDto;
 import com.konrad.garagev3.repository.*;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,7 +68,7 @@ public class JobService {
     }
 
     public Job findById(Long id) {
-        return jobRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("servicePart id " + id + " doesn't exist"));
+        return jobRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("job id " + id + " doesn't exist"));
     }
 
     public Page<Job> findAll(@PageableDefault Pageable pageable) {
@@ -81,7 +81,7 @@ public class JobService {
         jobRepository.deleteById(id);
     }
 
-    public List<ServicePartResponseDto> getHistory(Long vehicleId) {
+    public List<JobResponseDto> getHistory(Long vehicleId) {
         return jobRepository.findByVehicleId(vehicleId)
                 .stream()
                 .map(servicePartResponseMapper::toServicePartResponse)

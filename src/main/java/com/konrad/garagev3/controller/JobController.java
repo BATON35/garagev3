@@ -2,7 +2,7 @@ package com.konrad.garagev3.controller;
 
 import com.konrad.garagev3.mapper.JobMapper;
 import com.konrad.garagev3.model.dto.JobDto;
-import com.konrad.garagev3.model.dto.ServicePartResponseDto;
+import com.konrad.garagev3.model.dto.JobResponseDto;
 import com.konrad.garagev3.service.JobService;
 import org.mapstruct.factory.Mappers;
 import org.springframework.data.domain.Page;
@@ -60,7 +60,7 @@ public class JobController {
     }
 
     @GetMapping("/history")
-    public List<ServicePartResponseDto> getJobHistory(Long vehicleId) {
+    public List<JobResponseDto> getJobHistory(Long vehicleId) {
         return jobService.getHistory(vehicleId);
     }
 
