@@ -3,14 +3,11 @@ package com.konrad.garagev3.controller;
 import com.konrad.garagev3.mapper.CarServiceMapper;
 import com.konrad.garagev3.model.dao.CarService;
 import com.konrad.garagev3.model.dto.CarServiceDto;
-import com.konrad.garagev3.model.dto.ServicePartDto;
 import com.konrad.garagev3.service.CarServiceService;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

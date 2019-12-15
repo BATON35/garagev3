@@ -1,10 +1,9 @@
 package com.konrad.garagev3.service;
 
 import com.konrad.garagev3.exeption.TemplateParseExeption;
-import com.konrad.garagev3.model.dao.ServicePart;
+import com.konrad.garagev3.model.dao.Job;
 import com.konrad.garagev3.model.dao.Template;
-import com.konrad.garagev3.model.dao.Vehicle;
-import com.konrad.garagev3.repository.ServicePartRepository;
+import com.konrad.garagev3.repository.JobRepository;
 import com.konrad.garagev3.repository.TemplateRepository;
 import com.lowagie.text.DocumentException;
 import lombok.extern.slf4j.Slf4j;
@@ -16,10 +15,8 @@ import org.thymeleaf.context.Context;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 
 import java.io.*;
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 @Service
 @Slf4j
@@ -28,7 +25,7 @@ public class PDFService {
     private TemplateRepository templateRepository;
 
     @Autowired
-    private ServicePartRepository servicePartRepository;
+    private JobRepository jobRepository;
 
     @Autowired
     @Qualifier("htmlTemplateEngine")
@@ -37,7 +34,7 @@ public class PDFService {
     public byte[] generatePDF(Long vehicleId) throws TemplateParseExeption {
         Template vehicle_checkup_remainder = templateRepository.findByType("vehicle_checkup_remainder");
         Context context = new Context(Locale.forLanguageTag("pl"));
-        List<ServicePart> byVehicleId = servicePartRepository.findByVehicleId(vehicleId);
+        List<Job> byVehicleId = jobRepository.findByVehicleId(vehicleId);
         context.setVariable("vehicle", byVehicleId.get(0).getVehicle());
         String mailMessage = templateEngine.process(vehicle_checkup_remainder.getTemplate(), context);
         try {

@@ -15,7 +15,7 @@ import java.util.List;
 @Entity
 @EqualsAndHashCode
 @EntityListeners(AuditingEntityListener.class)
-public class ServicePart {
+public class Job {
     @Id
     @GeneratedValue
     private Long id;

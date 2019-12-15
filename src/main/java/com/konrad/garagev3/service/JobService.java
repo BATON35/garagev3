@@ -1,8 +1,8 @@
 package com.konrad.garagev3.service;
 
-import com.konrad.garagev3.mapper.ServicePartMapper;
+import com.konrad.garagev3.mapper.JobMapper;
 import com.konrad.garagev3.mapper.ServicePartResponseMapper;
-import com.konrad.garagev3.model.dao.ServicePart;
+import com.konrad.garagev3.model.dao.Job;
 import com.konrad.garagev3.model.dto.ServicePartResponseDto;
 import com.konrad.garagev3.repository.*;
 import org.mapstruct.factory.Mappers;
@@ -18,46 +18,46 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class ServicePartService {
+public class JobService {
 
     private WorkerRepository workerRepository;
     private PartRepository partRepository;
     private CarServiceRepository carServiceRepository;
-    private ServicePartRepository servicePartRepository;
+    private JobRepository jobRepository;
     private VehicleRepository vehicleRepository;
-    private final ServicePartMapper servicePartMapper;
+    private final JobMapper jobMapper;
     private final ServicePartResponseMapper servicePartResponseMapper;
 
     @Autowired
-    public ServicePartService(WorkerRepository workerRepository,
-                              PartRepository partRepository,
-                              CarServiceRepository carServiceRepository,
-                              ServicePartRepository servicePartRepository,
-                              VehicleRepository vehicleRepository,
-                              ServicePartResponseMapper servicePartResponseMapper
+    public JobService(WorkerRepository workerRepository,
+                      PartRepository partRepository,
+                      CarServiceRepository carServiceRepository,
+                      JobRepository jobRepository,
+                      VehicleRepository vehicleRepository,
+                      ServicePartResponseMapper servicePartResponseMapper
                               ) {
         this.workerRepository = workerRepository;
         this.partRepository = partRepository;
         this.carServiceRepository = carServiceRepository;
-        this.servicePartRepository = servicePartRepository;
+        this.jobRepository = jobRepository;
         this.vehicleRepository = vehicleRepository;
-        this.servicePartMapper = Mappers.getMapper(ServicePartMapper.class);
+        this.jobMapper = Mappers.getMapper(JobMapper.class);
         this.servicePartResponseMapper = servicePartResponseMapper;
     }
 
-    public ServicePart saveServicePart(Long workerId, List<Long> partIds, Long serviceID, String numberPlate) {
+    public Job saveServicePart(Long workerId, List<Long> partIds, Long serviceID, String numberPlate) {
 //        return workerRepository.findById(workerId)
 //                .map(worker -> serviceRepository.findById(serviceID)
 //                        .map(serviceCar -> {
 //                            List<Part> parts = partRepository.findByIdIn(partIds);
-//                            return servicePartRepository.save(ServicePart
+//                            return jobRepository.save(Job
 //                                    .builder()
 //                                    .worker(worker)
 //                                    .parts(parts)
 //                                    .build());
 //                        }).orElseThrow(() -> new EntityNotFoundException("serviceCar id " + serviceID + " doesn't exist")))
 //                .orElseThrow(() -> new EntityNotFoundException("worker id " + workerId + " doesn't exist"));
-        return servicePartRepository.save(ServicePart
+        return jobRepository.save(Job
                 .builder()
                 .worker(workerRepository.findById(workerId)
                         .orElseThrow(() -> new EntityNotFoundException("worker id " + workerId + " doesn't exist")))
@@ -67,22 +67,22 @@ public class ServicePartService {
                 .build());
     }
 
-    public ServicePart findById(Long id) {
-        return servicePartRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("servicePart id " + id + " doesn't exist"));
+    public Job findById(Long id) {
+        return jobRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("servicePart id " + id + " doesn't exist"));
     }
 
-    public Page<ServicePart> findAll(@PageableDefault Pageable pageable) {
-        Page<ServicePart> serviceParts = servicePartRepository.findAll(pageable);
-        Page<ServicePart> pageServiceParts = new PageImpl<>(serviceParts.getContent(), serviceParts.getPageable(), serviceParts.getContent().size());
+    public Page<Job> findAll(@PageableDefault Pageable pageable) {
+        Page<Job> serviceParts = jobRepository.findAll(pageable);
+        Page<Job> pageServiceParts = new PageImpl<>(serviceParts.getContent(), serviceParts.getPageable(), serviceParts.getContent().size());
         return pageServiceParts;
     }
 
     public void deleteServicePart(Long id) {
-        servicePartRepository.deleteById(id);
+        jobRepository.deleteById(id);
     }
 
     public List<ServicePartResponseDto> getHistory(Long vehicleId) {
-        return servicePartRepository.findByVehicleId(vehicleId)
+        return jobRepository.findByVehicleId(vehicleId)
                 .stream()
                 .map(servicePartResponseMapper::toServicePartResponse)
                 .collect(Collectors.toList());
