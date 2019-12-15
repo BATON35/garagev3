@@ -25,17 +25,17 @@ public class JobController {
     }
 
     @GetMapping("/{id}")
-    public JobDto getServicePartById(@PathVariable Long id) {
+    public JobDto getJobById(@PathVariable Long id) {
         return jobMapper.toJobDto(jobService.findById(id));
     }
 
     @GetMapping
-    public Page<JobDto> getServicePartList(@RequestParam Integer page, @RequestParam Integer size) {
+    public Page<JobDto> getJobList(@RequestParam Integer page, @RequestParam Integer size) {
         return jobService.findAll(PageRequest.of(page, size)).map(jobMapper::toJobDto);
     }
 
     @PostMapping
-    public JobDto saveServicePart(@RequestBody JobDto jobDto) {
+    public JobDto saveJob(@RequestBody JobDto jobDto) {
         return jobMapper.toJobDto(
                 jobService.saveServicePart(
                         jobDto.getWorkerId(),
@@ -45,7 +45,7 @@ public class JobController {
     }
 
     @PutMapping
-    public JobDto updateServicePart(@RequestBody JobDto jobDto) {
+    public JobDto updateJob(@RequestBody JobDto jobDto) {
         return jobMapper.toJobDto(
                 jobService.saveServicePart(
                         jobDto.getWorkerId(),
@@ -55,12 +55,12 @@ public class JobController {
     }
 
     @DeleteMapping("{id}")
-    public void deleteServicePart(@PathVariable Long id) {
+    public void deleteJob(@PathVariable Long id) {
         jobService.deleteServicePart(id);
     }
 
     @GetMapping("/history")
-    public List<ServicePartResponseDto> getServicePartHistory(Long vehicleId) {
+    public List<ServicePartResponseDto> getJobHistory(Long vehicleId) {
         return jobService.getHistory(vehicleId);
     }
 
