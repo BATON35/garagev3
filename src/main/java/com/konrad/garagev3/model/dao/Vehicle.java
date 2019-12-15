@@ -24,7 +24,7 @@ public class Vehicle {
     private String model;
     private String numberPlate;
     private LocalDate overviewDate;
-    @OneToMany( orphanRemoval = true,fetch = FetchType.EAGER)
+    @OneToMany( mappedBy = "vehicle")
     private List<ServicePart> servicesPart;
     @ManyToOne
     @JoinColumn(name = "client_id")
@@ -32,4 +32,6 @@ public class Vehicle {
     @EqualsAndHashCode.Exclude
     private Client client;
     private boolean notification;
+    @OneToMany(mappedBy = "vehicle")
+    private List<Photo> photos;
 }

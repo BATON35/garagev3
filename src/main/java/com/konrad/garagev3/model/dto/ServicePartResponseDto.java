@@ -13,7 +13,7 @@ import java.util.List;
 @Data
 @Builder
 public class ServicePartResponseDto {
-    private List<PartDto> partDto;
+    private List<PartDto> partsDto;
     private CarServiceDto carServiceDto;
     private LocalDateTime createdDate;
 }

@@ -33,6 +33,6 @@ public class ServicePart {
     @ManyToOne
     private Worker worker;
 
-    @ManyToOne
+    @ManyToOne()
     private Vehicle vehicle;
 }
