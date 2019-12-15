@@ -5,7 +5,7 @@ import com.konrad.garagev3.mapper.PartMapper;
 import com.konrad.garagev3.mapper.JobMapper;
 import com.konrad.garagev3.mapper.ServicePartResponseMapper;
 import com.konrad.garagev3.model.dao.Job;
-import com.konrad.garagev3.model.dto.ServicePartResponseDto;
+import com.konrad.garagev3.model.dto.JobResponseDto;
 import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Component;
 
@@ -24,8 +24,8 @@ public class ServicePartResponseMapperImpl implements ServicePartResponseMapper 
     }
 
     @Override
-    public ServicePartResponseDto toServicePartResponse(Job job) {
-        return ServicePartResponseDto.builder()
+    public JobResponseDto toServicePartResponse(Job job) {
+        return JobResponseDto.builder()
                 .carServiceDto(carServiceMapper.toCarServiceDto(job.getCarService()))
                 .createdDate(job.getCreatedDate())
                 .partsDto(job.getParts()
