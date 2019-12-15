@@ -119,16 +119,16 @@ public class UserService {
                 .orElseThrow(() -> new EntityNotFoundException("User with id " + id + " doesn't exist"));
     }
 
-    public Page<User> findAll(@PageableDefault Pageable pageable, Boolean hasRole) {
-        Page<User> users;
-        if (hasRole) {
-            users = userRepository.findByRoleIsNull(pageable);
-        } else {
-            users = userRepository.findAll(pageable);
-        }
-        Page<User> pageUsers = new PageImpl<>(users.getContent(), users.getPageable(), users.getTotalElements());
-        return pageUsers;
-    }
+//    public Page<User> findAll(@PageableDefault Pageable pageable, Boolean hasRole) {
+////        Page<User> users;
+////        if (hasRole) {
+////            users = userRepository.findByRoleIsNull(pageable);
+////        } else {
+////            users = userRepository.findAll(pageable);
+////        }
+////        Page<User> pageUsers = new PageImpl<>(users.getContent(), users.getPageable(), users.getTotalElements());
+////        return pageUsers;
+////    }
 
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
@@ -141,8 +141,13 @@ public class UserService {
                 .orElseThrow(()-> new EntityNotFoundException("User with name + " + name + " doesn't exist"));
     }
 
-    public Page<UserDto> searchUsers(String searchText, PageRequest pageRequest) {
-        Page<User> users = userRepository.findByNameContainsOrEmailContains(searchText, searchText, pageRequest);
+    public Page<UserDto> searchUsers(String searchText,Boolean hasRole, PageRequest pageRequest) {
+        Page<User> users;
+        if(!hasRole)
+            users = userRepository.findByNameContainsOrEmailContains(searchText, searchText, pageRequest);
+        else{
+            users = userRepository.findByRoleIsNullAndEmailOrNameContainsString(searchText, pageRequest);
+        }
         return new PageImpl<>(users.getContent()
                 .stream()
                 .map(userMapper::toUserDto)

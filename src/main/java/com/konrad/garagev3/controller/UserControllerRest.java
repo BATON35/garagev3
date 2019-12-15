@@ -25,12 +25,24 @@ public class UserControllerRest {
         userMapper = Mappers.getMapper(UserMapper.class);
     }
 
-
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/search")
-    public Page<UserDto> searchUsers(@RequestParam String searchText, @RequestParam Integer page, @RequestParam Integer size) {
-        return userService.searchUsers(searchText, PageRequest.of(page, size));
+    public Page<UserDto> searchUsers(@RequestParam String searchText, @RequestParam Boolean hasRole, @RequestParam Integer page, @RequestParam Integer size) {
+        return userService.searchUsers(searchText,hasRole, PageRequest.of(page, size));
     }
+
+//    @PreAuthorize("hasRole('ADMIN')")
+//    @GetMapping("/search")
+//    public Page<UserDto> searchUsers(@RequestParam String searchText, @RequestParam Integer page, @RequestParam Integer size) {
+//        return userService.searchUsers(searchText, PageRequest.of(page, size));
+//    }
+//
+//    @PreAuthorize("hasRole('ADMIN')")
+//    @GetMapping("/{page}/{size}/{hasRole}")
+//    public Page<UserDto> getUserList(@PathVariable Integer page, @PathVariable Integer size, @PathVariable Boolean hasRole) {
+//        return userService.findAll(PageRequest.of(page, size), hasRole).map(userMapper::toUserDto);
+//    }
+//
     @GetMapping("/info")
     public UserDto userInfo() {
         return userMapper.toUserDto(userService.getInfo());
@@ -42,23 +54,20 @@ public class UserControllerRest {
         return userMapper.toUserDto(userService.findById(id));
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/{page}/{size}/{hasRole}")
-    public Page<UserDto> getUserList(@PathVariable Integer page, @PathVariable Integer size, @PathVariable Boolean hasRole) {
-        return userService.findAll(PageRequest.of(page, size), hasRole).map(userMapper::toUserDto);
-    }
 
     @PostMapping
     public UserDto saveUser(@RequestBody UserDto userDto) {
         User user = userMapper.toUser(userDto);
         return userMapper.toUserDto(userService.saveUser(user));
     }
+
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping
     public UserDto updateUser(@RequestBody UserDto userDto) {
         User user = userMapper.toUser(userDto);
         return userMapper.toUserDto(userService.saveUser(user));
     }
+
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("{id}")
     public void deleteUser(@PathVariable Long id) {

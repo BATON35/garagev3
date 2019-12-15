@@ -28,7 +28,7 @@ public class ServicePartResponseMapperImpl implements ServicePartResponseMapper 
         return ServicePartResponseDto.builder()
                 .carServiceDto(carServiceMapper.toCarServiceDto(servicePart.getCarService()))
                 .createdDate(servicePart.getCreatedDate())
-                .partDto(servicePart.getParts()
+                .partsDto(servicePart.getParts()
                         .stream()
                         .map(partMapper::toPartDto)
                         .collect(Collectors.toList()))

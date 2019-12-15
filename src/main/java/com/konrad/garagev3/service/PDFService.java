@@ -1,8 +1,10 @@
 package com.konrad.garagev3.service;
 
 import com.konrad.garagev3.exeption.TemplateParseExeption;
+import com.konrad.garagev3.model.dao.ServicePart;
 import com.konrad.garagev3.model.dao.Template;
 import com.konrad.garagev3.model.dao.Vehicle;
+import com.konrad.garagev3.repository.ServicePartRepository;
 import com.konrad.garagev3.repository.TemplateRepository;
 import com.lowagie.text.DocumentException;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +17,7 @@ import org.xhtmlrenderer.pdf.ITextRenderer;
 
 import java.io.*;
 import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -23,16 +26,19 @@ import java.util.Map;
 public class PDFService {
     @Autowired
     private TemplateRepository templateRepository;
+
+    @Autowired
+    private ServicePartRepository servicePartRepository;
+
     @Autowired
     @Qualifier("htmlTemplateEngine")
     private TemplateEngine templateEngine;
 
-    public byte[] generatePDF() throws TemplateParseExeption {
+    public byte[] generatePDF(Long vehicleId) throws TemplateParseExeption {
         Template vehicle_checkup_remainder = templateRepository.findByType("vehicle_checkup_remainder");
         Context context = new Context(Locale.forLanguageTag("pl"));
-//        context.setVariable("vehicle.name", "vehicle");
-//        context.setVariable("vehicle.brand", "vehicleBrand");
-        context.setVariable("vehicle", Vehicle.builder().brand("test").build());
+        List<ServicePart> byVehicleId = servicePartRepository.findByVehicleId(vehicleId);
+        context.setVariable("vehicle", byVehicleId.get(0).getVehicle());
         String mailMessage = templateEngine.process(vehicle_checkup_remainder.getTemplate(), context);
         try {
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();

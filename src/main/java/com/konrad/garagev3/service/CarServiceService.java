@@ -30,7 +30,7 @@ public class CarServiceService {
 
     public Page<CarService> findAll(Pageable pageable) {
         Page<CarService> carServices = carServiceRepository.findAll(pageable);
-        Page<CarService> pageCarServices = new PageImpl<>(carServices.getContent(), carServices.getPageable(), carServices.getContent().size());
+        Page<CarService> pageCarServices = new PageImpl<>(carServices.getContent(), carServices.getPageable(), carServices.getTotalElements());
         return pageCarServices;
 
     }
