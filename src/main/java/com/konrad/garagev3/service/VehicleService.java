@@ -6,6 +6,7 @@ import com.konrad.garagev3.model.dao.Vehicle;
 import com.konrad.garagev3.model.dto.VehicleDto;
 import com.konrad.garagev3.repository.ClientRepository;
 import com.konrad.garagev3.repository.VehicleRepository;
+import com.konrad.garagev3.repository.WorkerRepository;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -105,4 +106,5 @@ public class VehicleService {
                 .map(vehicleMapper::toVehicleDto)
                 .collect(Collectors.toList());
     }
+
 }

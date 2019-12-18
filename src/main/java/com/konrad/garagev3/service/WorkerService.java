@@ -2,6 +2,7 @@ package com.konrad.garagev3.service;
 
 import com.konrad.garagev3.mapper.WorkerMapper;
 import com.konrad.garagev3.model.dao.Worker;
+import com.konrad.garagev3.model.dao.WorkerStatisticSell;
 import com.konrad.garagev3.model.dto.WorkerDto;
 import com.konrad.garagev3.repository.WorkerRepository;
 import org.mapstruct.factory.Mappers;
@@ -68,5 +69,14 @@ public class WorkerService {
                 .map(workerMapper::toWorkerDto)
                 .collect(Collectors.toList());
 
+    }
+    public List<WorkerStatisticSell> getStatistic(){
+        return workerRepository.getStatisticByWorker()
+                .stream()
+                .map(r -> WorkerStatisticSell.builder()
+                .date(r.getDate())
+                .price(r.getPrice())
+                .name(r.getName())
+                .build()).collect(Collectors.toList());
     }
 }
