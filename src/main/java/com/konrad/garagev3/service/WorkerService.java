@@ -15,7 +15,12 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -70,13 +75,56 @@ public class WorkerService {
                 .collect(Collectors.toList());
 
     }
-    public List<WorkerStatisticSell> getStatistic(){
-        return workerRepository.getStatisticByWorker()
+
+    public List<WorkerStatisticSell> getStatistic() {
+        List<WorkerStatisticSell> workerStatisticSells = workerRepository.getStatisticByWorker()
                 .stream()
                 .map(r -> WorkerStatisticSell.builder()
-                .date(r.getDate())
-                .price(r.getPrice())
-                .name(r.getName())
-                .build()).collect(Collectors.toList());
+                        .date(r.getDate())
+                        .price(r.getPrice())
+                        .name(r.getName())
+                        .build())
+                .collect(Collectors.toList());
+        Map<String, List<WorkerStatisticSell>> statisticGrouped = workerStatisticSells
+                .stream()
+                .collect(Collectors.groupingBy(workerStatisticSell -> workerStatisticSell.getName()));
+
+        Map<String, List<WorkerStatisticSell>> maps = new HashMap<>();
+        statisticGrouped.forEach((key, value) -> {
+            Map<String, Boolean> workerMounth = new HashMap<>();
+            workerMounth.put("01", false);
+            workerMounth.put("02", false);
+            workerMounth.put("03", false);
+            workerMounth.put("04", false);
+            workerMounth.put("05", false);
+            workerMounth.put("06", false);
+            workerMounth.put("07", false);
+            workerMounth.put("08", false);
+            workerMounth.put("09", false);
+            workerMounth.put("10", false);
+            workerMounth.put("11", false);
+            workerMounth.put("12", false);
+            value.forEach(element -> {
+                if (workerMounth.containsKey(element.getDate().split("-")[1])) {
+                    workerMounth.put(element.getDate().split("-")[1], true);
+                }
+            });
+            workerMounth.entrySet().forEach(entry -> {
+                if (!entry.getValue()) {
+                    value.add(WorkerStatisticSell
+                            .builder()
+                            .price(new BigDecimal(0))
+                            .date(LocalDate.now().getYear() + "-" + entry.getKey())
+                            .name(key)
+                            .build());
+                }
+            });
+        });
+//        return statisticGrouped.entrySet()
+//                .stream()
+//                .flatMap(element -> element.getValue().sort(Comparator.comparing(stats -> stats.getName())
+//                        .thenComparing(data -> data.))
+//                        .stream()).collect(Collectors.toList());
+        return statisticGrouped.entrySet().stream().flatMap(element->element.getValue().stream()).collect(Collectors.toList());
     }
 }
