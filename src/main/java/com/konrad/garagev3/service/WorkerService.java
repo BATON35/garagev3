@@ -91,25 +91,25 @@ public class WorkerService {
 
         Map<String, List<WorkerStatisticSell>> maps = new HashMap<>();
         statisticGrouped.forEach((key, value) -> {
-            Map<String, Boolean> workerMounth = new HashMap<>();
-            workerMounth.put("01", false);
-            workerMounth.put("02", false);
-            workerMounth.put("03", false);
-            workerMounth.put("04", false);
-            workerMounth.put("05", false);
-            workerMounth.put("06", false);
-            workerMounth.put("07", false);
-            workerMounth.put("08", false);
-            workerMounth.put("09", false);
-            workerMounth.put("10", false);
-            workerMounth.put("11", false);
-            workerMounth.put("12", false);
+            Map<String, Boolean> workerMonth = new HashMap<>();
+            workerMonth.put("01", false);
+            workerMonth.put("02", false);
+            workerMonth.put("03", false);
+            workerMonth.put("04", false);
+            workerMonth.put("05", false);
+            workerMonth.put("06", false);
+            workerMonth.put("07", false);
+            workerMonth.put("08", false);
+            workerMonth.put("09", false);
+            workerMonth.put("10", false);
+            workerMonth.put("11", false);
+            workerMonth.put("12", false);
             value.forEach(element -> {
-                if (workerMounth.containsKey(element.getDate().split("-")[1])) {
-                    workerMounth.put(element.getDate().split("-")[1], true);
+                if (workerMonth.containsKey(element.getDate().split("-")[1])) {
+                    workerMonth.put(element.getDate().split("-")[1], true);
                 }
             });
-            workerMounth.entrySet().forEach(entry -> {
+            workerMonth.entrySet().forEach(entry -> {
                 if (!entry.getValue()) {
                     value.add(WorkerStatisticSell
                             .builder()
@@ -125,6 +125,6 @@ public class WorkerService {
 //                .flatMap(element -> element.getValue().sort(Comparator.comparing(stats -> stats.getName())
 //                        .thenComparing(data -> data.))
 //                        .stream()).collect(Collectors.toList());
-        return statisticGrouped.entrySet().stream().flatMap(element->element.getValue().stream()).collect(Collectors.toList());
+        return statisticGrouped.entrySet().stream().flatMap(element -> element.getValue().stream()).collect(Collectors.toList());
     }
 }
