@@ -16,8 +16,6 @@ public class CarService {
     @Id
     @GeneratedValue
     private Long id;
-//    @ManyToMany(mappedBy = "carServices")
-//    private List<BodyPriceList> bodyPriceLists;
     private String description;
     private String name;
     private BigDecimal price;

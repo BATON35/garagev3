@@ -25,10 +25,6 @@ public class VehicleDto {
     private String model;
     private String numberPlate;
     private boolean notification;
-//    private Workshop workshop;
-    //   private long Client_id;
-    //   private Client client;
-    //private List<CarService> carServices;
 
 
 }

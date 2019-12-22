@@ -32,5 +32,5 @@ public class UserDto {
     protected String surname;
     protected int active;
     protected Set<Role> roles;
-  //  private Workshop workshop;
+
 }
