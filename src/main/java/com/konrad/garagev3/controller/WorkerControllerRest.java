@@ -3,6 +3,7 @@ package com.konrad.garagev3.controller;
 import com.konrad.garagev3.mapper.WorkerMapper;
 import com.konrad.garagev3.model.dao.Worker;
 import com.konrad.garagev3.model.dao.WorkerStatisticSell;
+import com.konrad.garagev3.model.dto.StatisticDto;
 import com.konrad.garagev3.model.dto.WorkerDto;
 import com.konrad.garagev3.repository.WorkerRepository;
 import com.konrad.garagev3.service.WorkerService;
@@ -48,9 +49,9 @@ public class WorkerControllerRest {
         return workerService.findAll(PageRequest.of(page, size), hasRole).map(workerMapper::toWorkerDto);
     }
 
-    @GetMapping
-    public List<WorkerStatisticSell> getStatistic() {
-        return workerService.getStatistic();
+    @PostMapping("/statistic")
+    public List<WorkerStatisticSell> getStatistic(@RequestBody StatisticDto statisticDto) {
+        return workerService.getStatistic(statisticDto);
     }
 
     @PostMapping

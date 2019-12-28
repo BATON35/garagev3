@@ -10,7 +10,6 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @Builder
 @Data
-@Entity
 @EqualsAndHashCode
 public class RoleDto {
     @Id

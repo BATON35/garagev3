@@ -3,6 +3,7 @@ package com.konrad.garagev3.service;
 import com.konrad.garagev3.mapper.WorkerMapper;
 import com.konrad.garagev3.model.dao.Worker;
 import com.konrad.garagev3.model.dao.WorkerStatisticSell;
+import com.konrad.garagev3.model.dto.StatisticDto;
 import com.konrad.garagev3.model.dto.WorkerDto;
 import com.konrad.garagev3.repository.WorkerRepository;
 import org.mapstruct.factory.Mappers;
@@ -17,10 +18,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityNotFoundException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -76,8 +74,8 @@ public class WorkerService {
 
     }
 
-    public List<WorkerStatisticSell> getStatistic() {
-        List<WorkerStatisticSell> workerStatisticSells = workerRepository.getStatisticByWorker()
+    public List<WorkerStatisticSell> getStatistic(StatisticDto statisticDto) {
+        List<WorkerStatisticSell> workerStatisticSells = workerRepository.getStatisticByWorker(statisticDto.getStart(), statisticDto.getEnd())
                 .stream()
                 .map(r -> WorkerStatisticSell.builder()
                         .date(r.getDate())
@@ -85,11 +83,12 @@ public class WorkerService {
                         .name(r.getName())
                         .build())
                 .collect(Collectors.toList());
+
         Map<String, List<WorkerStatisticSell>> statisticGrouped = workerStatisticSells
                 .stream()
-                .collect(Collectors.groupingBy(workerStatisticSell -> workerStatisticSell.getName()));
+                .collect(Collectors.groupingBy(WorkerStatisticSell::getName));
 
-        Map<String, List<WorkerStatisticSell>> maps = new HashMap<>();
+        //  Map<String, List<WorkerStatisticSell>> maps = new LinkedHashMap<>();
         statisticGrouped.forEach((key, value) -> {
             Map<String, Boolean> workerMonth = new HashMap<>();
             workerMonth.put("01", false);
@@ -104,9 +103,9 @@ public class WorkerService {
             workerMonth.put("10", false);
             workerMonth.put("11", false);
             workerMonth.put("12", false);
-            value.forEach(element -> {
-                if (workerMonth.containsKey(element.getDate().split("-")[1])) {
-                    workerMonth.put(element.getDate().split("-")[1], true);
+            value.forEach(statisticSell -> {
+                if (workerMonth.containsKey(statisticSell.getDate().split("-")[1])) {
+                    workerMonth.put(statisticSell.getDate().split("-")[1], true);
                 }
             });
             workerMonth.entrySet().forEach(entry -> {
@@ -120,11 +119,11 @@ public class WorkerService {
                 }
             });
         });
-//        return statisticGrouped.entrySet()
-//                .stream()
-//                .flatMap(element -> element.getValue().sort(Comparator.comparing(stats -> stats.getName())
-//                        .thenComparing(data -> data.))
-//                        .stream()).collect(Collectors.toList());
-        return statisticGrouped.entrySet().stream().flatMap(element -> element.getValue().stream()).collect(Collectors.toList());
+        return statisticGrouped.entrySet()
+                .stream()
+                .flatMap(element -> element.getValue()
+                        .stream().sorted(Comparator.comparing(WorkerStatisticSell::getName)
+                                .thenComparing(WorkerStatisticSell::getDate)))
+                .collect(Collectors.toList());
     }
 }

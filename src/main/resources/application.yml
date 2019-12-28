@@ -46,3 +46,9 @@ lombok:
 vehicle:
   photo:
     path: C:\vehiclePhoto
+
+logging:
+  level:
+    org:
+      hibernate:
+        type: TRACE
