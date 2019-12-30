@@ -34,7 +34,7 @@ public class FileController {
     }
 
     @PostMapping()
-    public void uploadFotoCar(@RequestParam MultipartFile multipartFile, @RequestParam Long vehicleId) {
+    public void uploadFotoCar(@RequestParam List<MultipartFile> multipartFile, @RequestParam Long vehicleId) {
         fileService.uploadPhotoCar(multipartFile, vehicleId);
     }
 

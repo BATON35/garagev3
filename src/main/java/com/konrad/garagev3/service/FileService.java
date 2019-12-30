@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 @Service
 @Slf4j
@@ -23,14 +24,15 @@ public class FileService {
     private PhotoRepository photoRepository;
 
 
-    public void uploadPhotoCar(MultipartFile multipartFile, Long vehicleId) {
+    public void uploadPhotoCar(List<MultipartFile> multipartFiles, Long vehicleId) {
         vehicleRepository.findById(vehicleId).ifPresent(vehicle -> {
-                File file = new File(vehiclePhotoFilePath + "/" + vehicleId + "/" + multipartFile.getOriginalFilename());
+            multipartFiles.forEach(f -> {
+                File file = new File(vehiclePhotoFilePath + "/" + vehicleId + "/" + f.getOriginalFilename());
                 if (!file.exists()) {
                     file.getParentFile().mkdirs();
                 }
                 try {
-                    multipartFile.transferTo(file);
+                    f.transferTo(file);
                     photoRepository.save(Photo.builder()
                             .vehicle(vehicle)
                             .link(file.getAbsolutePath()).build());
@@ -38,5 +40,6 @@ public class FileService {
                     log.error(e.getMessage(), e);
                 }
             });
+        });
     }
 }

@@ -5,6 +5,7 @@ import com.konrad.garagev3.model.dao.Vehicle;
 import com.konrad.garagev3.model.dto.VehicleDto;
 import com.konrad.garagev3.model.dto.WorkerDto;
 import com.konrad.garagev3.service.VehicleService;
+import javassist.bytecode.ByteArray;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -59,5 +60,10 @@ public class VehicleControllerRest {
     @PatchMapping("/{id}")
     public void toggleNotification(@PathVariable Long id){
         vehicleService.toggleNotification(id);
+    }
+
+    @GetMapping("/photo/{id}")
+    public List<byte[]> getPhotosPaths(@PathVariable Long id){
+       return vehicleService.getPhotosPaths(id);
     }
 }

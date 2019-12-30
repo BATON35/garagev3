@@ -2,11 +2,14 @@ package com.konrad.garagev3.service;
 
 import com.konrad.garagev3.mapper.VehicleMapper;
 import com.konrad.garagev3.model.dao.Client;
+import com.konrad.garagev3.model.dao.Photo;
 import com.konrad.garagev3.model.dao.Vehicle;
 import com.konrad.garagev3.model.dto.VehicleDto;
 import com.konrad.garagev3.repository.ClientRepository;
+import com.konrad.garagev3.repository.PhotoRepository;
 import com.konrad.garagev3.repository.VehicleRepository;
 import com.konrad.garagev3.repository.WorkerRepository;
+import javassist.bytecode.ByteArray;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,6 +20,9 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,12 +32,14 @@ public class VehicleService {
     private final VehicleRepository vehicleRepository;
     private final ClientRepository clientRepository;
     private final VehicleMapper vehicleMapper;
+    private final PhotoRepository photoRepository;
 
     @Autowired
-    VehicleService(VehicleRepository vehicleRepository, ClientRepository clientRepository) {
+    VehicleService(VehicleRepository vehicleRepository, ClientRepository clientRepository, PhotoRepository photoRepository) {
         this.vehicleRepository = vehicleRepository;
         this.clientRepository = clientRepository;
         this.vehicleMapper = Mappers.getMapper(VehicleMapper.class);
+        this.photoRepository = photoRepository;
     }
 
     public VehicleDto findVehicleByNumberPlate(String numberPlate) {
@@ -107,4 +115,16 @@ public class VehicleService {
                 .collect(Collectors.toList());
     }
 
+    public List<byte[]> getPhotosPaths(Long id) {
+        List<Photo> photos = photoRepository.findByVehicleId(id);
+        List<byte[]> photosInBytes = new ArrayList<>();
+            photos.forEach(photo -> {
+                try {
+                    photosInBytes.add(Files.readAllBytes(Paths.get(photo.getLink())));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+        return photosInBytes;
+    }
 }
