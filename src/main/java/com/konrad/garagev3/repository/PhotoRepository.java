@@ -8,4 +8,5 @@ import java.util.List;
 public interface PhotoRepository extends JpaRepository<Photo, Long> {
 
     List<Photo> findByVehicleId(Long id);
+    Photo findByPath(String path);
 }

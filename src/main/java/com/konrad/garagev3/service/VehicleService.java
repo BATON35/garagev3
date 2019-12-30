@@ -8,8 +8,6 @@ import com.konrad.garagev3.model.dto.VehicleDto;
 import com.konrad.garagev3.repository.ClientRepository;
 import com.konrad.garagev3.repository.PhotoRepository;
 import com.konrad.garagev3.repository.VehicleRepository;
-import com.konrad.garagev3.repository.WorkerRepository;
-import javassist.bytecode.ByteArray;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,7 +18,6 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -120,7 +117,7 @@ public class VehicleService {
         List<byte[]> photosInBytes = new ArrayList<>();
             photos.forEach(photo -> {
                 try {
-                    photosInBytes.add(Files.readAllBytes(Paths.get(photo.getLink())));
+                    photosInBytes.add(Files.readAllBytes(Paths.get(photo.getPath())));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

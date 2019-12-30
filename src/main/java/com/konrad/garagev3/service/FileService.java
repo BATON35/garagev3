@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -25,21 +26,29 @@ public class FileService {
 
 
     public void uploadPhotoCar(List<MultipartFile> multipartFiles, Long vehicleId) {
-        vehicleRepository.findById(vehicleId).ifPresent(vehicle -> {
-            multipartFiles.forEach(f -> {
-                File file = new File(vehiclePhotoFilePath + "/" + vehicleId + "/" + f.getOriginalFilename());
-                if (!file.exists()) {
-                    file.getParentFile().mkdirs();
+        vehicleRepository.findById(vehicleId).ifPresent(vehicle -> multipartFiles.forEach(f -> {
+            int version = 0;
+            File file = new File(createPathName(vehiclePhotoFilePath, String.valueOf(vehicleId), f.getOriginalFilename(), version));
+            if (!file.exists()) {
+                file.getParentFile().mkdirs();
+            }
+            try {
+                while (photoRepository.findByPath(file.getPath()) != null) {
+                    file = new File(createPathName(vehiclePhotoFilePath, String.valueOf(vehicleId), f.getOriginalFilename(), ++version));
                 }
-                try {
-                    f.transferTo(file);
-                    photoRepository.save(Photo.builder()
-                            .vehicle(vehicle)
-                            .link(file.getAbsolutePath()).build());
-                } catch (IOException e) {
-                    log.error(e.getMessage(), e);
-                }
-            });
-        });
+                f.transferTo(file);
+                photoRepository.save(Photo.builder()
+                        .vehicle(vehicle)
+                        .path(file.getAbsolutePath()).build());
+            } catch (IOException e) {
+                log.error(e.getMessage(), e);
+            }
+        }));
+    }
+
+    private String createPathName(String core, String folderName, String fileNameWithExtension, int version) {
+        String newFileName = new String(fileNameWithExtension.replaceFirst("\\.(?=[^.]*$)",  version + "."));
+        return new String(core + "/" + folderName + "/" + newFileName);
     }
 }
+

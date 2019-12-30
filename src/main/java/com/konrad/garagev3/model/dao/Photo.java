@@ -17,7 +17,7 @@ public class Photo {
     private String description;
 
     @Column(unique = true)
-    private String link;
+    private String path;
 
     @ManyToOne
     private Vehicle vehicle;
