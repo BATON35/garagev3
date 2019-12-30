@@ -2,10 +2,7 @@ package com.konrad.garagev3.model.dao;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -19,6 +16,7 @@ public class Photo {
 
     private String description;
 
+    @Column(unique = true)
     private String link;
 
     @ManyToOne
