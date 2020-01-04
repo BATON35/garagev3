@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityNotFoundException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -88,24 +89,16 @@ public class WorkerService {
                 .stream()
                 .collect(Collectors.groupingBy(WorkerStatisticSell::getName));
 
-        //  Map<String, List<WorkerStatisticSell>> maps = new LinkedHashMap<>();
         statisticGrouped.forEach((key, value) -> {
+            Period intervalPeriod = Period.between(statisticDto.getStart(), statisticDto.getEnd());
+            int periodOfTimeInMonths = intervalPeriod.getMonths() + intervalPeriod.getYears() * 12 + (int) Math.ceil(intervalPeriod.getDays() / 31.0);
             Map<String, Boolean> workerMonth = new HashMap<>();
-            workerMonth.put("01", false);
-            workerMonth.put("02", false);
-            workerMonth.put("03", false);
-            workerMonth.put("04", false);
-            workerMonth.put("05", false);
-            workerMonth.put("06", false);
-            workerMonth.put("07", false);
-            workerMonth.put("08", false);
-            workerMonth.put("09", false);
-            workerMonth.put("10", false);
-            workerMonth.put("11", false);
-            workerMonth.put("12", false);
+            for (int i = 0; i < periodOfTimeInMonths; i++) {
+                workerMonth.put(statisticDto.getStart().plusMonths(i).toString().substring(0, 7), false);
+            }
             value.forEach(statisticSell -> {
-                if (workerMonth.containsKey(statisticSell.getDate().split("-")[1])) {
-                    workerMonth.put(statisticSell.getDate().split("-")[1], true);
+                if (workerMonth.containsKey(statisticSell.getDate())) {
+                    workerMonth.put(statisticSell.getDate(), true);
                 }
             });
             workerMonth.entrySet().forEach(entry -> {
@@ -113,7 +106,7 @@ public class WorkerService {
                     value.add(WorkerStatisticSell
                             .builder()
                             .price(new BigDecimal(0))
-                            .date(LocalDate.now().getYear() + "-" + entry.getKey())
+                            .date(entry.getKey())
                             .name(key)
                             .build());
                 }
