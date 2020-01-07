@@ -1,5 +1,6 @@
 package com.konrad.garagev3.service;
 
+import com.konrad.garagev3.exeption.DuplicateEntryException;
 import com.konrad.garagev3.mapper.VehicleMapper;
 import com.konrad.garagev3.model.dao.Client;
 import com.konrad.garagev3.model.dao.Photo;
@@ -22,6 +23,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -40,12 +42,16 @@ public class VehicleService {
     }
 
     public VehicleDto findVehicleByNumberPlate(String numberPlate) {
-        return vehicleMapper.toVehicleDto(vehicleRepository.findByNumberPlate(numberPlate));
+        return vehicleMapper.toVehicleDto(vehicleRepository.findByNumberPlate(numberPlate).orElseThrow(()-> new EntityNotFoundException("Vehicle with number plate " + numberPlate  +" doesn't exist")));
     }
 
-    public Vehicle saveVehicle(Vehicle vehicle, Long clientId) {
+    public Vehicle saveVehicle(Vehicle vehicle, Long clientId) throws DuplicateEntryException {
         //todo doczytac SecurityContextHolder
         // String clientName = SecurityContextHolder.getContext().getAuthentication().getName();
+        Optional<Vehicle> present = vehicleRepository.findByNumberPlate(vehicle.getNumberPlate());
+        if(present.isPresent() && !present.get().getId().equals(vehicle.getId())){
+            throw new DuplicateEntryException("vehicle with number plate " + vehicle.getNumberPlate() + " exist in database");
+        }
         return clientRepository.findById(clientId).map(client -> {
             vehicle.setClient(client);
             return vehicleRepository.save(vehicle);
@@ -53,7 +59,11 @@ public class VehicleService {
 
     }
 
-    public Vehicle update(Vehicle vehicle) {
+    public Vehicle update(Vehicle vehicle) throws DuplicateEntryException {
+        Optional<Vehicle> present = vehicleRepository.findByNumberPlate(vehicle.getNumberPlate());
+        if(present.isPresent() && !present.get().getId().equals(vehicle.getId())){
+            throw new DuplicateEntryException("vehicle.duplicate.number");
+        }
         Client client = clientRepository.findByVehicles(vehicle);
         vehicle.setClient(client);
         return vehicleRepository.save(vehicle);

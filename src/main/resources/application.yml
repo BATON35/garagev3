@@ -52,3 +52,6 @@ logging:
     org:
       hibernate:
         type: TRACE
+
+server:
+  port: 8080

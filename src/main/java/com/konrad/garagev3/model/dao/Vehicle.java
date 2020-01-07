@@ -20,6 +20,7 @@ public class Vehicle {
     //  private Date productionDate;
     private String brand;
     private String model;
+    @Column(unique = true)
     private String numberPlate;
     private LocalDate overviewDate;
     @OneToMany( mappedBy = "vehicle")

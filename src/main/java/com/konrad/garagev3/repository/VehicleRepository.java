@@ -5,9 +5,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public interface VehicleRepository extends JpaRepository<Vehicle, Long> {
-    Vehicle findByNumberPlate(String numberPlate);
+    Optional<Vehicle> findByNumberPlate(String numberPlate);
 
     void deleteByClientId(Long id);
 

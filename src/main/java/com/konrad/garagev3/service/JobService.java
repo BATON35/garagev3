@@ -62,7 +62,7 @@ public class JobService {
                 .worker(workerRepository.findById(workerId)
                         .orElseThrow(() -> new EntityNotFoundException("worker id " + workerId + " doesn't exist")))
                 .carService(carServiceRepository.findById(serviceID).orElseThrow(() -> new EntityNotFoundException("carService id " + serviceID + " doesn't exist")))
-                .vehicle(vehicleRepository.findByNumberPlate(numberPlate)) //can return optional??
+                .vehicle(vehicleRepository.findByNumberPlate(numberPlate).orElseThrow(()->new EntityNotFoundException("Vehicle with number plate " + numberPlate  +" doesn't exist"))) //can return optional??
                 .parts(partRepository.findByIdIn(partIds))
                 .build());
     }

@@ -1,11 +1,10 @@
 package com.konrad.garagev3.controller;
 
+import com.konrad.garagev3.exeption.DuplicateEntryException;
 import com.konrad.garagev3.mapper.VehicleMapper;
 import com.konrad.garagev3.model.dao.Vehicle;
 import com.konrad.garagev3.model.dto.VehicleDto;
-import com.konrad.garagev3.model.dto.WorkerDto;
 import com.konrad.garagev3.service.VehicleService;
-import javassist.bytecode.ByteArray;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -41,13 +40,13 @@ public class VehicleControllerRest {
     }
 
     @PostMapping("/{clientId}")
-    public VehicleDto saveVehicle(@RequestBody VehicleDto vehicleDto, @PathVariable Long clientId) {
+    public VehicleDto saveVehicle(@RequestBody VehicleDto vehicleDto, @PathVariable Long clientId) throws DuplicateEntryException {
         Vehicle vehicle = vehicleService.saveVehicle(vehicleMapper.toVehicle(vehicleDto), clientId);
         return vehicleMapper.toVehicleDto(vehicle);
     }
 
     @PutMapping
-    public VehicleDto updateVehicle(@RequestBody VehicleDto vehicleDto) {
+    public VehicleDto updateVehicle(@RequestBody VehicleDto vehicleDto) throws DuplicateEntryException {
         Vehicle vehicle = vehicleService.update(vehicleMapper.toVehicle(vehicleDto));
         return vehicleMapper.toVehicleDto(vehicle);
     }
