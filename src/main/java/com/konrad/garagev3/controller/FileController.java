@@ -1,6 +1,6 @@
 package com.konrad.garagev3.controller;
 
-import com.konrad.garagev3.exeption.TemplateParseExeption;
+import com.konrad.garagev3.exeption.TemplateParseException;
 import com.konrad.garagev3.service.FileService;
 import com.konrad.garagev3.service.PDFService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ public class FileController {
 
 
     @GetMapping("/{vehicleId}")
-    public ResponseEntity<byte[]> getPDF(@PathVariable Long vehicleId) throws TemplateParseExeption {
+    public ResponseEntity<byte[]> getPDF(@PathVariable Long vehicleId) throws TemplateParseException {
         byte[] bytes = pdfService.generatePDF(vehicleId);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.set("Content-Type", MediaType.APPLICATION_PDF_VALUE);
