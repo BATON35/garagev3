@@ -55,13 +55,13 @@ public class VehicleService {
         return clientRepository.findById(clientId).map(client -> {
             vehicle.setClient(client);
             return vehicleRepository.save(vehicle);
-        }).orElseThrow(() -> new EntityNotFoundException("client with id " + clientId + " dosen't exist"));
+        }).orElseThrow(() -> new EntityNotFoundException("client with id " + clientId + " doesn't exist"));
 
     }
 
     public Vehicle update(Vehicle vehicle) throws DuplicateEntryException {
-        Optional<Vehicle> present = vehicleRepository.findByNumberPlate(vehicle.getNumberPlate());
-        if(present.isPresent() && !present.get().getId().equals(vehicle.getId())){
+        Optional<Vehicle> vehicleFromDatabase = vehicleRepository.findByNumberPlate(vehicle.getNumberPlate());
+        if(vehicleFromDatabase.isPresent() && !vehicleFromDatabase.get().getId().equals(vehicle.getId())){
             throw new DuplicateEntryException("vehicle.duplicate.number");
         }
         Client client = clientRepository.findByVehicles(vehicle);
