@@ -1,5 +1,6 @@
 package com.konrad.garagev3.service;
 
+import com.konrad.garagev3.exeption.DuplicateEntryException;
 import com.konrad.garagev3.mapper.UserMapper;
 import com.konrad.garagev3.model.dao.Role;
 import com.konrad.garagev3.model.dao.User;
@@ -50,7 +51,11 @@ public class UserService {
         return userMapper.toUserDto(userRepository.findByEmail(email));
     }
 
-    public User saveUser(User user) {
+    public User saveUser(User user) throws DuplicateEntryException {
+        User userFromDatabase = userRepository.findByEmail(user.getEmail());
+        if(userFromDatabase != null){
+            throw new DuplicateEntryException("user.duplicate.email");
+        }
         user.setActive(1);
         if (user.getRoles() != null && !user.getRoles().isEmpty()) {
             user.setRoles(user.getRoles().stream()

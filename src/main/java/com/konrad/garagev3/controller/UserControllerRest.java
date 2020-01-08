@@ -1,5 +1,6 @@
 package com.konrad.garagev3.controller;
 
+import com.konrad.garagev3.exeption.DuplicateEntryException;
 import com.konrad.garagev3.mapper.UserMapper;
 import com.konrad.garagev3.model.dao.User;
 import com.konrad.garagev3.model.dto.UserDto;
@@ -31,18 +32,6 @@ public class UserControllerRest {
         return userService.searchUsers(searchText,hasRole, PageRequest.of(page, size));
     }
 
-//    @PreAuthorize("hasRole('ADMIN')")
-//    @GetMapping("/search")
-//    public Page<UserDto> searchUsers(@RequestParam String searchText, @RequestParam Integer page, @RequestParam Integer size) {
-//        return userService.searchUsers(searchText, PageRequest.of(page, size));
-//    }
-//
-//    @PreAuthorize("hasRole('ADMIN')")
-//    @GetMapping("/{page}/{size}/{hasRole}")
-//    public Page<UserDto> getUserList(@PathVariable Integer page, @PathVariable Integer size, @PathVariable Boolean hasRole) {
-//        return userService.findAll(PageRequest.of(page, size), hasRole).map(userMapper::toUserDto);
-//    }
-//
     @GetMapping("/info")
     public UserDto userInfo() {
         return userMapper.toUserDto(userService.getInfo());
@@ -56,14 +45,14 @@ public class UserControllerRest {
 
 
     @PostMapping
-    public UserDto saveUser(@RequestBody UserDto userDto) {
+    public UserDto saveUser(@RequestBody UserDto userDto) throws DuplicateEntryException {
         User user = userMapper.toUser(userDto);
         return userMapper.toUserDto(userService.saveUser(user));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping
-    public UserDto updateUser(@RequestBody UserDto userDto) {
+    public UserDto updateUser(@RequestBody UserDto userDto) throws DuplicateEntryException {
         User user = userMapper.toUser(userDto);
         return userMapper.toUserDto(userService.saveUser(user));
     }
