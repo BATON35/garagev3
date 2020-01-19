@@ -17,7 +17,7 @@ public class Client {
     @Id
     @GeneratedValue
     private Long id;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,orphanRemoval = true, mappedBy = "client")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "client")
     @JsonManagedReference
     @EqualsAndHashCode.Exclude
     private Set<Vehicle> vehicles;

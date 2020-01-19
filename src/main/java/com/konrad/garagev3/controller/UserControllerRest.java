@@ -12,6 +12,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/users")
 public class UserControllerRest {
@@ -28,8 +30,8 @@ public class UserControllerRest {
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/search")
-    public Page<UserDto> searchUsers(@RequestParam String searchText, @RequestParam Boolean hasRole, @RequestParam Integer page, @RequestParam Integer size) {
-        return userService.searchUsers(searchText,hasRole, PageRequest.of(page, size));
+    public Page<UserDto> searchUsers(@RequestParam String searchText, @RequestParam(required = false) List<String> roles, @RequestParam Integer page, @RequestParam Integer size) {
+        return userService.searchUsers(searchText, roles, PageRequest.of(page, size));
     }
 
     @GetMapping("/info")

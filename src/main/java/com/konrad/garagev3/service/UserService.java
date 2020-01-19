@@ -53,7 +53,7 @@ public class UserService {
 
     public User saveUser(User user) throws DuplicateEntryException {
         User userFromDatabase = userRepository.findByEmail(user.getEmail());
-        if(userFromDatabase != null){
+        if (userFromDatabase != null && !userFromDatabase.getId().equals(user.getId())) {
             throw new DuplicateEntryException("user.duplicate.email");
         }
         user.setActive(1);
@@ -143,20 +143,27 @@ public class UserService {
     public User getInfo() {
         name = SecurityContextHolder.getContext().getAuthentication().getName();
         return userRepository.findByName(name)
-                .orElseThrow(()-> new EntityNotFoundException("User with name + " + name + " doesn't exist"));
+                .orElseThrow(() -> new EntityNotFoundException("User with name + " + name + " doesn't exist"));
     }
 
-    public Page<UserDto> searchUsers(String searchText,Boolean hasRole, PageRequest pageRequest) {
+    public Page<UserDto> searchUsers(String searchText, List<String> roles, PageRequest pageRequest) {
         Page<User> users;
-        if(!hasRole)
-            users = userRepository.findByNameContainsOrEmailContains(searchText, searchText, pageRequest);
-        else{
+        List<User> users2 = null;
+        if (roles != null) {
+            List<Role> rolesDB = roleRepository.findByNameIn(roles);
+            users = userRepository.findByRoles(roles, searchText, searchText, pageRequest);
+//            users.forEach(user -> roles.forEach(role -> role.equals(user.getRoles())));
+//            users2 = users.stream().filter(user -> user.getRoles()
+//                    .stream().anyMatch(role -> roles.contains(role.getName()))).collect(Collectors.toList());
+        } else {
             users = userRepository.findByRoleIsNullAndEmailOrNameContainsString(searchText, pageRequest);
         }
-        return new PageImpl<>(users.getContent()
-                .stream()
-                .map(userMapper::toUserDto)
-                .collect(Collectors.toList()), users.getPageable(), users.getTotalElements());
+        return new PageImpl<>(
+                users2 == null ?
+                        users.getContent()
+                                .stream()
+                                .map(userMapper::toUserDto)
+                                .collect(Collectors.toList()) : users2.stream().map(userMapper::toUserDto).collect(Collectors.toList()), users.getPageable(), users.getTotalElements());
     }
 }
 
