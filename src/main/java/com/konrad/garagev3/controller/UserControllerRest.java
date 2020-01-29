@@ -56,7 +56,7 @@ public class UserControllerRest {
     @PutMapping
     public UserDto updateUser(@RequestBody UserDto userDto) throws DuplicateEntryException {
         User user = userMapper.toUser(userDto);
-        return userMapper.toUserDto(userService.saveUser(user));
+        return userMapper.toUserDto(userService.updateUser(user));
     }
 
     @PreAuthorize("hasRole('ADMIN')")

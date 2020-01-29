@@ -1,6 +1,8 @@
 package com.konrad.garagev3.controller;
 
 import com.konrad.garagev3.exeption.TemplateParseException;
+import com.konrad.garagev3.file.FileFactory;
+import com.konrad.garagev3.file.model.FileType;
 import com.konrad.garagev3.service.FileService;
 import com.konrad.garagev3.service.PDFService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,8 @@ public class FileController {
     private PDFService pdfService;
     @Autowired
     private FileService fileService;
+    @Autowired
+    private FileFactory fileFactory;
 
 
     @GetMapping("/{vehicleId}")
@@ -36,6 +40,16 @@ public class FileController {
     @PostMapping()
     public void uploadFotoCar(@RequestParam List<MultipartFile> multipartFile, @RequestParam Long vehicleId) {
         fileService.uploadPhotoCar(multipartFile, vehicleId);
+    }
+
+    @GetMapping("{vehicleId}/{fileType}")
+    public ResponseEntity<byte[]> getGeneratedVehicleHistoryReport(@PathVariable long vehicleId, @PathVariable FileType fileType) {
+        byte[] bytes = fileFactory.getStrategy(fileType).generateVehicleHistoryReport(vehicleId);
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.set("Content-Type", MediaType.APPLICATION_OCTET_STREAM_VALUE);
+        httpHeaders.set("Content-Length", Integer.toString(bytes.length));
+        httpHeaders.set("Content-Disposition", "attachment;filename=test." + fileType.toString().toLowerCase());
+        return new ResponseEntity<>(bytes, httpHeaders, HttpStatus.CREATED);
     }
 
 }

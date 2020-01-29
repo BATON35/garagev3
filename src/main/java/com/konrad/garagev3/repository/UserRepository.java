@@ -25,7 +25,7 @@ public interface UserRepository<T extends User> extends JpaRepository<T, Long> {
     Page<T> findByNameContainsOrEmailContains(String name, String email, Pageable pageable);
 
     @Query(value = "select * from user u join user_role ur on u.id = ur.user_id join role r on ur.role_id = r.id where r.name in (:roles) and (email like CONCAT('%', :email, '%') or u.name like CONCAT('%', :name, '%'))", nativeQuery = true)
-    Page<T> findByRoles(List<String> roles, String email, String name, Pageable pageable);
+    Page<T> findByRoles(@Param("roles") List<String> roles, @Param("email") String email,@Param("name") String name, Pageable pageable);
 
     @Query(value = "select * from user left join user_role on user.id = user_role.user_id where role_id is null", nativeQuery = true)
     Page<T> findByRoleIsNull(Pageable pageable);

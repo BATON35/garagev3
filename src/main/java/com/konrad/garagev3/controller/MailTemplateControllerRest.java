@@ -24,7 +24,6 @@ public class MailTemplateControllerRest {
     }
     @GetMapping("/{page}/[size}")
     public Page<Template> getList(@PathVariable Integer page, @PathVariable Integer size) {
-//        return userService.findAll(PageRequest.of(page, size)).map(userMapper::toUserDto);
         return mailTemplateService.findAll(PageRequest.of(page, size));
     }
 

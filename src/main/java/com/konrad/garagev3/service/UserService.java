@@ -13,8 +13,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -31,7 +29,7 @@ import java.util.stream.Collectors;
 @Service
 public class UserService {
 
-    private UserRepository<User> userRepository;
+    private UserRepository<? super User> userRepository;
     private RoleRepository roleRepository;
     private UserMapper userMapper;
     @Autowired
@@ -51,9 +49,9 @@ public class UserService {
         return userMapper.toUserDto(userRepository.findByEmail(email));
     }
 
-    public User saveUser(User user) throws DuplicateEntryException {
+    public User saveUser(User user) throws DuplicateEntryException{
         User userFromDatabase = userRepository.findByEmail(user.getEmail());
-        if (userFromDatabase != null && !userFromDatabase.getId().equals(user.getId())) {
+        if (userFromDatabase != null) {
             throw new DuplicateEntryException("user.duplicate.email");
         }
         user.setActive(1);
@@ -64,16 +62,31 @@ public class UserService {
                     .collect(Collectors.toSet()));
         }
 
-        if (user.getId() == null) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             return userRepository.save(user);
+    }
+
+    public User updateUser(User user) throws DuplicateEntryException {
+        Optional<? extends User> userFromDatabase = userRepository.findById(user.getId());
+        if (userFromDatabase.isPresent() && !userFromDatabase.get().getId().equals(user.getId())) {
+            throw new DuplicateEntryException("user.duplicate.email");
         }
-        Optional<User> userById = userRepository.findById(user.getId());
-        if (userById.isPresent() && userById.get().getPassword().equals(user.getPassword())) {
-            return userRepository.save(user);
+        user.setActive(1);
+        if (user.getRoles() != null && !user.getRoles().isEmpty()) {
+            user.setRoles(user.getRoles().stream()
+                    .map(role -> roleRepository.findByName(role.getName()))
+                    .filter(Objects::nonNull)
+                    .collect(Collectors.toSet()));
         }
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
+
+//        Optional<?extends User> userById = userRepository.findById(user.getId());
+            if(!userFromDatabase.get().getEmail().equals(user.getEmail())){
+                userFromDatabase.get().setEmail(user.getEmail());
+            }
+        if(user.getPassword() != null)
+        userFromDatabase.get().setPassword(passwordEncoder.encode(user.getPassword()));
+
+        return userRepository.save(userFromDatabase.get());
     }
 
     public UserDto saveUserWithPrivileges(UserDto userDto) {
@@ -111,7 +124,7 @@ public class UserService {
     }
 
     public List<UserDto> findAllActiveUsers() {
-        List<User> users = userRepository.findByActiveIs(1);
+        List<? extends User> users = userRepository.findByActiveIs(1);
         users.sort(Comparator.comparing(User::getEmail));
         return users
                 .stream()
@@ -123,17 +136,6 @@ public class UserService {
         return userRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("User with id " + id + " doesn't exist"));
     }
-
-//    public Page<User> findAll(@PageableDefault Pageable pageable, Boolean hasRole) {
-////        Page<User> users;
-////        if (hasRole) {
-////            users = userRepository.findByRoleIsNull(pageable);
-////        } else {
-////            users = userRepository.findAll(pageable);
-////        }
-////        Page<User> pageUsers = new PageImpl<>(users.getContent(), users.getPageable(), users.getTotalElements());
-////        return pageUsers;
-////    }
 
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
@@ -147,23 +149,20 @@ public class UserService {
     }
 
     public Page<UserDto> searchUsers(String searchText, List<String> roles, PageRequest pageRequest) {
-        Page<User> users;
-        List<User> users2 = null;
+        Page<? extends User> users;
         if (roles != null) {
             List<Role> rolesDB = roleRepository.findByNameIn(roles);
             users = userRepository.findByRoles(roles, searchText, searchText, pageRequest);
-//            users.forEach(user -> roles.forEach(role -> role.equals(user.getRoles())));
-//            users2 = users.stream().filter(user -> user.getRoles()
-//                    .stream().anyMatch(role -> roles.contains(role.getName()))).collect(Collectors.toList());
         } else {
             users = userRepository.findByRoleIsNullAndEmailOrNameContainsString(searchText, pageRequest);
         }
         return new PageImpl<>(
-                users2 == null ?
-                        users.getContent()
-                                .stream()
-                                .map(userMapper::toUserDto)
-                                .collect(Collectors.toList()) : users2.stream().map(userMapper::toUserDto).collect(Collectors.toList()), users.getPageable(), users.getTotalElements());
+                users.getContent()
+                        .stream()
+                        .map(userMapper::toUserDto)
+                        .collect(Collectors.toList()), users.getPageable(), users.getTotalElements());
     }
+
+
 }
 
