@@ -12,19 +12,19 @@ import java.util.List;
 
 @Component
 @Slf4j
-public class JsonGenerator extends FileStrategy {
+public class JSONGenerator extends FileStrategy {
     @Autowired
     private ObjectMapper objectMapper;
 
-    public JsonGenerator() {
+    public JSONGenerator() {
         super(FileType.JSON);
     }
 
     @Override
-    public byte[] generateVehicleHistoryReport(Long vehicleId) {
-        List<Job> byVehicleId = jobRepository.findByVehicleId(vehicleId);
+    public byte[] generateVehicleHistoryReport(String numberPlate) {
+        List<Job> byVehicleId = jobRepository.findByVehicleId(4L);
         try {
-            return objectMapper.writeValueAsBytes(byVehicleId.get(0).getVehicle().getNumberPlate());
+            return objectMapper.writeValueAsBytes(byVehicleId);
         } catch (JsonProcessingException e) {
             log.error(e.getMessage());
         }

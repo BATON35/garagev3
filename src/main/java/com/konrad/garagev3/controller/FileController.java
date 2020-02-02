@@ -26,7 +26,6 @@ public class FileController {
     @Autowired
     private FileFactory fileFactory;
 
-
     @GetMapping("/{vehicleId}")
     public ResponseEntity<byte[]> getPDF(@PathVariable Long vehicleId) throws TemplateParseException {
         byte[] bytes = pdfService.generatePDF(vehicleId);
@@ -42,13 +41,13 @@ public class FileController {
         fileService.uploadPhotoCar(multipartFile, vehicleId);
     }
 
-    @GetMapping("{vehicleId}/{fileType}")
-    public ResponseEntity<byte[]> getGeneratedVehicleHistoryReport(@PathVariable long vehicleId, @PathVariable FileType fileType) {
-        byte[] bytes = fileFactory.getStrategy(fileType).generateVehicleHistoryReport(vehicleId);
+    @GetMapping("{numberPlate}/{fileType}")
+    public ResponseEntity<byte[]> getGeneratedVehicleHistoryReport(@PathVariable String numberPlate, @PathVariable FileType fileType) {
+        byte[] bytes = fileFactory.getStrategy(fileType).generateVehicleHistoryReport(numberPlate);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.set("Content-Type", MediaType.APPLICATION_OCTET_STREAM_VALUE);
         httpHeaders.set("Content-Length", Integer.toString(bytes.length));
-        httpHeaders.set("Content-Disposition", "attachment;filename=test." + fileType.toString().toLowerCase());
+        httpHeaders.set("Content-Disposition", "attachment;filename=" + numberPlate + "." + fileType.toString().toLowerCase());
         return new ResponseEntity<>(bytes, httpHeaders, HttpStatus.CREATED);
     }
 

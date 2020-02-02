@@ -1,6 +1,7 @@
 package com.konrad.garagev3.model.dao;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -24,6 +25,7 @@ public class Vehicle {
     private String numberPlate;
     private LocalDate overviewDate;
     @OneToMany( mappedBy = "vehicle")
+    @JsonBackReference
     private List<Job> servicesPart;
     @ManyToOne
     @JoinColumn(name = "client_id")

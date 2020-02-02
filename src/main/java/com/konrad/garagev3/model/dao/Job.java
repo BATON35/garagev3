@@ -1,5 +1,6 @@
 package com.konrad.garagev3.model.dao;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -34,5 +35,6 @@ public class Job {
     private Worker worker;
 
     @ManyToOne()
+    @JsonManagedReference
     private Vehicle vehicle;
 }

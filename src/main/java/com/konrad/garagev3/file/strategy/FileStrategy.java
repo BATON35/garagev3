@@ -15,6 +15,6 @@ public abstract class FileStrategy {
         this.fileType = fileType;
     }
 
-    public abstract byte[] generateVehicleHistoryReport(Long vehicleId);
+    public abstract byte[] generateVehicleHistoryReport(String numberPlate);
 
 }

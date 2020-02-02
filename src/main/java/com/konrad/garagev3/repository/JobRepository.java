@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface JobRepository extends JpaRepository<Job, Long> {
     List<Job> findByVehicleId(Long id);
+    List<Job> findByVehicleNumberPlate(String numberPlate);
 }
