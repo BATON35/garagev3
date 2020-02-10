@@ -1,11 +1,18 @@
 package com.konrad.garagev3.model.dao;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @NoArgsConstructor
@@ -14,6 +21,7 @@ import java.util.List;
 @Data
 @Entity
 @EqualsAndHashCode
+@EntityListeners(AuditingEntityListener.class)
 public class Vehicle {
     @Id
     @GeneratedValue
@@ -26,7 +34,7 @@ public class Vehicle {
     private LocalDate overviewDate;
     @OneToMany( mappedBy = "vehicle")
     @JsonBackReference
-    private List<Job> servicesPart;
+    private List<Job> jobs;
     @ManyToOne
     @JoinColumn(name = "client_id")
     @JsonBackReference
@@ -34,5 +42,14 @@ public class Vehicle {
     private Client client;
     private boolean notification;
     @OneToMany(mappedBy = "vehicle")
+    @JsonIgnore
     private List<Photo> photos;
+    @CreatedBy
+    private String createdBy;
+    @CreatedDate
+    private LocalDateTime createdDate;
+    @LastModifiedDate
+    private LocalDateTime lastModifiedDate;
+    @LastModifiedBy
+    private String lastModifiedBy;
 }

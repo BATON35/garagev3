@@ -1,6 +1,7 @@
 package com.konrad.garagev3.model.dto;
 
 import com.konrad.garagev3.model.dao.Role;
+import com.konrad.garagev3.model.dao.WorkerType;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.validator.constraints.Length;
@@ -16,7 +17,10 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(exclude = {"password", "active ", "id"})
+//@Builder
 public class UserDto {
+// private WorkerType workerType;
+// private Integer age;
    // @Setter(AccessLevel.NONE)
    // private int id;
     @Email(message = "*Please provide a valid Email")

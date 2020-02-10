@@ -33,7 +33,7 @@ public class PDFGenerator extends FileStrategy {
 
     @Override
     public byte[] generateVehicleHistoryReport(String numberPlate) {
-        List<Job> byVehicleId = jobRepository.findByVehicleId(4L);
+        List<Job> byVehicleId = jobRepository.findByVehicleNumberPlate(numberPlate);
         Document document = new Document(PageSize.A4, 10f, 10f, 10f, 10f);
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         try {
@@ -44,11 +44,13 @@ public class PDFGenerator extends FileStrategy {
             pdfPTable.addCell("Date");
             pdfPTable.addCell("Service");
             pdfPTable.addCell("Parts");
+//            pdfPTable.addCell("Worker");
             byVehicleId.forEach(e -> {
                 pdfPTable.addCell(e.getId().toString());
                 pdfPTable.addCell(e.getCreatedDate().toString());
                 pdfPTable.addCell(e.getCarService().toString());
                 pdfPTable.addCell(e.getParts().toString());
+//                pdfPTable.addCell(e.getWorker().get.toString());
             });
             document.add(pdfPTable);
             document.close();

@@ -22,9 +22,9 @@ public class JSONGenerator extends FileStrategy {
 
     @Override
     public byte[] generateVehicleHistoryReport(String numberPlate) {
-        List<Job> byVehicleId = jobRepository.findByVehicleId(4L);
+        List<Job> byVehicleNumberPlate = jobRepository.findByVehicleNumberPlate(numberPlate);
         try {
-            return objectMapper.writeValueAsBytes(byVehicleId);
+            return objectMapper.writeValueAsBytes(byVehicleNumberPlate);
         } catch (JsonProcessingException e) {
             log.error(e.getMessage());
         }

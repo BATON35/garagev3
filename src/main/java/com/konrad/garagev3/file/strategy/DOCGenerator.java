@@ -21,7 +21,7 @@ public class DOCGenerator extends FileStrategy {
 
     @Override
     public byte[] generateVehicleHistoryReport(String numberPlate) {
-        List<Job> byVehicleId = jobRepository.findByVehicleId(4L);
+        List<Job> byVehicleId = jobRepository.findByVehicleNumberPlate(numberPlate);
         XWPFDocument document = new XWPFDocument();
         XWPFTable table = document.createTable();
         XWPFTableRow row = table.getRow(0);

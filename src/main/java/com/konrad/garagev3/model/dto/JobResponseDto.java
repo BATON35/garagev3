@@ -15,5 +15,6 @@ import java.util.List;
 public class JobResponseDto {
     private List<PartDto> partsDto;
     private CarServiceDto carServiceDto;
+    private WorkerDto workerDto;
     private LocalDateTime createdDate;
 }

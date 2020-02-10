@@ -1,7 +1,7 @@
 package com.konrad.garagev3.service;
 
 import com.konrad.garagev3.mapper.JobMapper;
-import com.konrad.garagev3.mapper.ServicePartResponseMapper;
+import com.konrad.garagev3.mapper.JobResponseMapper;
 import com.konrad.garagev3.model.dao.Job;
 import com.konrad.garagev3.model.dto.JobResponseDto;
 import com.konrad.garagev3.repository.*;
@@ -25,8 +25,8 @@ public class JobService {
     private CarServiceRepository carServiceRepository;
     private JobRepository jobRepository;
     private VehicleRepository vehicleRepository;
-    private final JobMapper jobMapper;
-    private final ServicePartResponseMapper servicePartResponseMapper;
+//    private final JobMapper jobMapper;
+    private final JobResponseMapper jobResponseMapper;
 
     @Autowired
     public JobService(WorkerRepository workerRepository,
@@ -34,29 +34,19 @@ public class JobService {
                       CarServiceRepository carServiceRepository,
                       JobRepository jobRepository,
                       VehicleRepository vehicleRepository,
-                      ServicePartResponseMapper servicePartResponseMapper
+                      JobResponseMapper jobResponseMapper,
+                      JobMapper jobMapper
                               ) {
         this.workerRepository = workerRepository;
         this.partRepository = partRepository;
         this.carServiceRepository = carServiceRepository;
         this.jobRepository = jobRepository;
         this.vehicleRepository = vehicleRepository;
-        this.jobMapper = Mappers.getMapper(JobMapper.class);
-        this.servicePartResponseMapper = servicePartResponseMapper;
+//        this.jobMapper = jobMapper;
+        this.jobResponseMapper = jobResponseMapper;
     }
 
-    public Job saveServicePart(Long workerId, List<Long> partIds, Long serviceID, String numberPlate) {
-//        return workerRepository.findById(workerId)
-//                .map(worker -> serviceRepository.findById(serviceID)
-//                        .map(serviceCar -> {
-//                            List<Part> parts = partRepository.findByIdIn(partIds);
-//                            return jobRepository.save(Job
-//                                    .builder()
-//                                    .worker(worker)
-//                                    .parts(parts)
-//                                    .build());
-//                        }).orElseThrow(() -> new EntityNotFoundException("serviceCar id " + serviceID + " doesn't exist")))
-//                .orElseThrow(() -> new EntityNotFoundException("worker id " + workerId + " doesn't exist"));
+    public Job saveJob(Long workerId, List<Long> partIds, Long serviceID, String numberPlate) {
         return jobRepository.save(Job
                 .builder()
                 .worker(workerRepository.findById(workerId)
@@ -84,7 +74,7 @@ public class JobService {
     public List<JobResponseDto> getHistory(Long vehicleId) {
         return jobRepository.findByVehicleId(vehicleId)
                 .stream()
-                .map(servicePartResponseMapper::toServicePartResponse)
+                .map(jobResponseMapper::toServicePartResponse)
                 .collect(Collectors.toList());
     }
 

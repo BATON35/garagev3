@@ -22,7 +22,7 @@ public class XLSGenerator extends FileStrategy {
 
     @Override
     public byte[] generateVehicleHistoryReport(String numberPlate) {
-        List<Job> byVehicleId = jobRepository.findByVehicleId(4L);
+        List<Job> byVehicleId = jobRepository.findByVehicleNumberPlate(numberPlate);
         HSSFWorkbook workbook = new HSSFWorkbook();
         HSSFSheet sheet = workbook.createSheet("report");
         HSSFRow row = sheet.createRow(0);
