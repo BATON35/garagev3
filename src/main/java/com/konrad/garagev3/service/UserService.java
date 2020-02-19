@@ -19,11 +19,9 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 @Service
@@ -49,21 +47,18 @@ public class UserService {
         return userMapper.toUserDto(userRepository.findByEmail(email));
     }
 
-    public User saveUser(User user) throws DuplicateEntryException{
+    public User saveUser(User user) throws DuplicateEntryException {
         User userFromDatabase = userRepository.findByEmail(user.getEmail());
         if (userFromDatabase != null) {
             throw new DuplicateEntryException("user.duplicate.email");
         }
         user.setActive(1);
         if (user.getRoles() != null && !user.getRoles().isEmpty()) {
-            user.setRoles(user.getRoles().stream()
-                    .map(role -> roleRepository.findByName(role.getName()))
-                    .filter(Objects::nonNull)
-                    .collect(Collectors.toSet()));
+            user.setRoles(mapStringToRoles(user));
         }
 
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
-            return userRepository.save(user);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        return userRepository.save(user);
     }
 
     public User updateUser(User user) throws DuplicateEntryException {
@@ -71,22 +66,22 @@ public class UserService {
         if (userFromDatabase.isPresent() && !userFromDatabase.get().getId().equals(user.getId())) {
             throw new DuplicateEntryException("user.duplicate.email");
         }
-        user.setActive(1);
         if (user.getRoles() != null && !user.getRoles().isEmpty()) {
-            user.setRoles(user.getRoles().stream()
-                    .map(role -> roleRepository.findByName(role.getName()))
-                    .filter(Objects::nonNull)
-                    .collect(Collectors.toSet()));
+            user.setRoles(mapStringToRoles(user));
         }
-
-//        Optional<?extends User> userById = userRepository.findById(user.getId());
-            if(!userFromDatabase.get().getEmail().equals(user.getEmail())){
-                userFromDatabase.get().setEmail(user.getEmail());
-            }
-        if(user.getPassword() != null)
-        userFromDatabase.get().setPassword(passwordEncoder.encode(user.getPassword()));
-
+        userFromDatabase.get().setRoles(user.getRoles());
+        userFromDatabase.get().setEmail(user.getEmail());
+        userFromDatabase.get().setName(user.getName());
+        userFromDatabase.get().setSurname(user.getSurname());
+        userFromDatabase.get().setActive(user.getActive());
         return userRepository.save(userFromDatabase.get());
+    }
+
+    private Set<Role> mapStringToRoles(User user) {
+        return user.getRoles().stream()
+                .map(role -> roleRepository.findByName(role.getName()))
+                .filter(Objects::nonNull)
+                .collect(Collectors.toSet());
     }
 
     public UserDto saveUserWithPrivileges(UserDto userDto) {
@@ -153,6 +148,13 @@ public class UserService {
         if (roles != null) {
             List<Role> rolesDB = roleRepository.findByNameIn(roles);
             users = userRepository.findByRoles(roles, searchText, searchText, pageRequest);
+            //todo dlaczego nie mogę usuną obiekut z listy w ten sposób
+//            List<Role> byNameNotIn = roleRepository.findByNameNotIn(roles);
+//            for (int i = 0; i < users.getContent().size(); i++) {
+//                if (users.getContent().get(i).getRoles().stream().anyMatch(role -> role.getName().equals(byNameNotIn.get(0).getName()))) {
+//                    users.getContent().remove(users.getContent().get(i));
+//                }
+//            }
         } else {
             users = userRepository.findByRoleIsNullAndEmailOrNameContainsString(searchText, pageRequest);
         }

@@ -2,6 +2,7 @@ package com.konrad.garagev3.mapper.Impl;
 
 import com.konrad.garagev3.mapper.JobMapper;
 import com.konrad.garagev3.model.dao.Job;
+import com.konrad.garagev3.model.dao.Part;
 import com.konrad.garagev3.model.dto.JobDto;
 import org.springframework.stereotype.Component;
 
@@ -20,7 +21,7 @@ public class JobMapperImpl implements JobMapper {
                 .ServiceId(job.getCarService().getId())
                 .vehicleNumberPlate(job.getVehicle().getNumberPlate())
                 .workerId(job.getWorker().getId())
-                .partIds(job.getParts().stream().map(e->e.getId()).collect(Collectors.toList()))
+                .partIds(job.getParts().stream().map(Part::getId).collect(Collectors.toList()))
                 .build();
     }
 }

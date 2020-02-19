@@ -15,7 +15,6 @@ public class CSVGenerator extends FileStrategy {
     @Override
     public byte[] generateVehicleHistoryReport(String numberPlate) {
         List<Job> byVehicleId = jobRepository.findByVehicleNumberPlate(numberPlate);
-//        List<Job> byVehicleId = jobRepository.findByVehicleId(vehicleId);
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Id;");
         stringBuilder.append("Date;");

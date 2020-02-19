@@ -22,9 +22,9 @@ public class ClientControllerRest {
     private final ClientMapper clientDtoMapper;
 
     @Autowired
-    public ClientControllerRest(ClientService clientService) {
+    public ClientControllerRest(ClientService clientService, ClientMapper clientDtoMapper) {
         this.clientService = clientService;
-        clientDtoMapper = Mappers.getMapper(ClientMapper.class);
+        this.clientDtoMapper = clientDtoMapper;
     }
 
     @GetMapping("/search")

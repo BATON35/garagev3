@@ -25,31 +25,31 @@ public class ClientServiceTest {
     ClientRepository mockClientRepository;
 
     private ClientService sut;
-
-    @Before
-    public void setUp() {
-        // initMocks(this);
-        sut = new ClientService(mockClientRepository);
-        Mockito.when(mockClientRepository.findByEmail(TEST_CLIENT.getEmail())).thenReturn(TEST_CLIENT);
-        Mockito.when(mockClientRepository.save(any(Client.class))).thenReturn(TEST_CLIENT);
-        Mockito.when(mockClientRepository.findBySurnameAndName(
-                TEST_CLIENT.getSurname(), TEST_CLIENT.getName())).thenReturn(TEST_CLIENT);
-        Mockito.when(mockClientRepository.findByActiveIs(1)).thenReturn(Arrays.asList(TEST_CLIENT, TEST_CLIENT_2));
-        Mockito.when(mockClientRepository.findById(5L)).thenReturn(Optional.of(Client
-                .builder()
-                .name("name")
-                .id(1L)
-                .active(1)
-                .surname("surname")
-                .email("email@pl")
-                .phoneNumber("121212112")
-                .vehicles(Collections.emptySet())
-                .build()));
-        Mockito.when(mockClientRepository.findById(10L)).thenReturn(Optional.empty());
-//        Mockito.when(mockClientRepository.findByActiveIs(1)).thenReturn(Arrays.asList(
-//                TEST_CLIENT,
-//                TEST_CLIENT_2));
-    }
+//
+//    @Before
+//    public void setUp() {
+//        // initMocks(this);
+//        sut = new ClientService(mockClientRepository, );
+//        Mockito.when(mockClientRepository.findByEmail(TEST_CLIENT.getEmail())).thenReturn(TEST_CLIENT);
+//        Mockito.when(mockClientRepository.save(any(Client.class))).thenReturn(TEST_CLIENT);
+//        Mockito.when(mockClientRepository.findBySurnameAndName(
+//                TEST_CLIENT.getSurname(), TEST_CLIENT.getName())).thenReturn(TEST_CLIENT);
+//        Mockito.when(mockClientRepository.findByActiveIs(1)).thenReturn(Arrays.asList(TEST_CLIENT, TEST_CLIENT_2));
+//        Mockito.when(mockClientRepository.findById(5L)).thenReturn(Optional.of(Client
+//                .builder()
+//                .name("name")
+//                .id(1L)
+//                .active(1)
+//                .surname("surname")
+//                .email("email@pl")
+//                .phoneNumber("121212112")
+//                .vehicles(Collections.emptySet())
+//                .build()));
+//        Mockito.when(mockClientRepository.findById(10L)).thenReturn(Optional.empty());
+////        Mockito.when(mockClientRepository.findByActiveIs(1)).thenReturn(Arrays.asList(
+////                TEST_CLIENT,
+////                TEST_CLIENT_2));
+//    }
 
     @Test
     public void findClientByEmail() {

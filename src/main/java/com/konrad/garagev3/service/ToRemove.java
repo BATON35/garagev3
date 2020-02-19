@@ -2,6 +2,7 @@ package com.konrad.garagev3.service;
 
 import com.konrad.garagev3.model.dao.WorkerType;
 import com.konrad.garagev3.model.dto.UserDto;
+import io.swagger.models.auth.In;
 
 import javax.validation.constraints.NotEmpty;
 import java.util.*;
@@ -24,6 +25,16 @@ public class ToRemove {
        listsOfIntegers.forEach(list -> myListsOfIntegers.add(list.stream().filter(e -> e != 5).collect(Collectors.toList())));
         System.out.println(myListsOfIntegers);
         Stream<List<Integer>> listStream = myListsOfIntegers.stream().map(element -> element.stream().filter(e -> e != 5).collect(Collectors.toList()));
+
+
+        Map<String, Integer> test = new LinkedHashMap<>();
+        test.put("jesten", 1);
+        test.put("dwa", 2);
+        test.put("trzy", 2);
+
+        Set<Map.Entry<String, Integer>> entries = test.entrySet();
+        System.out.println(test.remove("trzy"));
+
 
 //        List<UserDto> workers = new ArrayList<>();
 //        workers.add(UserDto.builder().id(1L).age(33).name("aaa").workerType(WorkerType.MANAGER).build());

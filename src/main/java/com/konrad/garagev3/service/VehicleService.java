@@ -9,7 +9,6 @@ import com.konrad.garagev3.model.dto.VehicleDto;
 import com.konrad.garagev3.repository.ClientRepository;
 import com.konrad.garagev3.repository.PhotoRepository;
 import com.konrad.garagev3.repository.VehicleRepository;
-import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -34,22 +33,27 @@ public class VehicleService {
     private final PhotoRepository photoRepository;
 
     @Autowired
-    VehicleService(VehicleRepository vehicleRepository, ClientRepository clientRepository, PhotoRepository photoRepository) {
+    VehicleService(VehicleRepository vehicleRepository,
+                   ClientRepository clientRepository,
+                   PhotoRepository photoRepository,
+                   VehicleMapper vehicleMapper) {
         this.vehicleRepository = vehicleRepository;
         this.clientRepository = clientRepository;
-        this.vehicleMapper = Mappers.getMapper(VehicleMapper.class);
+        this.vehicleMapper = vehicleMapper;
         this.photoRepository = photoRepository;
     }
 
     public VehicleDto findVehicleByNumberPlate(String numberPlate) {
-        return vehicleMapper.toVehicleDto(vehicleRepository.findByNumberPlate(numberPlate).orElseThrow(()-> new EntityNotFoundException("Vehicle with number plate " + numberPlate  +" doesn't exist")));
+        return vehicleMapper.toVehicleDto(vehicleRepository
+                .findByNumberPlate(numberPlate)
+                .orElseThrow(() -> new EntityNotFoundException("Vehicle with number plate " + numberPlate + " doesn't exist")));
     }
 
     public Vehicle saveVehicle(Vehicle vehicle, Long clientId) throws DuplicateEntryException {
         //todo doczytac SecurityContextHolder
         // String clientName = SecurityContextHolder.getContext().getAuthentication().getName();
         Optional<Vehicle> present = vehicleRepository.findByNumberPlate(vehicle.getNumberPlate());
-        if(present.isPresent() && !present.get().getId().equals(vehicle.getId())){
+        if (present.isPresent() && !present.get().getId().equals(vehicle.getId())) {
             throw new DuplicateEntryException("vehicle with number plate " + vehicle.getNumberPlate() + " exist in database");
         }
         return clientRepository.findById(clientId).map(client -> {
@@ -61,7 +65,7 @@ public class VehicleService {
 
     public Vehicle update(Vehicle vehicle) throws DuplicateEntryException {
         Optional<Vehicle> vehicleFromDatabase = vehicleRepository.findByNumberPlate(vehicle.getNumberPlate());
-        if(vehicleFromDatabase.isPresent() && !vehicleFromDatabase.get().getId().equals(vehicle.getId())){
+        if (vehicleFromDatabase.isPresent() && !vehicleFromDatabase.get().getId().equals(vehicle.getId())) {
             throw new DuplicateEntryException("vehicle.duplicate.number");
         }
         Client client = clientRepository.findByVehicles(vehicle);
@@ -125,13 +129,13 @@ public class VehicleService {
     public List<byte[]> getPhotosPaths(Long id) {
         List<Photo> photos = photoRepository.findByVehicleId(id);
         List<byte[]> photosInBytes = new ArrayList<>();
-            photos.forEach(photo -> {
-                try {
-                    photosInBytes.add(Files.readAllBytes(Paths.get(photo.getPath())));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            });
+        photos.forEach(photo -> {
+            try {
+                photosInBytes.add(Files.readAllBytes(Paths.get(photo.getPath())));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
         return photosInBytes;
     }
 }

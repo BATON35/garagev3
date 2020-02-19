@@ -13,6 +13,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @NoArgsConstructor
@@ -26,7 +27,7 @@ public class Vehicle {
     @Id
     @GeneratedValue
     private Long id;
-    //  private Date productionDate;
+    private LocalDate productionDate;
     private String brand;
     private String model;
     @Column(unique = true)

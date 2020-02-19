@@ -27,10 +27,10 @@ public class ClientService {
     private final VehicleMapper vehicleMapper;
 
     @Autowired
-    public ClientService(ClientRepository clientRepository) {
+    public ClientService(ClientRepository clientRepository, VehicleMapper vehicleMapper, ClientMapper clientMapper) {
         this.clientRepository = clientRepository;
-        clientMapper = Mappers.getMapper(ClientMapper.class);
-        vehicleMapper = Mappers.getMapper(VehicleMapper.class);
+        this.clientMapper = clientMapper;
+        this.vehicleMapper = vehicleMapper;
     }
 
     public ClientDto findClientByEmail(String email) {
