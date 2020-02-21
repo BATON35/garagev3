@@ -18,7 +18,9 @@ public interface UserRepository<T extends User> extends JpaRepository<T, Long> {
 
     List<T> findByActiveIs(int one);
 
-    Optional<T> findByName(String username);
+    Optional<T> findByName(String userName);
+
+    Optional<T> findByLogin(String userLogin);
 
     Page<T> findByNameContainsAndRolesInOrEmailContains(String name, List<Role> roles, String email, Pageable pageable);
 

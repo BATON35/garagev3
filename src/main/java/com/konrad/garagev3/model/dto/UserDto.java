@@ -19,14 +19,16 @@ import java.util.Set;
 @EqualsAndHashCode(exclude = {"password", "active ", "id"})
 //@Builder
 public class UserDto {
-// private WorkerType workerType;
+    // private WorkerType workerType;
 // private Integer age;
-   // @Setter(AccessLevel.NONE)
-   // private int id;
+    // @Setter(AccessLevel.NONE)
+    // private int id;
+    protected String login;
     @Email(message = "*Please provide a valid Email")
     @NotEmpty(message = "*Please provide an email")
     protected String email;
     protected Long id;
+    protected String phoneNumber;
     @Length(min = 55, message = "*Your password must have at least 5 characters")
     @NotEmpty(message = "*Please provide your password")
     protected String password;
@@ -36,5 +38,5 @@ public class UserDto {
     protected String surname;
     protected int active;
     protected Set<Role> roles;
-  //  private Workshop workshop;
+    //  private Workshop workshop;
 }

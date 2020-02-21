@@ -43,9 +43,9 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
         if (authorities != null && !authorities.isEmpty()) {
             grantedAuthorities = Arrays.stream(authorities.split(",")).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
         }
-        String userName = claims.getSubject();
-        if (userName != null) {
-            UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userName, null, grantedAuthorities);
+        String userLogin = claims.getSubject();
+        if (userLogin != null) {
+            UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userLogin, null, grantedAuthorities);
             SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
             chain.doFilter(request, response);
         }else

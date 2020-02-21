@@ -18,7 +18,10 @@ public class User{
     @GeneratedValue
     protected Long id;
     @Column(unique = true)
+    protected String login;
+    @Column(unique = true)
     protected String email;
+    protected String phoneNumber;
     protected String password;
     @Column(unique = true)
     protected String name;
