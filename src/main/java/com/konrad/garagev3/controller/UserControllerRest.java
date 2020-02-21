@@ -7,11 +7,14 @@ import com.konrad.garagev3.model.dto.UserDto;
 import com.konrad.garagev3.service.UserService;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 @RestController
@@ -63,6 +66,12 @@ public class UserControllerRest {
     @DeleteMapping("{id}")
     public void deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public void duplicateExceptionHandler(DataIntegrityViolationException sqlException) {
+        System.out.println(sqlException);
     }
 
 }
