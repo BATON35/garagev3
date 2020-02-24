@@ -14,7 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 @RestController
@@ -55,6 +54,12 @@ public class UserControllerRest {
         return userMapper.toUserDto(userService.saveUser(user));
     }
 
+    @PostMapping("/change-password")
+    @PreAuthorize("isAuthenticated()")
+    public void changePassword(@RequestBody UserDto userDto) {
+        userService.changePassword(userDto.getPassword());
+    }
+
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping
     public UserDto updateUser(@RequestBody UserDto userDto) throws DuplicateEntryException {
@@ -70,8 +75,16 @@ public class UserControllerRest {
 
     @ExceptionHandler(DataIntegrityViolationException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
-    public void duplicateExceptionHandler(DataIntegrityViolationException sqlException) {
-        System.out.println(sqlException);
+    @ResponseBody
+    public String duplicateExceptionHandler(DataIntegrityViolationException sqlException) {
+        return sqlException.getMessage();
+    }
+
+    @ExceptionHandler(DuplicateEntryException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ResponseBody()
+    public String duplicateEntryExceptionHandler(DuplicateEntryException sqlException) {
+        return sqlException.getMessage();
     }
 
 }

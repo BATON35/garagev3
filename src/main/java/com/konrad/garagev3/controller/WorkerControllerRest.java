@@ -49,6 +49,7 @@ public class WorkerControllerRest {
         return workerService.findAll(PageRequest.of(page, size), hasRole).map(workerMapper::toWorkerDto);
     }
 
+    //modify do get method??
     @PostMapping("/statistic")
     public List<WorkerStatisticSell> getStatistic(@RequestBody StatisticDto statisticDto) {
         return workerService.getStatistic(statisticDto);

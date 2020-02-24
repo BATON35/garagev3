@@ -21,7 +21,6 @@ import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 
 @Service
@@ -32,7 +31,7 @@ public class UserService {
     private UserMapper userMapper;
     @Autowired
     private PasswordEncoder passwordEncoder;
-    private String name;
+    private String login;
 
 
     @Autowired
@@ -138,9 +137,9 @@ public class UserService {
 
 
     public User getInfo() {
-        name = SecurityContextHolder.getContext().getAuthentication().getName();
-        return userRepository.findByName(name)
-                .orElseThrow(() -> new EntityNotFoundException("User with name + " + name + " doesn't exist"));
+        login = SecurityContextHolder.getContext().getAuthentication().getName();
+        return userRepository.findByLogin(login)
+                .orElseThrow(() -> new EntityNotFoundException("User with login + " + login + " doesn't exist"));
     }
 
     public Page<UserDto> searchUsers(String searchText, List<String> roles, PageRequest pageRequest) {
@@ -166,5 +165,14 @@ public class UserService {
     }
 
 
+    public void changePassword(String password) {
+        Optional<? super User> optionalUser = userRepository.findByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
+        if (optionalUser.isPresent()) {
+            User user1 = optionalUser.map(user -> (User) user).get();
+            user1.setPassword(passwordEncoder.encode(password));
+            userRepository.save(user1);
+        } else
+            throw new EntityNotFoundException("User not found");
+    }
 }
 

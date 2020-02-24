@@ -1,7 +1,9 @@
 package com.konrad.garagev3.service;
 
 import com.konrad.garagev3.mapper.JobResponseMapper;
+import com.konrad.garagev3.model.dao.CarService;
 import com.konrad.garagev3.model.dao.Job;
+import com.konrad.garagev3.model.dao.JobStatisticIncome;
 import com.konrad.garagev3.model.dao.Part;
 import com.konrad.garagev3.model.dto.JobResponseDto;
 import com.konrad.garagev3.repository.*;
@@ -13,6 +15,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -44,13 +47,6 @@ public class JobService {
     }
 
     public Job saveJob(Long workerId, List<Long> partIds, Long serviceID, String numberPlate) {
-//        Map<Long, Long> collect = partIds.stream().collect(Collectors.groupingBy(partId -> partId, Collectors.counting()));
-//        List<Part> parts = new LinkedList<>();
-//        collect.entrySet().stream().forEach(e -> {
-//            for (int i = 0; i < e.getValue(); i++) {
-//                parts.add(partRepository.findById(e.getKey()).orElseThrow(() -> new EntityNotFoundException("dupa blada")));
-//            }
-//        });
         List<Part> byIdIn = partRepository.findByIdIn(partIds);
         List<Part> partsList = partIds.stream()
                 .map(id -> byIdIn.stream()
@@ -58,16 +54,24 @@ public class JobService {
                         .collect(Collectors.toList()))
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
+        CarService carService = carServiceRepository.findById(serviceID)
+                .orElseThrow(() -> new EntityNotFoundException("carService id " + serviceID + " doesn't exist"));
+        BigDecimal totalPrice = new BigDecimal(0);
+        totalPrice = totalPrice.add(carService.getPrice());
+        for (Part part : partsList) {
+            totalPrice = totalPrice.add(part.getPrice());
+        }
         return jobRepository.save(Job
                 .builder()
                 .worker(workerRepository.findById(workerId)
                         .orElseThrow(() -> new EntityNotFoundException("worker id " + workerId + " doesn't exist")))
-                .carService(carServiceRepository.findById(serviceID).orElseThrow(() -> new EntityNotFoundException("carService id " + serviceID + " doesn't exist")))
+                .carService(carService)
                 .vehicle(vehicleRepository.findByNumberPlate(numberPlate).orElseThrow(() -> new EntityNotFoundException("Vehicle with number plate " + numberPlate + " doesn't exist"))) //can return optional??
                 //todo partRepository.findByIdIn(). do not return duplicate
 //                .parts(partRepository.findByIdIn(partIds))
 //                .parts(partRepository.findByIdIn(partIds))
                 .parts(partsList)
+                .price(totalPrice)
                 .build());
     }
 
@@ -92,4 +96,13 @@ public class JobService {
                 .collect(Collectors.toList());
     }
 
+    public List<JobStatisticIncome> getStatistic() {
+        return jobRepository.getStatisticByMonth().stream()
+                .map(jobStatisticIncomeFromDatabase -> JobStatisticIncome
+                        .builder()
+                        .date(jobStatisticIncomeFromDatabase.getDate().substring(0,10))
+                        .price(jobStatisticIncomeFromDatabase.getTotalPrice() == null? new BigDecimal(0): jobStatisticIncomeFromDatabase.getTotalPrice())
+                        .build())
+                .collect(Collectors.toList());
+    }
 }

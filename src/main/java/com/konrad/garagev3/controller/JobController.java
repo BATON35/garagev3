@@ -1,6 +1,7 @@
 package com.konrad.garagev3.controller;
 
 import com.konrad.garagev3.mapper.JobMapper;
+import com.konrad.garagev3.model.dao.JobStatisticIncome;
 import com.konrad.garagev3.model.dto.JobDto;
 import com.konrad.garagev3.model.dto.JobResponseDto;
 import com.konrad.garagev3.service.JobService;
@@ -33,6 +34,11 @@ public class JobController {
     @GetMapping
     public Page<JobDto> getJobList(@RequestParam Integer page, @RequestParam Integer size) {
         return jobService.findAll(PageRequest.of(page, size)).map(jobMapper::toJobDto);
+    }
+    //zmienic na post??
+    @GetMapping("/statistic")
+    public List<JobStatisticIncome> getStatistic() {
+        return jobService.getStatistic();
     }
 
     @PostMapping
