@@ -1,5 +1,8 @@
-package com.konrad.garagev3.model.dto;
+package com.konrad.garagev3.model.response;
 
+import com.konrad.garagev3.model.dto.CarServiceDto;
+import com.konrad.garagev3.model.dto.PartDto;
+import com.konrad.garagev3.model.dto.WorkerDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 @Builder
-public class JobResponseDto {
+public class JobHistory {
     private List<PartDto> partsDto;
     private CarServiceDto carServiceDto;
     private WorkerDto workerDto;

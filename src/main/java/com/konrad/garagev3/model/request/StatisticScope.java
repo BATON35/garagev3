@@ -1,4 +1,4 @@
-package com.konrad.garagev3.model.dto;
+package com.konrad.garagev3.model.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Builder
 @Data
-public class StatisticDto {
+public class StatisticScope {
     private LocalDate start;
     private LocalDate end;
 }

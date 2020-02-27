@@ -13,7 +13,6 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class PartDto {
     private Long id;
-
     private String name;
     private BigDecimal price;
 }

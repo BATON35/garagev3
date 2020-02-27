@@ -1,9 +1,9 @@
 package com.konrad.garagev3.controller;
 
 import com.konrad.garagev3.mapper.JobMapper;
-import com.konrad.garagev3.model.dao.JobStatisticIncome;
+import com.konrad.garagev3.model.response.JobStatisticIncome;
 import com.konrad.garagev3.model.dto.JobDto;
-import com.konrad.garagev3.model.dto.JobResponseDto;
+import com.konrad.garagev3.model.response.JobHistory;
 import com.konrad.garagev3.service.JobService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -35,7 +35,7 @@ public class JobController {
     public Page<JobDto> getJobList(@RequestParam Integer page, @RequestParam Integer size) {
         return jobService.findAll(PageRequest.of(page, size)).map(jobMapper::toJobDto);
     }
-    //zmienic na post??
+
     @GetMapping("/statistic")
     public List<JobStatisticIncome> getStatistic() {
         return jobService.getStatistic();
@@ -67,7 +67,7 @@ public class JobController {
     }
 
     @GetMapping("/history")
-    public List<JobResponseDto> getJobHistory(Long vehicleId) {
+    public List<JobHistory> getJobHistory(Long vehicleId) {
         return jobService.getHistory(vehicleId);
     }
 

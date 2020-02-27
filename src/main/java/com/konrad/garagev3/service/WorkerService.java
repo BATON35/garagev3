@@ -2,8 +2,8 @@ package com.konrad.garagev3.service;
 
 import com.konrad.garagev3.mapper.WorkerMapper;
 import com.konrad.garagev3.model.dao.Worker;
-import com.konrad.garagev3.model.dao.WorkerStatisticSell;
-import com.konrad.garagev3.model.dto.StatisticDto;
+import com.konrad.garagev3.model.response.WorkerStatisticSell;
+import com.konrad.garagev3.model.request.StatisticScope;
 import com.konrad.garagev3.model.dto.WorkerDto;
 import com.konrad.garagev3.repository.WorkerRepository;
 import org.mapstruct.factory.Mappers;
@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.Period;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -74,8 +73,8 @@ public class WorkerService {
 
     }
 
-    public List<WorkerStatisticSell> getStatistic(StatisticDto statisticDto) {
-        List<WorkerStatisticSell> workerStatisticSells = workerRepository.getStatisticByWorker(statisticDto.getStart(), statisticDto.getEnd())
+    public List<WorkerStatisticSell> getStatistic(StatisticScope statisticScope) {
+        List<WorkerStatisticSell> workerStatisticSells = workerRepository.getStatisticByWorker(statisticScope.getStart(), statisticScope.getEnd())
                 .stream()
                 .map(r -> WorkerStatisticSell.builder()
                         .date(r.getDate())
@@ -89,11 +88,11 @@ public class WorkerService {
                 .collect(Collectors.groupingBy(WorkerStatisticSell::getName));
 
         statisticGrouped.forEach((key, value) -> {
-            Period intervalPeriod = Period.between(statisticDto.getStart(), statisticDto.getEnd());
+            Period intervalPeriod = Period.between(statisticScope.getStart(), statisticScope.getEnd());
             int periodOfTimeInMonths = intervalPeriod.getMonths() + intervalPeriod.getYears() * 12 + (int) Math.ceil(intervalPeriod.getDays() / 31.0);
             Map<String, Boolean> workerMonth = new HashMap<>();
             for (int i = 0; i < periodOfTimeInMonths; i++) {
-                workerMonth.put(statisticDto.getStart().plusMonths(i).toString().substring(0, 7), false);
+                workerMonth.put(statisticScope.getStart().plusMonths(i).toString().substring(0, 7), false);
             }
             value.forEach(statisticSell -> {
                 if (workerMonth.containsKey(statisticSell.getDate())) {

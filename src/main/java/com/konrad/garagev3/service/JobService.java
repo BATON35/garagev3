@@ -3,9 +3,9 @@ package com.konrad.garagev3.service;
 import com.konrad.garagev3.mapper.JobResponseMapper;
 import com.konrad.garagev3.model.dao.CarService;
 import com.konrad.garagev3.model.dao.Job;
-import com.konrad.garagev3.model.dao.JobStatisticIncome;
+import com.konrad.garagev3.model.response.JobStatisticIncome;
 import com.konrad.garagev3.model.dao.Part;
-import com.konrad.garagev3.model.dto.JobResponseDto;
+import com.konrad.garagev3.model.response.JobHistory;
 import com.konrad.garagev3.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -89,7 +89,7 @@ public class JobService {
         jobRepository.deleteById(id);
     }
 
-    public List<JobResponseDto> getHistory(Long vehicleId) {
+    public List<JobHistory> getHistory(Long vehicleId) {
         return jobRepository.findByVehicleId(vehicleId)
                 .stream()
                 .map(jobResponseMapper::toServicePartResponse)

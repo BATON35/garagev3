@@ -2,7 +2,7 @@ package com.konrad.garagev3.mapper.Impl;
 
 import com.konrad.garagev3.mapper.*;
 import com.konrad.garagev3.model.dao.Job;
-import com.konrad.garagev3.model.dto.JobResponseDto;
+import com.konrad.garagev3.model.response.JobHistory;
 import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Component;
 
@@ -21,11 +21,11 @@ public class JobResponseMapperImpl implements JobResponseMapper { ;
     }
 
     @Override
-    public JobResponseDto toServicePartResponse(Job job) {
+    public JobHistory toServicePartResponse(Job job) {
         if ( job == null ) {
             return null;
         }
-        return JobResponseDto.builder()
+        return JobHistory.builder()
                 .carServiceDto(carServiceMapper.toCarServiceDto(job.getCarService()))
                 .createdDate(job.getCreatedDate())
                 .partsDto(job.getParts()
