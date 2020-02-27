@@ -50,8 +50,6 @@ public class VehicleService {
     }
 
     public Vehicle saveVehicle(Vehicle vehicle, Long clientId) throws DuplicateEntryException {
-        //todo doczytac SecurityContextHolder
-        // String clientName = SecurityContextHolder.getContext().getAuthentication().getName();
         Optional<Vehicle> present = vehicleRepository.findByNumberPlate(vehicle.getNumberPlate());
         if (present.isPresent() && !present.get().getId().equals(vehicle.getId())) {
             throw new DuplicateEntryException("vehicle with number plate " + vehicle.getNumberPlate() + " exist in database");

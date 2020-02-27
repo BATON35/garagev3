@@ -19,15 +19,14 @@ public class User{
     protected Long id;
     @Column(unique = true)
     protected String login;
-    protected boolean deleted;
-    @Column(unique = true)
-    protected String email;
-    protected String phoneNumber;
     protected String password;
     protected String name;
     protected String surname;
-    protected Integer active;
+    @Column(unique = true)
+    protected String email;
+    protected String phoneNumber;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     protected Set<Role> roles;
+    protected boolean deleted;
 }
