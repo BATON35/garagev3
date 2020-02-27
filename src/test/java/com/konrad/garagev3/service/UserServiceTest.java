@@ -25,8 +25,8 @@ public class UserServiceTest {
 //                mockRoleRepository,
 //                mockBCryptPasswordEncoder);
 //        Mockito.when(mockUserRepository.save(any(User.class))).thenReturn(TEST_USER);
-////        Mockito.when(mockUserRepository.findByActiveIs(1)).thenReturn(Arrays.asList(TEST_USER, TEST_USER_1));
-////        Mockito.when(mockUserRepository.findByEmail(TEST_USER.getEmail())).thenReturn(TEST_USER);
+////        Mockito.when(mockUserRepository.findByActiveIsAndDeleted(1)).thenReturn(Arrays.asList(TEST_USER, TEST_USER_1));
+////        Mockito.when(mockUserRepository.findByEmailAndDeleted(TEST_USER.getEmail())).thenReturn(TEST_USER);
 ////         Mockito.when(mockRoleRepository.findAll()).thenReturn(new ArrayList<>(ALL_ROLES));
 //    }
 //
@@ -83,7 +83,7 @@ public class UserServiceTest {
 //    @Test
 //    public void deactivateUser() {
 //        Mockito.when(mockUserRepository
-//                .findByEmail(TEST_USER_ACTIVE.getEmail()))
+//                .findByEmailAndDeleted(TEST_USER_ACTIVE.getEmail()))
 //                .thenReturn(TEST_USER_ACTIVE);
 //
 //        userServiceUnderTest.deactivateUser(TEST_USER_ACTIVE.getEmail());
@@ -95,7 +95,7 @@ public class UserServiceTest {
 //    public void activateUser() {
 //        // TODO: 10.07.2019 misleading test
 ////        Mockito.when(mockUserRepository
-////                .findByEmail(TEST_USER_INACTIVE.getEmail()))
+////                .findByEmailAndDeleted(TEST_USER_INACTIVE.getEmail()))
 ////                .thenReturn(TEST_USER_INACTIVE);
 ////
 ////        final UserDto result = userServiceUnderTest.activateUser(TEST_USER_INACTIVE.getEmail());

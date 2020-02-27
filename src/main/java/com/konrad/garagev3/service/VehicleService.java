@@ -68,13 +68,13 @@ public class VehicleService {
         if (vehicleFromDatabase.isPresent() && !vehicleFromDatabase.get().getId().equals(vehicle.getId())) {
             throw new DuplicateEntryException("vehicle.duplicate.number");
         }
-        Client client = clientRepository.findByVehicles(vehicle);
+        Client client = clientRepository.findByVehiclesAndDeleted(vehicle, false);
         vehicle.setClient(client);
         return vehicleRepository.save(vehicle);
     }
 
     public List<VehicleDto> findVehicleByClientMail(String email) {
-        Client client = clientRepository.findByEmail(email);
+        Client client = clientRepository.findByEmailAndDeleted(email, false);
         List<Vehicle> vehicles = vehicleRepository.findByClientId(client.getId());
         ArrayList vehiclesDto = new ArrayList();
         for (Vehicle vehicle : vehicles) {

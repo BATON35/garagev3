@@ -17,6 +17,7 @@ public class Client {
     @Id
     @GeneratedValue
     private Long id;
+    protected boolean deleted;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "client")
     @JsonManagedReference
     @EqualsAndHashCode.Exclude
@@ -24,6 +25,7 @@ public class Client {
     private String name;
     private Integer active;
     private String surname;
+    @Column(unique = true)
     private String email;
     private String phoneNumber;
 }

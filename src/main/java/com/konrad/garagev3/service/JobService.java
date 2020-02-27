@@ -100,7 +100,7 @@ public class JobService {
         return jobRepository.getStatisticByMonth().stream()
                 .map(jobStatisticIncomeFromDatabase -> JobStatisticIncome
                         .builder()
-                        .date(jobStatisticIncomeFromDatabase.getDate().substring(0,10))
+                        .date(jobStatisticIncomeFromDatabase.getDate().substring(0,7))
                         .price(jobStatisticIncomeFromDatabase.getTotalPrice() == null? new BigDecimal(0): jobStatisticIncomeFromDatabase.getTotalPrice())
                         .build())
                 .collect(Collectors.toList());

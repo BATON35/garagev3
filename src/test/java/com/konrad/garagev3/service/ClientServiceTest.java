@@ -30,11 +30,11 @@ public class ClientServiceTest {
 //    public void setUp() {
 //        // initMocks(this);
 //        sut = new ClientService(mockClientRepository, );
-//        Mockito.when(mockClientRepository.findByEmail(TEST_CLIENT.getEmail())).thenReturn(TEST_CLIENT);
+//        Mockito.when(mockClientRepository.findByEmailAndDeleted(TEST_CLIENT.getEmail())).thenReturn(TEST_CLIENT);
 //        Mockito.when(mockClientRepository.save(any(Client.class))).thenReturn(TEST_CLIENT);
-//        Mockito.when(mockClientRepository.findBySurnameAndName(
+//        Mockito.when(mockClientRepository.findBySurnameAndNameAndDeleted(
 //                TEST_CLIENT.getSurname(), TEST_CLIENT.getName())).thenReturn(TEST_CLIENT);
-//        Mockito.when(mockClientRepository.findByActiveIs(1)).thenReturn(Arrays.asList(TEST_CLIENT, TEST_CLIENT_2));
+//        Mockito.when(mockClientRepository.findByActiveIsAndDeleted(1)).thenReturn(Arrays.asList(TEST_CLIENT, TEST_CLIENT_2));
 //        Mockito.when(mockClientRepository.findById(5L)).thenReturn(Optional.of(Client
 //                .builder()
 //                .name("name")
@@ -46,7 +46,7 @@ public class ClientServiceTest {
 //                .vehicles(Collections.emptySet())
 //                .build()));
 //        Mockito.when(mockClientRepository.findById(10L)).thenReturn(Optional.empty());
-////        Mockito.when(mockClientRepository.findByActiveIs(1)).thenReturn(Arrays.asList(
+////        Mockito.when(mockClientRepository.findByActiveIsAndDeleted(1)).thenReturn(Arrays.asList(
 ////                TEST_CLIENT,
 ////                TEST_CLIENT_2));
 //    }

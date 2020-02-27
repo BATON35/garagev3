@@ -28,6 +28,7 @@ public class UserDto {
     @NotEmpty(message = "*Please provide an email")
     protected String email;
     protected Long id;
+    protected boolean deleted;
     protected String phoneNumber;
     @Length(min = 55, message = "*Your password must have at least 5 characters")
     @NotEmpty(message = "*Please provide your password")

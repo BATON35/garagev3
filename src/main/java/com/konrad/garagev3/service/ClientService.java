@@ -5,7 +5,6 @@ import com.konrad.garagev3.mapper.VehicleMapper;
 import com.konrad.garagev3.model.dao.Client;
 import com.konrad.garagev3.model.dto.ClientDto;
 import com.konrad.garagev3.repository.ClientRepository;
-import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -34,7 +33,7 @@ public class ClientService {
     }
 
     public ClientDto findClientByEmail(String email) {
-        return clientMapper.toClientDto(clientRepository.findByEmail(email));
+        return clientMapper.toClientDto(clientRepository.findByEmailAndDeleted(email, false));
     }
 
     public Client saveClient(Client client) {
@@ -43,11 +42,11 @@ public class ClientService {
     }
 
     public ClientDto findClientBySurnameAndName(String surname, String name) {
-        return clientMapper.toClientDto(clientRepository.findBySurnameAndName(surname, name));
+        return clientMapper.toClientDto(clientRepository.findBySurnameAndNameAndDeleted(surname, name, false));
     }
 
     public List<ClientDto> findAllActiveClients() {
-        return clientRepository.findByActiveIs(1)
+        return clientRepository.findByActiveIsAndDeleted(1, false)
                 .stream()
                 .map(clientMapper::toClientDto)
                 .sorted(Comparator.comparing(ClientDto::getEmail))
@@ -65,14 +64,14 @@ public class ClientService {
 
     @Transactional
     public void deleteClient(String mail) {
-        clientRepository.deleteByEmail(mail);
+        clientRepository.deleteByEmailAndDeleted(mail, false);
 
-        // clientRepository.delete(clientRepository.findByEmail(mail));
+        // clientRepository.delete(clientRepository.findByEmailAndDeleted(mail));
     }
 
     @Transactional
     public ClientDto editClient(ClientDto clientDto) {
-        return clientRepository.findById(clientDto.getId()).map(client -> {
+        return clientRepository.findByIdAndDeleted(clientDto.getId(), false).map(client -> {
             if (clientDto.getEmail() != null && !client.getEmail().equals(clientDto.getEmail())) {
                 client.setEmail(clientDto.getEmail());
             }
@@ -83,22 +82,25 @@ public class ClientService {
 
     public ClientDto findById(Long id) {
         return clientMapper.toClientDto(
-                clientRepository.findById(id)
+                clientRepository.findByIdAndDeleted(id, false)
                         .orElseThrow(() -> new EntityNotFoundException("Client with " + id + " doesn't exist")));
     }
 
-    public Page<Client> findAll(@PageableDefault Pageable pageable) {
-        Page<Client> clients = clientRepository.findAll(pageable);
+    public Page<Client> findAll(@PageableDefault Pageable pageable, boolean deleted) {
+        Page<Client> clients = clientRepository.findByDeleted(deleted, pageable);
         Page<Client> pageClient = new PageImpl<>(clients.getContent(), clients.getPageable(), clients.getTotalElements());
         return pageClient;
     }
 
     public void deleteClient(Long id) {
-        clientRepository.deleteById(id);
+        clientRepository.findById(id).ifPresent(client -> {
+            client.setDeleted(true);
+            clientRepository.save(client);
+        });
     }
 
     public Page<ClientDto> searchClients(String searchText, PageRequest pageRequest) {
-        Page<Client> clients = clientRepository.findByNameContainsOrEmailContains(searchText, searchText, pageRequest);
+        Page<Client> clients = clientRepository.findByNameContainsOrEmailContainsAndDeleted(searchText, searchText, false, pageRequest);
         return new PageImpl<>(clients.getContent()
                 .stream()
                 .map(clientMapper::toClientDto)
@@ -106,8 +108,8 @@ public class ClientService {
     }
 
     public List<String> autocompleteClients(String searchText) {
-        List<String> byAutoCompleteEmail = clientRepository.findByAutoCompleteEmail(searchText);
-        List<String> byAutoCompleteName = clientRepository.findByAutoCompleteName(searchText);
+        List<String> byAutoCompleteEmail = clientRepository.findByAutoCompleteEmail(searchText,false);
+        List<String> byAutoCompleteName = clientRepository.findByAutoCompleteName(searchText, false);
         byAutoCompleteEmail.addAll(byAutoCompleteName);
         return byAutoCompleteEmail;
     }

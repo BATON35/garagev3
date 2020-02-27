@@ -43,8 +43,8 @@ public class ClientControllerRest {
     }
 
     @GetMapping("/{page}/{size}")
-    public Page<ClientDto> getClientList(@PathVariable Integer page, @PathVariable Integer size) {
-        return clientService.findAll(PageRequest.of(page, size)).map(clientDtoMapper::toClientDto);
+    public Page<ClientDto> getClientList(@PathVariable Integer page, @PathVariable Integer size, @RequestParam boolean deleted) {
+        return clientService.findAll(PageRequest.of(page, size), deleted).map(clientDtoMapper::toClientDto);
     }
 
     @PostMapping

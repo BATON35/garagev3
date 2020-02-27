@@ -73,13 +73,13 @@ public class UserControllerRest {
         userService.deleteUser(id);
     }
 
-    @ExceptionHandler(DataIntegrityViolationException.class)
-    @ResponseStatus(HttpStatus.CONFLICT)
-    @ResponseBody
-    public String duplicateExceptionHandler(DataIntegrityViolationException sqlException) {
-        return sqlException.getMessage();
-    }
-
+//    @ExceptionHandler(DataIntegrityViolationException.class)
+//    @ResponseStatus(HttpStatus.CONFLICT)
+//    @ResponseBody
+//    public String duplicateExceptionHandler(DataIntegrityViolationException sqlException) {
+//        return sqlException.getMessage();
+//    }
+//
     @ExceptionHandler(DuplicateEntryException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     @ResponseBody()

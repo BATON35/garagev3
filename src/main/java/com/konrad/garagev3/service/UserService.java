@@ -42,16 +42,19 @@ public class UserService {
         userMapper = Mappers.getMapper(UserMapper.class);
     }
 
-    public UserDto findUserByEmail(String email) {
-        return userMapper.toUserDto(userRepository.findByEmail(email));
+    public UserDto findUserByEmail(String email) throws DuplicateEntryException {
+        return userMapper.toUserDto(userRepository.findByEmail(email)
+                .orElseThrow(() -> new DuplicateEntryException("user.duplicate.email")));
     }
 
     public User saveUser(User user) throws DuplicateEntryException {
-        User userFromDatabase = userRepository.findByEmail(user.getEmail());
-        if (userFromDatabase != null) {
+        Optional<? super User> userFromDatabaseByLogin = userRepository.findByLogin(user.getLogin());
+        if (userFromDatabaseByLogin.isPresent()) {
+            throw new DuplicateEntryException("user.duplicate.login");
+        }
+        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
             throw new DuplicateEntryException("user.duplicate.email");
         }
-        user.setActive(1);
         if (user.getRoles() != null && !user.getRoles().isEmpty()) {
             user.setRoles(mapStringToRoles(user));
         }
@@ -72,7 +75,6 @@ public class UserService {
         userFromDatabase.get().setEmail(user.getEmail());
         userFromDatabase.get().setName(user.getName());
         userFromDatabase.get().setSurname(user.getSurname());
-        userFromDatabase.get().setActive(user.getActive());
         return userRepository.save(userFromDatabase.get());
     }
 
@@ -86,9 +88,6 @@ public class UserService {
     public UserDto saveUserWithPrivileges(UserDto userDto) {
         UserMapper userMapper = Mappers.getMapper(UserMapper.class);
         User user = userMapper.toUser(userDto);
-        //  user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        user.setActive(1);
-        // user.setRoles(new LinkedHashSet<>(user.getRoles()));
         return userMapper.toUserDto(userRepository.save(user));
     }
 
@@ -96,34 +95,9 @@ public class UserService {
         return roleRepository.findAll();
     }
 
-//    public Role findRoleById(Long id) {
-//        return roleRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Role with id " + id + " doesn't exist"));
-//    }
-
     @Transactional
     public void deleteUser(String email) {
         userRepository.deleteByEmail(email);
-    }
-
-    public UserDto deactivateUser(String email) {
-        User user = userRepository.findByEmail(email);
-        user.setActive(0);
-        return userMapper.toUserDto(userRepository.save(user));
-    }
-
-    public UserDto activateUser(String email) {
-        User user = userRepository.findByEmail(email);
-        user.setActive(1);
-        return userMapper.toUserDto(userRepository.save(user));
-    }
-
-    public List<UserDto> findAllActiveUsers() {
-        List<? extends User> users = userRepository.findByActiveIs(1);
-        users.sort(Comparator.comparing(User::getEmail));
-        return users
-                .stream()
-                .map(userMapper::toUserDto)
-                .collect(Collectors.toList());
     }
 
     public User findById(Long id) {
@@ -147,13 +121,6 @@ public class UserService {
         if (roles != null) {
             List<Role> rolesDB = roleRepository.findByNameIn(roles);
             users = userRepository.findByRoles(roles, searchText, searchText, pageRequest);
-            //todo dlaczego nie mogę usuną obiekut z listy w ten sposób
-//            List<Role> byNameNotIn = roleRepository.findByNameNotIn(roles);
-//            for (int i = 0; i < users.getContent().size(); i++) {
-//                if (users.getContent().get(i).getRoles().stream().anyMatch(role -> role.getName().equals(byNameNotIn.get(0).getName()))) {
-//                    users.getContent().remove(users.getContent().get(i));
-//                }
-//            }
         } else {
             users = userRepository.findByRoleIsNullAndEmailOrNameContainsString(searchText, pageRequest);
         }

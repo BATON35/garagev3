@@ -19,11 +19,11 @@ public class User{
     protected Long id;
     @Column(unique = true)
     protected String login;
+    protected boolean deleted;
     @Column(unique = true)
     protected String email;
     protected String phoneNumber;
     protected String password;
-    @Column(unique = true)
     protected String name;
     protected String surname;
     protected Integer active;

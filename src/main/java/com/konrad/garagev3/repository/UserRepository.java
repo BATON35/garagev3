@@ -12,11 +12,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserRepository<T extends User> extends JpaRepository<T, Long> {
-    T findByEmail(String email);
+    Optional<T> findByEmail(String email);
 
     void deleteByEmail(String email);
-
-    List<T> findByActiveIs(int one);
 
     Optional<T> findByName(String userName);
 
