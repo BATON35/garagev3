@@ -7,13 +7,13 @@ import com.konrad.garagev3.model.dto.UserDto;
 import com.konrad.garagev3.service.UserService;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -84,7 +84,7 @@ public class UserControllerRest {
     @ResponseStatus(HttpStatus.CONFLICT)
     @ResponseBody()
     public String duplicateEntryExceptionHandler(DuplicateEntryException sqlException) {
-        return sqlException.getMessage();
+        return sqlException.toString();
     }
 
 }

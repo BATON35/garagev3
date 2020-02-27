@@ -21,7 +21,7 @@ public class UserDto {
     protected Long id;
     protected String login;
     @NotEmpty(message = "*Please provide your password")
-    @Length(min = 55, message = "*Your password must have at least 5 characters")
+    @Length(min = 6, message = "*Your password must have at least 5 characters")
     protected String password;
     @Column(name = "name")
     @NotEmpty(message = "*Please provide your name")

@@ -35,7 +35,6 @@ public class WorkerService {
     }
 
     public Worker saveWorker(Worker worker) {
-        worker.setActive(1);
         return workerRepository.save(worker);
     }
 
