@@ -23,7 +23,6 @@ public class Client {
     @EqualsAndHashCode.Exclude
     private Set<Vehicle> vehicles;
     private String name;
-    private Integer active;
     private String surname;
     @Column(unique = true)
     private String email;

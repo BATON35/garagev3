@@ -27,7 +27,6 @@ public class ClientMapperImpl implements ClientMapper {
                 .email(client.getEmail())
                 .name(client.getName())
                 .surname(client.getSurname())
-                .active(client.getActive())
                 .build();
     }
 
@@ -41,7 +40,6 @@ public class ClientMapperImpl implements ClientMapper {
                 .email(clientDto.getEmail())
                 .name(clientDto.getName())
                 .surname(clientDto.getSurname())
-                .active(clientDto.getActive())
                 .build();
     }
 }

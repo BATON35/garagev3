@@ -17,8 +17,6 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
 
     Client findBySurnameAndNameAndDeleted(String surname, String name, boolean deleted);
 
-    List<Client> findByActiveIsAndDeleted(int one, boolean deleted);
-
     void deleteByEmailAndDeleted(String mail, boolean deleted);
 
     Client findByVehiclesAndDeleted(Vehicle vehicle, boolean deleted);

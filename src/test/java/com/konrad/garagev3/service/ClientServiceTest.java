@@ -83,30 +83,30 @@ public class ClientServiceTest {
         assertThat(TEST_CLIENT_DTO).isEqualTo(result);
     }
 
-    @Test
-    public void shouldReturnAllActivateClients()  {
-        final List<ClientDto> result = sut.findAllActiveClients();
-        assertThat(result).containsOnly(TEST_CLIENT_DTO_2, TEST_CLIENT_DTO)
-                .isSortedAccordingTo(Comparator.comparing(ClientDto::getEmail));
-    }
+//    @Test
+//    public void shouldReturnAllActivateClients()  {
+//        final List<ClientDto> result = sut.findAllActiveClients();
+//        assertThat(result).containsOnly(TEST_CLIENT_DTO_2, TEST_CLIENT_DTO)
+//                .isSortedAccordingTo(Comparator.comparing(ClientDto::getEmail));
+//    }
 
-    @Test
-    public void deactivateClient() {
-        Mockito.when(mockClientRepository
-                .findById(TEST_ClIENT_ACTIVE_DTO.getId()))
-                .thenReturn(Optional.ofNullable(TEST_ClIENT_ACTIVE));
+//    @Test
+//    public void deactivateClient() {
+//        Mockito.when(mockClientRepository
+//                .findById(TEST_ClIENT_ACTIVE_DTO.getId()))
+//                .thenReturn(Optional.ofNullable(TEST_ClIENT_ACTIVE));
+//
+//        sut.deactivateClient(TEST_ClIENT_ACTIVE.getId());
+//
+//        Mockito.verify(mockClientRepository).save(any(Client.class));
+//    }
 
-        sut.deactivateClient(TEST_ClIENT_ACTIVE.getId());
-
-        Mockito.verify(mockClientRepository).save(any(Client.class));
-    }
-
-    @Test
-    public void shouldNotDeactivateClient() {
-        assertThatThrownBy(() -> sut.deactivateClient(43L))
-                .isInstanceOf(EntityNotFoundException.class)
-                .hasMessage("Client with 43 doesn't exist");
-    }
+//    @Test
+//    public void shouldNotDeactivateClient() {
+//        assertThatThrownBy(() -> sut.deactivateClient(43L))
+//                .isInstanceOf(EntityNotFoundException.class)
+//                .hasMessage("Client with 43 doesn't exist");
+//    }
 
     @Test
     public void shouldGetClientDtoById() {
@@ -141,7 +141,6 @@ public class ClientServiceTest {
                 .builder()
                 .name("name")
                 .id(1L)
-                .active(1)
                 .surname("surname")
                 .email("email@pl")
                 .phoneNumber("121212112")
@@ -157,7 +156,6 @@ public class ClientServiceTest {
                 .builder()
                 .name("name")
                 .id(1L)
-                .active(1)
                 .surname("surname")
                 .email("email@pl")
                 .phoneNumber("121212112")

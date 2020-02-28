@@ -37,29 +37,11 @@ public class ClientService {
     }
 
     public Client saveClient(Client client) {
-        client.setActive(1);
         return clientRepository.save(client);
     }
 
     public ClientDto findClientBySurnameAndName(String surname, String name) {
         return clientMapper.toClientDto(clientRepository.findBySurnameAndNameAndDeleted(surname, name, false));
-    }
-
-    public List<ClientDto> findAllActiveClients() {
-        return clientRepository.findByActiveIsAndDeleted(1, false)
-                .stream()
-                .map(clientMapper::toClientDto)
-                .sorted(Comparator.comparing(ClientDto::getEmail))
-                .collect(Collectors.toList());
-    }
-
-    public ClientDto deactivateClient(Long id) {
-        return clientRepository.findById(id).map(client -> {
-            client.setActive(0);
-            return clientMapper.toClientDto(clientRepository.save(client));
-        }).orElseThrow(() -> new EntityNotFoundException("Client with " + id + " doesn't exist"));
-//        client.setActive(0);
-//        return clientMapper.toClientDto(clientRepository.save(client));
     }
 
     @Transactional
@@ -75,7 +57,6 @@ public class ClientService {
             if (clientDto.getEmail() != null && !client.getEmail().equals(clientDto.getEmail())) {
                 client.setEmail(clientDto.getEmail());
             }
-            client.setActive(1);
             return clientMapper.toClientDto(clientRepository.save(client));
         }).orElseThrow(() -> new EntityNotFoundException("Client with " + clientDto.getId() + " doesn't exist"));
     }

@@ -17,7 +17,6 @@ public class ClientDto {
     @NotEmpty(message = "Wypełnij pole imie klienta")
     private String name;
     private Long id;
-    private int active;
     private boolean deleted;
     @Length(min = 3, max = 127, message = "Pole nazwisko musi musi składać sie z co najmniej trzech liter")
     @NotEmpty(message = "Wypełnij pole nazwisko klienta")
