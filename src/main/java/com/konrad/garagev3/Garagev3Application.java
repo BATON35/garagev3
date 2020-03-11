@@ -10,6 +10,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @SpringBootApplication
 @EnableScheduling
 @EnableSwagger2
+@EnableJpaAuditing
 public class Garagev3Application {
 
     public static void main(String[] args) {

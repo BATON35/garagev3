@@ -13,7 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -30,10 +29,11 @@ public class UserControllerRest {
         userMapper = Mappers.getMapper(UserMapper.class);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+
     @GetMapping("/search")
-    public Page<UserDto> searchUsers(@RequestParam String searchText, @RequestParam(required = false) List<String> roles, @RequestParam Integer page, @RequestParam Integer size) {
-        return userService.searchUsers(searchText, roles, PageRequest.of(page, size));
+    @PreAuthorize("@securityService.hasAccessToDeletedUserList(#deleted)")
+    public Page<UserDto> searchUsers(@RequestParam String searchText, @RequestParam(required = false) List<String> roles, @RequestParam Integer page, @RequestParam Integer size, @RequestParam(required = false) boolean deleted) {
+        return userService.searchUsers(searchText, roles, deleted, PageRequest.of(page, size));
     }
 
     @GetMapping("/info")
@@ -41,7 +41,6 @@ public class UserControllerRest {
         return userMapper.toUserDto(userService.getInfo());
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/{id}")
     public UserDto getUserById(@PathVariable Long id) {
         return userMapper.toUserDto(userService.findById(id));
@@ -67,19 +66,18 @@ public class UserControllerRest {
         return userMapper.toUserDto(userService.updateUser(user));
     }
 
+    @PutMapping("/restore")
+    public void restoreUser(@RequestParam Long id) {
+        userService.restoreUser(id);
+    }
+
+
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("{id}")
     public void deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
     }
 
-//    @ExceptionHandler(DataIntegrityViolationException.class)
-//    @ResponseStatus(HttpStatus.CONFLICT)
-//    @ResponseBody
-//    public String duplicateExceptionHandler(DataIntegrityViolationException sqlException) {
-//        return sqlException.getMessage();
-//    }
-//
     @ExceptionHandler(DuplicateEntryException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     @ResponseBody()
