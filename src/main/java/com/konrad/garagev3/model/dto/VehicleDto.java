@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 
@@ -14,7 +15,7 @@ import java.time.LocalDate;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class VehicleDto {
+public class VehicleDto implements Serializable {
     private Long id;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate productionDate;

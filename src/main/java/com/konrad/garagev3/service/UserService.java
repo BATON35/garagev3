@@ -95,18 +95,16 @@ public class UserService {
         return roleRepository.findAll();
     }
 
-    @Transactional
-    public void deleteUser(String email) {
-        userRepository.deleteByEmail(email);
-    }
-
     public User findById(Long id) {
-        return userRepository.findById(id)
+        return userRepository.findByIdAndDeleted(id, false)
                 .orElseThrow(() -> new EntityNotFoundException("User with id " + id + " doesn't exist"));
     }
 
     public void deleteUser(Long id) {
-        userRepository.deleteById(id);
+        userRepository.findById(id).ifPresent(user->{
+            user.setDeleted(true);
+            userRepository.save(user);
+        });
     }
 
 
@@ -116,13 +114,13 @@ public class UserService {
                 .orElseThrow(() -> new EntityNotFoundException("User with login + " + login + " doesn't exist"));
     }
 
-    public Page<UserDto> searchUsers(String searchText, List<String> roles, PageRequest pageRequest) {
+    public Page<UserDto> searchUsers(String searchText, List<String> roles,Boolean deleted, PageRequest pageRequest) {
         Page<? extends User> users;
         if (roles != null) {
             List<Role> rolesDB = roleRepository.findByNameIn(roles);
-            users = userRepository.findByRoles(roles, searchText, searchText, pageRequest);
+            users = userRepository.findByRolesAndDeleted(roles, searchText, searchText,deleted, pageRequest);
         } else {
-            users = userRepository.findByRoleIsNullAndEmailOrNameContainsString(searchText, pageRequest);
+            users = userRepository.findByRoleIsNullAndEmailOrNameContainsStringAndDeleted(searchText, deleted, pageRequest);
         }
         return new PageImpl<>(
                 users.getContent()
@@ -140,6 +138,13 @@ public class UserService {
             userRepository.save(user1);
         } else
             throw new EntityNotFoundException("User not found");
+    }
+
+    public void restoreUser(Long id) {
+        userRepository.findByIdAndDeleted(id, true).ifPresent(user->{
+            user.setDeleted(false);
+            userRepository.save(user);
+        });
     }
 }
 

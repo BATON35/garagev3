@@ -1,14 +1,12 @@
 package com.konrad.garagev3.configuration;
 
-import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
-@EnableJpaAuditing
-@Configuration
+@Component
 public class AuditingConfig implements AuditorAware<String> {
 
     @Override

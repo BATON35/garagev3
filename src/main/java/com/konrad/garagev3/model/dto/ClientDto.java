@@ -5,6 +5,7 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import java.io.Serializable;
 import java.util.Set;
 
 @Data
@@ -12,7 +13,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(exclude = { "active ", "id"})
-public class ClientDto {
+public class ClientDto implements Serializable {
     @Length(min = 3, max = 127, message = "Pole imie musi musi składać sie z co najmniej trzech liter")
     @NotEmpty(message = "Wypełnij pole imie klienta")
     private String name;

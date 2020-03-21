@@ -5,7 +5,9 @@ import com.konrad.garagev3.mapper.VehicleMapper;
 import com.konrad.garagev3.model.dao.Client;
 import com.konrad.garagev3.model.dto.ClientDto;
 import com.konrad.garagev3.repository.ClientRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -20,6 +22,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class ClientService {
     private final ClientRepository clientRepository;
     private final ClientMapper clientMapper;
@@ -61,14 +64,16 @@ public class ClientService {
         }).orElseThrow(() -> new EntityNotFoundException("Client with " + clientDto.getId() + " doesn't exist"));
     }
 
+    @Cacheable(cacheNames = "Client", key = "#id")
     public ClientDto findById(Long id) {
+        log.info("Object is not in cache");
         return clientMapper.toClientDto(
                 clientRepository.findByIdAndDeleted(id, false)
                         .orElseThrow(() -> new EntityNotFoundException("Client with " + id + " doesn't exist")));
     }
 
-    public Page<Client> findAll(@PageableDefault Pageable pageable, boolean deleted) {
-        Page<Client> clients = clientRepository.findByDeleted(deleted, pageable);
+    public Page<Client> findAll(@PageableDefault Pageable pageable, Boolean deleted) {
+        Page<Client> clients = clientRepository.findByDeleted(deleted == null ? false : deleted, pageable);
         Page<Client> pageClient = new PageImpl<>(clients.getContent(), clients.getPageable(), clients.getTotalElements());
         return pageClient;
     }
@@ -80,8 +85,8 @@ public class ClientService {
         });
     }
 
-    public Page<ClientDto> searchClients(String searchText, PageRequest pageRequest) {
-        Page<Client> clients = clientRepository.findByNameContainsOrEmailContainsAndDeleted(searchText, searchText, false, pageRequest);
+    public Page<ClientDto> searchClients(String searchText, PageRequest pageRequest, boolean deleted) {
+        Page<Client> clients = clientRepository.findByNameContainsOrEmailContainsAndDeleted(searchText, searchText, deleted, pageRequest);
         return new PageImpl<>(clients.getContent()
                 .stream()
                 .map(clientMapper::toClientDto)
@@ -89,10 +94,16 @@ public class ClientService {
     }
 
     public List<String> autocompleteClients(String searchText) {
-        List<String> byAutoCompleteEmail = clientRepository.findByAutoCompleteEmail(searchText,false);
+        List<String> byAutoCompleteEmail = clientRepository.findByAutoCompleteEmail(searchText, false);
         List<String> byAutoCompleteName = clientRepository.findByAutoCompleteName(searchText, false);
         byAutoCompleteEmail.addAll(byAutoCompleteName);
         return byAutoCompleteEmail;
     }
 
+    public void restore(Long id) {
+        clientRepository.findByIdAndDeleted(id, true).ifPresent(client -> {
+            client.setDeleted(false);
+            clientRepository.save(client);
+        });
+    }
 }

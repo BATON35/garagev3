@@ -37,6 +37,10 @@ spring:
           starttls:
            enable: true
 
+  kafka:
+    consumer:
+      group-id: test
+
 config:
   stopBubbling: true
 

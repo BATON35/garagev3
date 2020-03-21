@@ -5,6 +5,7 @@ import com.konrad.garagev3.model.dao.WorkerType;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.data.annotation.LastModifiedBy;
 
 
 import javax.persistence.Column;
@@ -33,4 +34,6 @@ public class UserDto {
     protected String phoneNumber;
     protected Set<Role> roles;
     protected boolean deleted;
+    private String createdBy;
+    private String lastModifiedBy;
 }
