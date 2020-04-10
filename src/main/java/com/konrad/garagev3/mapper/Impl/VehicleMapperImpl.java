@@ -11,24 +11,22 @@ public class VehicleMapperImpl implements VehicleMapper {
     @Override
     public VehicleDto toVehicleDto(Vehicle vehicle) {
         return VehicleDto.builder()
-                .brand(vehicle.getBrand())
+                .brand(vehicle.getCar().getBrand())
                 .id(vehicle.getId())
                 .productionDate(vehicle.getProductionDate())
-                .model(vehicle.getModel())
+                .model(vehicle.getCar().getModel())
                 .notification(vehicle.isNotification())
                 .numberPlate(vehicle.getNumberPlate())
                 .overviewDate(vehicle.getOverviewDate())
-                .hasHistory(vehicle.getJobs() == null ? false : !vehicle.getJobs().isEmpty())
+                .hasHistory(vehicle.getJobs() != null && !vehicle.getJobs().isEmpty())
                 .build();
     }
 
     @Override
     public Vehicle toVehicle(VehicleDto vehicleDto) {
         return Vehicle.builder()
-                .brand(vehicleDto.getBrand())
                 .id(vehicleDto.getId())
                 .productionDate(vehicleDto.getProductionDate())
-                .model(vehicleDto.getModel())
                 .notification(vehicleDto.isNotification())
                 .numberPlate(vehicleDto.getNumberPlate())
                 .overviewDate(vehicleDto.getOverviewDate())

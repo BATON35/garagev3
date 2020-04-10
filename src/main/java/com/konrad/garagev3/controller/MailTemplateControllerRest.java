@@ -8,7 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/mail-template")
+@RequestMapping("/api/mail-body")
 public class MailTemplateControllerRest {
     @Autowired
     private MailTemplateService mailTemplateService;

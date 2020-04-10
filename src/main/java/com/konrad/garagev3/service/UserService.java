@@ -71,11 +71,13 @@ public class UserService {
         if (user.getRoles() != null && !user.getRoles().isEmpty()) {
             user.setRoles(mapStringToRoles(user));
         }
-        userFromDatabase.get().setRoles(user.getRoles());
-        userFromDatabase.get().setEmail(user.getEmail());
-        userFromDatabase.get().setName(user.getName());
-        userFromDatabase.get().setSurname(user.getSurname());
-        return userRepository.save(userFromDatabase.get());
+        return userFromDatabase.map(userDB -> {
+            userDB.setRoles(user.getRoles());
+            userDB.setEmail(user.getEmail());
+            userDB.setName(user.getName());
+            userDB.setSurname(user.getSurname());
+            return userRepository.save(userDB);
+        }).orElseThrow(() -> new EntityNotFoundException("user not exist"));
     }
 
     private Set<Role> mapStringToRoles(User user) {
@@ -101,7 +103,7 @@ public class UserService {
     }
 
     public void deleteUser(Long id) {
-        userRepository.findById(id).ifPresent(user->{
+        userRepository.findById(id).ifPresent(user -> {
             user.setDeleted(true);
             userRepository.save(user);
         });
@@ -114,11 +116,11 @@ public class UserService {
                 .orElseThrow(() -> new EntityNotFoundException("User with login + " + login + " doesn't exist"));
     }
 
-    public Page<UserDto> searchUsers(String searchText, List<String> roles,Boolean deleted, PageRequest pageRequest) {
+    public Page<UserDto> searchUsers(String searchText, List<String> roles, Boolean deleted, PageRequest pageRequest) {
         Page<? extends User> users;
         if (roles != null) {
             List<Role> rolesDB = roleRepository.findByNameIn(roles);
-            users = userRepository.findByRolesAndDeleted(roles, searchText, searchText,deleted, pageRequest);
+            users = userRepository.findByRolesAndDeleted(roles, searchText, searchText, deleted, pageRequest);
         } else {
             users = userRepository.findByRoleIsNullAndEmailOrNameContainsStringAndDeleted(searchText, deleted, pageRequest);
         }
@@ -133,7 +135,7 @@ public class UserService {
     public void changePassword(String password) {
         Optional<? super User> optionalUser = userRepository.findByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
         if (optionalUser.isPresent()) {
-            User user1 = optionalUser.map(user -> (User) user).get();
+            User user1 = (User) optionalUser.get();
             user1.setPassword(passwordEncoder.encode(password));
             userRepository.save(user1);
         } else
@@ -141,7 +143,7 @@ public class UserService {
     }
 
     public void restoreUser(Long id) {
-        userRepository.findByIdAndDeleted(id, true).ifPresent(user->{
+        userRepository.findByIdAndDeleted(id, true).ifPresent(user -> {
             user.setDeleted(false);
             userRepository.save(user);
         });

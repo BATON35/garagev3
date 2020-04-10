@@ -1,7 +1,6 @@
 package com.konrad.garagev3;
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
@@ -13,7 +12,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableScheduling
 @EnableSwagger2
 @EnableJpaAuditing
-@EnableKafka
+//@EnableKafka
 @EnableCaching
 public class Garagev3Application {
 

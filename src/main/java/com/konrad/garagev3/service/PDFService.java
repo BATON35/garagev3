@@ -36,7 +36,7 @@ public class PDFService {
         Context context = new Context(Locale.forLanguageTag("pl"));
         List<Job> byVehicleId = jobRepository.findByVehicleId(vehicleId);
         context.setVariable("vehicle", byVehicleId.get(0).getVehicle());
-        String mailMessage = templateEngine.process(vehicle_checkup_remainder.getTemplate(), context);
+        String mailMessage = templateEngine.process(vehicle_checkup_remainder.getBody(), context);
         try {
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
             ITextRenderer iTextRenderer = new ITextRenderer();

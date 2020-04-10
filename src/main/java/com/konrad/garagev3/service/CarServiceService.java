@@ -18,12 +18,12 @@ import java.util.stream.Collectors;
 @Service
 public class CarServiceService {
 
-    private static CarServiceRepository carServiceRepository;
+    private final CarServiceRepository carServiceRepository;
     private static CarServiceMapper carServiceMapper;
 
     @Autowired
     public CarServiceService(CarServiceRepository carServiceRepository) {
-        CarServiceService.carServiceRepository = carServiceRepository;
+        this.carServiceRepository = carServiceRepository;
         carServiceMapper = Mappers.getMapper(CarServiceMapper.class);
     }
 
@@ -36,7 +36,7 @@ public class CarServiceService {
     }
 
     public CarService findById(Long id) {
-        return carServiceRepository.findById(id).orElseThrow(()->new EntityNotFoundException());
+        return carServiceRepository.findById(id).orElseThrow(() -> new EntityNotFoundException());
     }
 
     public CarService saveCarService(CarService carService) {

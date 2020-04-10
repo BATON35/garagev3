@@ -28,16 +28,13 @@ public class Vehicle {
     @GeneratedValue
     private Long id;
     private LocalDate productionDate;
-    private String brand;
-    private String model;
     @Column(unique = true)
     private String numberPlate;
     private LocalDate overviewDate;
-    @OneToMany( mappedBy = "vehicle")
+    @OneToMany(mappedBy = "vehicle")
     @JsonBackReference
     private List<Job> jobs;
     @ManyToOne
-    @JoinColumn(name = "client_id")
     @JsonBackReference
     @EqualsAndHashCode.Exclude
     private Client client;
@@ -53,4 +50,9 @@ public class Vehicle {
     private LocalDateTime lastModifiedDate;
     @LastModifiedBy
     private String lastModifiedBy;
+    //    @ManyToOne
+//    private Car car;
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Statistic statistic;
+
 }

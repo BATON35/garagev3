@@ -28,31 +28,29 @@ public class DOCGenerator extends FileStrategy {
     @Override
     public byte[] generateVehicleHistoryReport(String numberPlate) {
         List<Job> byVehicleId = jobRepository.findByVehicleNumberPlate(numberPlate);
-        XWPFDocument document = new XWPFDocument();
-        XWPFTable table = document.createTable();
-        table.setCellMargins(100, 200, 100, 200);
-        XWPFTableRow columnName = table.getRow(0);
-        columnName.getCell(0).setText("Job Id");
-        columnName.addNewTableCell().setText("Job Date");
-        columnName.addNewTableCell().setText("Service name");
-        columnName.addNewTableCell().setText("Parts");
-        columnName.addNewTableCell().setText("Price");
-        byVehicleId.forEach(job -> {
-            XWPFTableRow row = table.createRow();
-            row.getCell(0).setText(job.getId().toString());
-            row.getCell(1).setText(job.getCreatedDate().format(DateTimeFormatter.ISO_LOCAL_DATE).toString());
-            row.getCell(2).setText(job.getCarService().getName());
-            row.getCell(3).setText(job.getParts().stream().map(Part::getName).collect(Collectors.joining(" ")));
-            row.getCell(4).setText(job.getParts().stream().map(part -> part.getPrice()).reduce(BigDecimal.ZERO, BigDecimal::add).toString());
-
-
-        });
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        try {
+        try (XWPFDocument document = new XWPFDocument()) {
+            XWPFTable table = document.createTable();
+            table.setCellMargins(100, 200, 100, 200);
+            XWPFTableRow columnName = table.getRow(0);
+            columnName.getCell(0).setText("Job Id");
+            columnName.addNewTableCell().setText("Job Date");
+            columnName.addNewTableCell().setText("Service name");
+            columnName.addNewTableCell().setText("Parts");
+            columnName.addNewTableCell().setText("Price");
+            byVehicleId.forEach(job -> {
+                XWPFTableRow row = table.createRow();
+                row.getCell(0).setText(job.getId().toString());
+                row.getCell(1).setText(job.getCreatedDate().format(DateTimeFormatter.ISO_LOCAL_DATE).toString());
+                row.getCell(2).setText(job.getCarService().getName());
+                row.getCell(3).setText(job.getParts().stream().map(Part::getName).collect(Collectors.joining(" ")));
+                row.getCell(4).setText(job.getParts().stream().map(part -> part.getPrice()).reduce(BigDecimal.ZERO, BigDecimal::add).toString());
+            });
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
             document.write(byteArrayOutputStream);
+            return byteArrayOutputStream.toByteArray();
         } catch (IOException e) {
             log.error(e.getMessage());
         }
-        return byteArrayOutputStream.toByteArray();
+        return new byte[0];
     }
 }

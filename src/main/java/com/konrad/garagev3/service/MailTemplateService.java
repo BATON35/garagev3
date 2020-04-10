@@ -23,8 +23,8 @@ public class MailTemplateService {
             if (!template.getType().equals(mailTemplateDB.getType())) {
                 mailTemplateDB.setType(template.getType());
             }
-            if (!template.getTemplate().equals(mailTemplateDB.getTemplate())) {
-                mailTemplateDB.setTemplate(template.getTemplate());
+            if (!template.getBody().equals(mailTemplateDB.getBody())) {
+                mailTemplateDB.setBody(template.getBody());
             }
             return templateRepository.save(mailTemplateDB);
         }).orElseThrow(() -> new EntityNotFoundException("Template with id " + template.getId() + " doesn't exist"));

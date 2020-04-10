@@ -9,7 +9,8 @@ import org.springframework.stereotype.Component;
 import java.util.stream.Collectors;
 
 @Component
-public class JobResponseMapperImpl implements JobResponseMapper { ;
+public class JobResponseMapperImpl implements JobResponseMapper {
+    
     private final CarServiceMapper carServiceMapper;
     private final PartMapper partMapper;
     private final WorkerMapper workerMapper;

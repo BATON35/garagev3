@@ -52,6 +52,7 @@ vehicle:
     path: C:\vehiclePhoto
 
 logging:
+  path: E:\
   level:
     org:
       hibernate:
