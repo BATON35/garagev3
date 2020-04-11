@@ -6,7 +6,6 @@ import com.konrad.garagev3.repository.CarRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -15,7 +14,6 @@ import java.util.ArrayList;
 import java.util.DoubleSummaryStatistics;
 import java.util.List;
 import java.util.concurrent.Callable;
-import java.util.function.Function;
 
 @Repository
 @Slf4j
@@ -60,17 +58,10 @@ public class OtoMotoScraper implements Callable<Object> {
                             });
                 }
                 DoubleSummaryStatistics doubleSummaryStatistics = prices.stream().mapToDouble(t -> t).summaryStatistics();
-                if (car.getStatistic() != null) {
-                    Statistic statistic = car.getStatistic();
-                    statistic.setHeightPrice(doubleSummaryStatistics.getMax());
-                    statistic.setLowerPrice(doubleSummaryStatistics.getMin());
-                    statistic.setAvrPrice(doubleSummaryStatistics.getAverage());
-                } else {
-                    Statistic statistic = new Statistic(null, doubleSummaryStatistics.getMin(), doubleSummaryStatistics.getMax(), doubleSummaryStatistics.getAverage());
-                    car.setStatistic(statistic);
-                }
+                car.setHeightPrice(doubleSummaryStatistics.getMax());
+                car.setLowerPrice(doubleSummaryStatistics.getMin());
+                car.setAvrPrice(doubleSummaryStatistics.getAverage());
                 carRepository.save(car);
-
             }
         } catch (IOException e) {
             log.error(e.getMessage(), e);

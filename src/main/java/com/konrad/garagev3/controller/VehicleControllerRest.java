@@ -40,7 +40,7 @@ public class VehicleControllerRest {
 
     @PostMapping("/{clientId}")
     public VehicleDto saveVehicle(@RequestBody VehicleDto vehicleDto, @PathVariable Long clientId) throws DuplicateEntryException {
-        Vehicle vehicle = vehicleService.saveVehicle(vehicleMapperImp.toVehicle(vehicleDto), clientId);
+        Vehicle vehicle = vehicleService.saveVehicle(vehicleMapperImp.toVehicle(vehicleDto), clientId, vehicleDto.getBrand(), vehicleDto.getModel());
         return vehicleMapperImp.toVehicleDto(vehicle);
     }
 
@@ -64,4 +64,16 @@ public class VehicleControllerRest {
     public List<byte[]> getPhotosPaths(@PathVariable Long id){
        return vehicleService.getPhotosPaths(id);
     }
+
+    @GetMapping("/brand")
+    public List<String> getBrand() {
+        return vehicleService.getBrand();
+    }
+
+    @GetMapping("/model")
+    public List<String> getModel(@RequestParam String model) {
+        return vehicleService.getModel(model);
+    }
+
+
 }

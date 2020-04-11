@@ -6,9 +6,11 @@ import com.konrad.garagev3.model.dao.Client;
 import com.konrad.garagev3.model.dao.Photo;
 import com.konrad.garagev3.model.dao.Vehicle;
 import com.konrad.garagev3.model.dto.VehicleDto;
+import com.konrad.garagev3.repository.CarRepository;
 import com.konrad.garagev3.repository.ClientRepository;
 import com.konrad.garagev3.repository.PhotoRepository;
 import com.konrad.garagev3.repository.VehicleRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -26,22 +28,14 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class VehicleService {
     private final VehicleRepository vehicleRepository;
     private final ClientRepository clientRepository;
     private final VehicleMapper vehicleMapper;
     private final PhotoRepository photoRepository;
+    private final CarRepository carRepository;
 
-    @Autowired
-    VehicleService(VehicleRepository vehicleRepository,
-                   ClientRepository clientRepository,
-                   PhotoRepository photoRepository,
-                   VehicleMapper vehicleMapper) {
-        this.vehicleRepository = vehicleRepository;
-        this.clientRepository = clientRepository;
-        this.vehicleMapper = vehicleMapper;
-        this.photoRepository = photoRepository;
-    }
 
     public VehicleDto findVehicleByNumberPlate(String numberPlate) {
         return vehicleMapper.toVehicleDto(vehicleRepository
@@ -49,13 +43,14 @@ public class VehicleService {
                 .orElseThrow(() -> new EntityNotFoundException("Vehicle with number plate " + numberPlate + " doesn't exist")));
     }
 
-    public Vehicle saveVehicle(Vehicle vehicle, Long clientId) throws DuplicateEntryException {
+    public Vehicle saveVehicle(Vehicle vehicle, Long clientId, String brand, String model) throws DuplicateEntryException {
         Optional<Vehicle> present = vehicleRepository.findByNumberPlate(vehicle.getNumberPlate());
         if (present.isPresent() && !present.get().getId().equals(vehicle.getId())) {
             throw new DuplicateEntryException("vehicle with number plate " + vehicle.getNumberPlate() + " exist in database");
         }
         return clientRepository.findById(clientId).map(client -> {
             vehicle.setClient(client);
+            vehicle.setCar(carRepository.findByBrandAndModel(brand, model).orElseThrow(()-> new EntityNotFoundException("Car with brand: " + brand + " model ;" + model + "doesn't exist")));
             return vehicleRepository.save(vehicle);
         }).orElseThrow(() -> new EntityNotFoundException("client with id " + clientId + " doesn't exist"));
 
@@ -135,5 +130,13 @@ public class VehicleService {
             }
         });
         return photosInBytes;
+    }
+
+    public List<String> getBrand() {
+        return vehicleRepository.distinctBrand();
+    }
+
+    public List<String> getModel(String model) {
+        return vehicleRepository.distinctModel(model);
     }
 }
