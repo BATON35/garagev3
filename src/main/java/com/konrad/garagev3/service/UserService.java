@@ -76,6 +76,7 @@ public class UserService {
             userDB.setEmail(user.getEmail());
             userDB.setName(user.getName());
             userDB.setSurname(user.getSurname());
+            userDB.setPhoneNumber(user.getPhoneNumber());
             return userRepository.save(userDB);
         }).orElseThrow(() -> new EntityNotFoundException("user not exist"));
     }

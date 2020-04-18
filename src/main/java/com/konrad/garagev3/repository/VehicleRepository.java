@@ -19,11 +19,11 @@ public interface VehicleRepository extends JpaRepository<Vehicle, Long> {
 
     List<Vehicle> findByNumberPlateContaining(String text);
 
-    @Query(value = "select distinct brand from car", nativeQuery = true)
-    List<String> distinctBrand();
+//    @Query(value = "select distinct brand from car", nativeQuery = true)
+//    List<String> distinctBrand();
 
-    @Query(value = "select distinct model from car where brand = ?1", nativeQuery = true)
-    List<String> distinctModel(String brand);
+//    @Query(value = "select distinct model from car where brand = ?1", nativeQuery = true)
+//    List<String> distinctModel(String brand);
 
 
 }

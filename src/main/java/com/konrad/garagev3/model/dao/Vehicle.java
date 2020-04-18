@@ -50,7 +50,7 @@ public class Vehicle {
     private LocalDateTime lastModifiedDate;
     @LastModifiedBy
     private String lastModifiedBy;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Car car;
     @ManyToOne(cascade = CascadeType.ALL)
     private Statistic statistic;

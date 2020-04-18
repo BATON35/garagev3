@@ -2,6 +2,7 @@ package com.konrad.garagev3.service;
 
 import com.konrad.garagev3.exeption.DuplicateEntryException;
 import com.konrad.garagev3.mapper.VehicleMapper;
+import com.konrad.garagev3.model.dao.Car;
 import com.konrad.garagev3.model.dao.Client;
 import com.konrad.garagev3.model.dao.Photo;
 import com.konrad.garagev3.model.dao.Vehicle;
@@ -11,7 +12,6 @@ import com.konrad.garagev3.repository.ClientRepository;
 import com.konrad.garagev3.repository.PhotoRepository;
 import com.konrad.garagev3.repository.VehicleRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +23,7 @@ import javax.transaction.Transactional;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -50,7 +51,11 @@ public class VehicleService {
         }
         return clientRepository.findById(clientId).map(client -> {
             vehicle.setClient(client);
-            vehicle.setCar(carRepository.findByBrandAndModel(brand, model).orElseThrow(()-> new EntityNotFoundException("Car with brand: " + brand + " model ;" + model + "doesn't exist")));
+//            vehicle.setCar(carRepository.findByBrandAndModel(brand, model).orElseThrow(()-> new EntityNotFoundException("Car with brand: " + brand + " model ;" + model + " doesn't exist")));
+            vehicle.setCar(Car.builder()
+                    .brand(brand)
+                    .model(model)
+                    .build());
             return vehicleRepository.save(vehicle);
         }).orElseThrow(() -> new EntityNotFoundException("client with id " + clientId + " doesn't exist"));
 
@@ -133,10 +138,14 @@ public class VehicleService {
     }
 
     public List<String> getBrand() {
-        return vehicleRepository.distinctBrand();
+        List<String> brands = new ArrayList<>(List.of("BMW", "Toyota", "Audi", "Alfa Romeo", "Dacia", "Fiat", "Hyundai", "Ford"));
+        Collections.sort(brands);
+        return brands;
     }
 
     public List<String> getModel(String model) {
-        return vehicleRepository.distinctModel(model);
+        List<String> models = new ArrayList<>(List.of("PRIUS", "Yaris", "Aygo", "Vios", "Rush", "Rush", "Rush", "Sequoia"));
+        Collections.sort(models);
+        return models;
     }
 }
