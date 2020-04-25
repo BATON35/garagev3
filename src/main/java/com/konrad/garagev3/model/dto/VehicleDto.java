@@ -17,8 +17,8 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class VehicleDto implements Serializable {
     private Long id;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate productionDate;
+ //   @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private String productionDate;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate overviewDate;
     @Length(min = 3, max = 127, message = "Pole imie wymaga conajmniej trzech znakow")

@@ -65,15 +65,4 @@ public class VehicleControllerRest {
        return vehicleService.getPhotosPaths(id);
     }
 
-    @GetMapping("/brand")
-    public List<String> getBrand() {
-        return vehicleService.getBrand();
-    }
-
-    @GetMapping("/model")
-    public List<String> getModel(@RequestParam String model) {
-        return vehicleService.getModel(model);
-    }
-
-
 }

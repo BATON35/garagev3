@@ -4,6 +4,7 @@ import com.konrad.garagev3.mapper.CarServiceMapper;
 import com.konrad.garagev3.model.dao.CarService;
 import com.konrad.garagev3.model.dto.CarServiceDto;
 import com.konrad.garagev3.repository.CarServiceRepository;
+import lombok.RequiredArgsConstructor;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,16 +17,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class CarServiceService {
 
     private final CarServiceRepository carServiceRepository;
-    private static CarServiceMapper carServiceMapper;
-
-    @Autowired
-    public CarServiceService(CarServiceRepository carServiceRepository) {
-        this.carServiceRepository = carServiceRepository;
-        carServiceMapper = Mappers.getMapper(CarServiceMapper.class);
-    }
+    private static CarServiceMapper carServiceMapper = Mappers.getMapper(CarServiceMapper.class);
 
 
     public Page<CarService> findAll(Pageable pageable) {
