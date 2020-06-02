@@ -1,10 +1,12 @@
 package com.konrad.garagev3.model.dto;
 
 import com.konrad.garagev3.model.dao.Role;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.validator.constraints.Length;
-
 
 import javax.persistence.Column;
 import javax.validation.constraints.Email;
@@ -15,22 +17,23 @@ import java.util.Set;
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(exclude = {"password", "active ", "id"})
+@EqualsAndHashCode(exclude = {"password", "id"})
 public class UserDto {
-   // @Setter(AccessLevel.NONE)
-   // private int id;
-    @Email(message = "*Please provide a valid Email")
-    @NotEmpty(message = "*Please provide an email")
-    protected String email;
     protected Long id;
-    @Length(min = 55, message = "*Your password must have at least 5 characters")
+    protected String login;
     @NotEmpty(message = "*Please provide your password")
+    @Length(min = 6, message = "*Your password must have at least 5 characters")
     protected String password;
     @Column(name = "name")
     @NotEmpty(message = "*Please provide your name")
     protected String name;
     protected String surname;
-    protected int active;
+    @Email(message = "*Please provide a valid Email")
+    @NotEmpty(message = "*Please provide an email")
+    protected String email;
+    protected String phoneNumber;
     protected Set<Role> roles;
-
+    protected boolean deleted;
+    private String createdBy;
+    private String lastModifiedBy;
 }

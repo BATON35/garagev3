@@ -47,7 +47,7 @@ public class VehicleMailer {
             String email = vehicle.getClient().getEmail();
             Context context = new Context(Locale.forLanguageTag("pl"), objectMapper.convertValue(vehicle, Map.class));
             context.setVariable("vehicle", vehicle);
-            String mailMessage = templateEngine.process(vehicle_checkup_remainder.getTemplate(), context);
+            String mailMessage = templateEngine.process(vehicle_checkup_remainder.getBody(), context);
             MimeMessage mimeMessage = javaMailSender.createMimeMessage();
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
             try {

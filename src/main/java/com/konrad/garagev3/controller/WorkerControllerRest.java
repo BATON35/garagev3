@@ -2,9 +2,9 @@ package com.konrad.garagev3.controller;
 
 import com.konrad.garagev3.mapper.WorkerMapper;
 import com.konrad.garagev3.model.dao.Worker;
-import com.konrad.garagev3.model.dao.WorkerStatisticSell;
+import com.konrad.garagev3.model.response.WorkerStatisticSell;
+import com.konrad.garagev3.model.request.StatisticScope;
 import com.konrad.garagev3.model.dto.WorkerDto;
-import com.konrad.garagev3.repository.WorkerRepository;
 import com.konrad.garagev3.service.WorkerService;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,9 +48,10 @@ public class WorkerControllerRest {
         return workerService.findAll(PageRequest.of(page, size), hasRole).map(workerMapper::toWorkerDto);
     }
 
-    @GetMapping
-    public List<WorkerStatisticSell> getStatistic() {
-        return workerService.getStatistic();
+    //modify do get method??
+    @PostMapping("/statistic")
+    public List<WorkerStatisticSell> getStatistic(@RequestBody StatisticScope statisticScope) {
+        return workerService.getStatistic(statisticScope);
     }
 
     @PostMapping

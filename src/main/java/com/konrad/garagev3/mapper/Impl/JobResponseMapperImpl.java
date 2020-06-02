@@ -1,37 +1,39 @@
 package com.konrad.garagev3.mapper.Impl;
 
-import com.konrad.garagev3.mapper.CarServiceMapper;
-import com.konrad.garagev3.mapper.PartMapper;
-import com.konrad.garagev3.mapper.JobMapper;
-import com.konrad.garagev3.mapper.ServicePartResponseMapper;
+import com.konrad.garagev3.mapper.*;
 import com.konrad.garagev3.model.dao.Job;
-import com.konrad.garagev3.model.dto.JobResponseDto;
+import com.konrad.garagev3.model.response.JobHistory;
 import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Component;
 
 import java.util.stream.Collectors;
 
 @Component
-public class ServicePartResponseMapperImpl implements ServicePartResponseMapper {
-    private final JobMapper jobMapper;
+public class JobResponseMapperImpl implements JobResponseMapper {
+    
     private final CarServiceMapper carServiceMapper;
     private final PartMapper partMapper;
+    private final WorkerMapper workerMapper;
 
-    public ServicePartResponseMapperImpl() {
-        this.jobMapper = Mappers.getMapper(JobMapper.class);
+    public JobResponseMapperImpl() {
         this.carServiceMapper = Mappers.getMapper(CarServiceMapper.class);
         this.partMapper = Mappers.getMapper(PartMapper.class);
+        this.workerMapper = Mappers.getMapper(WorkerMapper.class);
     }
 
     @Override
-    public JobResponseDto toServicePartResponse(Job job) {
-        return JobResponseDto.builder()
+    public JobHistory toServicePartResponse(Job job) {
+        if ( job == null ) {
+            return null;
+        }
+        return JobHistory.builder()
                 .carServiceDto(carServiceMapper.toCarServiceDto(job.getCarService()))
                 .createdDate(job.getCreatedDate())
                 .partsDto(job.getParts()
                         .stream()
                         .map(partMapper::toPartDto)
                         .collect(Collectors.toList()))
+                .workerDto(workerMapper.toWorkerDto(job.getWorker()))
                 .build();
 
     }

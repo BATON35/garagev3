@@ -8,6 +8,7 @@ import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,6 +45,7 @@ public class PartControllerRest {
         return partService.savePart(partMapper.toPart(partDto));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping
     public PartDto updatePart(@RequestBody PartDto partDto) {
         return partService.savePart(partMapper.toPart(partDto));

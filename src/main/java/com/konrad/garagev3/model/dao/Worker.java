@@ -12,6 +12,7 @@ import javax.persistence.Enumerated;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@EqualsAndHashCode
 public class Worker extends User {
     @Enumerated(EnumType.STRING)
     private WorkerType type;

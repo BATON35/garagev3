@@ -1,6 +1,6 @@
 package com.konrad.garagev3.service;
 
-import com.konrad.garagev3.exeption.TemplateParseExeption;
+import com.konrad.garagev3.exeption.TemplateParseException;
 import com.konrad.garagev3.model.dao.Job;
 import com.konrad.garagev3.model.dao.Template;
 import com.konrad.garagev3.repository.JobRepository;
@@ -31,12 +31,12 @@ public class PDFService {
     @Qualifier("htmlTemplateEngine")
     private TemplateEngine templateEngine;
 
-    public byte[] generatePDF(Long vehicleId) throws TemplateParseExeption {
+    public byte[] generatePDF(Long vehicleId) throws TemplateParseException {
         Template vehicle_checkup_remainder = templateRepository.findByType("vehicle_checkup_remainder");
         Context context = new Context(Locale.forLanguageTag("pl"));
         List<Job> byVehicleId = jobRepository.findByVehicleId(vehicleId);
         context.setVariable("vehicle", byVehicleId.get(0).getVehicle());
-        String mailMessage = templateEngine.process(vehicle_checkup_remainder.getTemplate(), context);
+        String mailMessage = templateEngine.process(vehicle_checkup_remainder.getBody(), context);
         try {
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
             ITextRenderer iTextRenderer = new ITextRenderer();
@@ -48,7 +48,7 @@ public class PDFService {
         } catch (DocumentException e) {
             log.error(e.getMessage(), e);
         }
-        throw new TemplateParseExeption("PDF can not be generated");
+        throw new TemplateParseException("PDF can not be generated");
     }
 
 }

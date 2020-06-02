@@ -1,10 +1,11 @@
 package com.konrad.garagev3.controller;
 
 import com.konrad.garagev3.mapper.JobMapper;
+import com.konrad.garagev3.model.response.JobStatisticIncome;
 import com.konrad.garagev3.model.dto.JobDto;
-import com.konrad.garagev3.model.dto.JobResponseDto;
+import com.konrad.garagev3.model.response.JobHistory;
 import com.konrad.garagev3.service.JobService;
-import org.mapstruct.factory.Mappers;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
@@ -18,9 +19,10 @@ public class JobController {
     private final JobService jobService;
     private final JobMapper jobMapper;
 
-    public JobController(JobService jobService) {
+    @Autowired
+    public JobController(JobService jobService, JobMapper jobMapper) {
         this.jobService = jobService;
-        this.jobMapper = Mappers.getMapper(JobMapper.class);
+        this.jobMapper = jobMapper;
 
     }
 
@@ -34,10 +36,15 @@ public class JobController {
         return jobService.findAll(PageRequest.of(page, size)).map(jobMapper::toJobDto);
     }
 
+    @GetMapping("/statistic")
+    public List<JobStatisticIncome> getStatistic() {
+        return jobService.getStatistic();
+    }
+
     @PostMapping
     public JobDto saveJob(@RequestBody JobDto jobDto) {
         return jobMapper.toJobDto(
-                jobService.saveServicePart(
+                jobService.saveJob(
                         jobDto.getWorkerId(),
                         jobDto.getPartIds(),
                         jobDto.getServiceId(),
@@ -47,7 +54,7 @@ public class JobController {
     @PutMapping
     public JobDto updateJob(@RequestBody JobDto jobDto) {
         return jobMapper.toJobDto(
-                jobService.saveServicePart(
+                jobService.saveJob(
                         jobDto.getWorkerId(),
                         jobDto.getPartIds(),
                         jobDto.getServiceId(),
@@ -60,7 +67,7 @@ public class JobController {
     }
 
     @GetMapping("/history")
-    public List<JobResponseDto> getJobHistory(Long vehicleId) {
+    public List<JobHistory> getJobHistory(Long vehicleId) {
         return jobService.getHistory(vehicleId);
     }
 

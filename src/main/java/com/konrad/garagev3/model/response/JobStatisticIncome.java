@@ -1,4 +1,4 @@
-package com.konrad.garagev3.model.dao;
+package com.konrad.garagev3.model.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,14 +6,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class WorkerStatisticSell {
+public class JobStatisticIncome {
     private String date;
     private BigDecimal price;
-    private String name;
 }

@@ -10,7 +10,6 @@ import java.util.Collections;
 public class ClientServiceTestData {
     static final Client TEST_CLIENT = Client.builder()
             .id(1L)
-            .active(1)
             .email("email@pl")
             .name("name")
             .surname("surname")
@@ -23,12 +22,10 @@ public class ClientServiceTestData {
             .name("name2")
             .surname("surname2")
             .phoneNumber("4444444444")
-            .active(1)
             .vehicles(Collections.emptySet())
             .build();
     static final Client TEST_CLIENT_EXIST_IN_DATABASE = Client.builder()
             .id(1L)
-            .active(1)
             .email("email@pl")
             .name("name")
             .surname("surname")
@@ -41,7 +38,6 @@ public class ClientServiceTestData {
             .name("nameToSave")
             .surname("toSave")
             .phoneNumber("121212113")
-            .active(1)
             .build();
     static final ClientDto TEST_CLIENT_DTO_2 = ClientDto.builder()
             .id(2L)
@@ -49,12 +45,10 @@ public class ClientServiceTestData {
             .name("name2")
             .surname("surname2")
             .phoneNumber("4444444444")
-            .active(1)
             .vehicles(Collections.emptySet())
             .build();
     static final ClientDto TEST_CLIENT_DTO = ClientDto.builder()
             .id(1L)
-            .active(1)
             .email("email@pl")
             .name("name")
             .surname("surname")
@@ -66,14 +60,12 @@ public class ClientServiceTestData {
             .name("name3")
             .surname("surname2")
             .phoneNumber("333333333")
-            .active(1)
             .build();
     static final ClientDto TEST_CLIENT_DTO_VEHICLE = ClientDto.builder()
             .email("emailTest@pl")
             .name("name")
             .surname("surname")
             .phoneNumber("000000000")
-            .active(1)
             //.vehicles(Collections.singleton(VehicleDto.builder().brand("brand").build()))
             .build();
     static final Client TEST_ClIENT_ACTIVE = Client.builder()
@@ -82,7 +74,6 @@ public class ClientServiceTestData {
             .name("name2")
             .surname("surname2")
             .phoneNumber("4444444444")
-            .active(1)
             .build();
 
     static final Client TEST_ClIENT_ACTIVE_DTO = Client.builder()
@@ -91,6 +82,5 @@ public class ClientServiceTestData {
             .name("name2")
             .surname("surname2")
             .phoneNumber("4444444444")
-            .active(1)
             .build();
 }

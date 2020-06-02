@@ -17,13 +17,14 @@ public class Client {
     @Id
     @GeneratedValue
     private Long id;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,orphanRemoval = true, mappedBy = "client")
+    protected boolean deleted;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "client")
     @JsonManagedReference
     @EqualsAndHashCode.Exclude
     private Set<Vehicle> vehicles;
     private String name;
-    private Integer active;
     private String surname;
+    @Column(unique = true)
     private String email;
     private String phoneNumber;
 }

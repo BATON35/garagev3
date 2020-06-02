@@ -1,11 +1,10 @@
 package com.konrad.garagev3.controller;
 
-import com.konrad.garagev3.mapper.VehicleMapper;
+import com.konrad.garagev3.exeption.DuplicateEntryException;
+import com.konrad.garagev3.mapper.Impl.VehicleMapperImpl;
 import com.konrad.garagev3.model.dao.Vehicle;
 import com.konrad.garagev3.model.dto.VehicleDto;
-import com.konrad.garagev3.model.dto.WorkerDto;
 import com.konrad.garagev3.service.VehicleService;
-import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,22 +16,22 @@ import java.util.List;
 @RequestMapping("/api/vehicles")
 public class VehicleControllerRest {
     private final VehicleService vehicleService;
-    private final VehicleMapper vehicleMapper;
+    private final VehicleMapperImpl vehicleMapperImp;
 
     @Autowired
-    public VehicleControllerRest(VehicleService vehicleService) {
+    public VehicleControllerRest(VehicleService vehicleService, VehicleMapperImpl vehicleMapperImp) {
         this.vehicleService = vehicleService;
-        this.vehicleMapper = Mappers.getMapper(VehicleMapper.class);
+        this.vehicleMapperImp = vehicleMapperImp;
     }
 
     @GetMapping("/{id}")
     public VehicleDto getVehicleById(@PathVariable Long id) {
-        return vehicleMapper.toVehicleDto(vehicleService.findById(id));
+        return vehicleMapperImp.toVehicleDto(vehicleService.findById(id));
     }
 
     @GetMapping
     public Page<VehicleDto> getVehicleList(Pageable pageable) {
-        return vehicleService.findAll(pageable).map(vehicleMapper::toVehicleDto);
+        return vehicleService.findAll(pageable).map(vehicleMapperImp::toVehicleDto);
     }
     @GetMapping("/autoComplete")
     public List<VehicleDto> autocompleteVehicle(@RequestParam String text) {
@@ -40,15 +39,15 @@ public class VehicleControllerRest {
     }
 
     @PostMapping("/{clientId}")
-    public VehicleDto saveVehicle(@RequestBody VehicleDto vehicleDto, @PathVariable Long clientId) {
-        Vehicle vehicle = vehicleService.saveVehicle(vehicleMapper.toVehicle(vehicleDto), clientId);
-        return vehicleMapper.toVehicleDto(vehicle);
+    public VehicleDto saveVehicle(@RequestBody VehicleDto vehicleDto, @PathVariable Long clientId) throws DuplicateEntryException {
+        Vehicle vehicle = vehicleService.saveVehicle(vehicleMapperImp.toVehicle(vehicleDto), clientId, vehicleDto.getBrand(), vehicleDto.getModel());
+        return vehicleMapperImp.toVehicleDto(vehicle);
     }
 
     @PutMapping
-    public VehicleDto updateVehicle(@RequestBody VehicleDto vehicleDto) {
-        Vehicle vehicle = vehicleService.update(vehicleMapper.toVehicle(vehicleDto));
-        return vehicleMapper.toVehicleDto(vehicle);
+    public VehicleDto updateVehicle(@RequestBody VehicleDto vehicleDto) throws DuplicateEntryException {
+        Vehicle vehicle = vehicleService.update(vehicleMapperImp.toVehicle(vehicleDto));
+        return vehicleMapperImp.toVehicleDto(vehicle);
     }
 
     @DeleteMapping("/{id}")
@@ -60,4 +59,10 @@ public class VehicleControllerRest {
     public void toggleNotification(@PathVariable Long id){
         vehicleService.toggleNotification(id);
     }
+
+    @GetMapping("/photo/{id}")
+    public List<byte[]> getPhotosPaths(@PathVariable Long id){
+       return vehicleService.getPhotosPaths(id);
+    }
+
 }

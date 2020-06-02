@@ -9,24 +9,27 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 
 public interface ClientRepository extends JpaRepository<Client, Long> {
-    Client findByEmail(String email);
+    Client findByEmailAndDeleted(String email, boolean deleted);
 
-    Client findBySurnameAndName(String surname, String name);
+    Client findBySurnameAndNameAndDeleted(String surname, String name, boolean deleted);
 
-    List<Client> findByActiveIs(int one);
+    void deleteByEmailAndDeleted(String mail, boolean deleted);
 
-    void deleteByEmail(String mail);
+    Client findByVehiclesAndDeleted(Vehicle vehicle, boolean deleted);
 
-    Client findByVehicles(Vehicle vehicle);
+    Page<Client> findByNameContainsOrEmailContainsAndDeleted(String name, String email, boolean deleted, Pageable pageable);
 
-    Page<Client> findByNameContainsOrEmailContains(String name, String email, Pageable pageable);
+    @Query(value = "select c.email from Client c where c.email like CONCAT(:searchText,'%') and deleted = :deleted", nativeQuery = true)
+    List<String> findByAutoCompleteEmail(@Param("searchText") String searchText, @Param("deleted") boolean deleted);
 
-    @Query(value = "select c.email from Client c where c.email like CONCAT(:searchText,'%')", nativeQuery = true)
-    List<String> findByAutoCompleteEmail(@Param("searchText") String searchText);
+    @Query(value = "select c.name from Client c where c.name like CONCAT(:searchText,'%') and deleted = :deleted", nativeQuery = true)
+    List<String> findByAutoCompleteName(@Param("searchText") String searchText, @Param("deleted") boolean deleted);
 
-    @Query(value = "select c.name from Client c where c.name like CONCAT(:searchText,'%')", nativeQuery = true)
-    List<String> findByAutoCompleteName(@Param("searchText") String searchText);
+    Page<Client> findByDeleted(boolean Deleted, Pageable pageable);
+
+    Optional<Client> findByIdAndDeleted(Long id, boolean deleted);
 }

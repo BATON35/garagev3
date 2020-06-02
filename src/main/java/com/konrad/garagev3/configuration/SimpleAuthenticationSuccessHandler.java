@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.DefaultRedirectStrategy;
@@ -15,6 +16,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.stereotype.Component;
 
 @Component
+@Slf4j
 public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccessHandler{
 
     private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
@@ -29,15 +31,13 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
                 try {
                     redirectStrategy.sendRedirect(arg0, arg1, "/index");
                 } catch (Exception e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
+                    log.error(e.getMessage() , e);
                 }
             } else if(authority.getAuthority().equals("ROLE_ADMIN")) {
                 try {
                     redirectStrategy.sendRedirect(arg0, arg1, "/admin");
                 } catch (Exception e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
+                    log.error(e.getMessage() , e);
                 }
             } else {
                 throw new IllegalStateException();

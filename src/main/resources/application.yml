@@ -21,9 +21,9 @@ spring:
 #        id:
 #          new_generator_mappings: false
 
-  queries:
-    users-query: select email, password, active from user where email=?
-    roles-query: select u.email, r.name from user u inner join user_role ur on(u.id=ur.user_id) inner join role r on(ur.role_id=r.id) where u.email=?
+#  queries:
+#    users-query: select email, password, active from user where email=?
+#    roles-query: select u.email, r.name from user u inner join user_role ur on(u.id=ur.user_id) inner join role r on(ur.role_id=r.id) where u.email=?
 
   mail:
     host: smtp.gmail.com
@@ -37,6 +37,10 @@ spring:
           starttls:
            enable: true
 
+  kafka:
+    consumer:
+      group-id: test
+
 config:
   stopBubbling: true
 
@@ -46,3 +50,13 @@ lombok:
 vehicle:
   photo:
     path: C:\vehiclePhoto
+
+logging:
+  path: E:\
+  level:
+    org:
+      hibernate:
+        type: TRACE
+
+server:
+  port: 8080

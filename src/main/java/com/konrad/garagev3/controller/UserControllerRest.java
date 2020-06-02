@@ -1,5 +1,6 @@
 package com.konrad.garagev3.controller;
 
+import com.konrad.garagev3.exeption.DuplicateEntryException;
 import com.konrad.garagev3.mapper.UserMapper;
 import com.konrad.garagev3.model.dao.User;
 import com.konrad.garagev3.model.dto.UserDto;
@@ -8,8 +9,11 @@ import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
@@ -25,30 +29,18 @@ public class UserControllerRest {
         userMapper = Mappers.getMapper(UserMapper.class);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+
     @GetMapping("/search")
-    public Page<UserDto> searchUsers(@RequestParam String searchText, @RequestParam Boolean hasRole, @RequestParam Integer page, @RequestParam Integer size) {
-        return userService.searchUsers(searchText,hasRole, PageRequest.of(page, size));
+    @PreAuthorize("@securityService.hasAccessToDeletedUserList(#deleted)")
+    public Page<UserDto> searchUsers(@RequestParam String searchText, @RequestParam(required = false) List<String> roles, @RequestParam Integer page, @RequestParam Integer size, @RequestParam(required = false) boolean deleted) {
+        return userService.searchUsers(searchText, roles, deleted, PageRequest.of(page, size));
     }
 
-//    @PreAuthorize("hasRole('ADMIN')")
-//    @GetMapping("/search")
-//    public Page<UserDto> searchUsers(@RequestParam String searchText, @RequestParam Integer page, @RequestParam Integer size) {
-//        return userService.searchUsers(searchText, PageRequest.of(page, size));
-//    }
-//
-//    @PreAuthorize("hasRole('ADMIN')")
-//    @GetMapping("/{page}/{size}/{hasRole}")
-//    public Page<UserDto> getUserList(@PathVariable Integer page, @PathVariable Integer size, @PathVariable Boolean hasRole) {
-//        return userService.findAll(PageRequest.of(page, size), hasRole).map(userMapper::toUserDto);
-//    }
-//
     @GetMapping("/info")
     public UserDto userInfo() {
         return userMapper.toUserDto(userService.getInfo());
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/{id}")
     public UserDto getUserById(@PathVariable Long id) {
         return userMapper.toUserDto(userService.findById(id));
@@ -56,22 +48,41 @@ public class UserControllerRest {
 
 
     @PostMapping
-    public UserDto saveUser(@RequestBody UserDto userDto) {
+    public UserDto saveUser(@RequestBody UserDto userDto) throws DuplicateEntryException {
         User user = userMapper.toUser(userDto);
         return userMapper.toUserDto(userService.saveUser(user));
     }
 
+    @PostMapping("/change-password")
+    @PreAuthorize("isAuthenticated()")
+    public void changePassword(@RequestBody UserDto userDto) {
+        userService.changePassword(userDto.getPassword());
+    }
+
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping
-    public UserDto updateUser(@RequestBody UserDto userDto) {
+    public UserDto updateUser(@RequestBody UserDto userDto) throws DuplicateEntryException {
         User user = userMapper.toUser(userDto);
-        return userMapper.toUserDto(userService.saveUser(user));
+        return userMapper.toUserDto(userService.updateUser(user));
     }
+
+    @PutMapping("/restore")
+    public void restoreUser(@RequestParam Long id) {
+        userService.restoreUser(id);
+    }
+
 
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("{id}")
     public void deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
+    }
+
+    @ExceptionHandler(DuplicateEntryException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ResponseBody()
+    public String duplicateEntryExceptionHandler(DuplicateEntryException sqlException) {
+        return sqlException.toString();
     }
 
 }

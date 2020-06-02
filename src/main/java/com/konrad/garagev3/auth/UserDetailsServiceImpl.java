@@ -17,21 +17,16 @@ import java.util.stream.Collectors;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserRepository<User> userRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        try {
-            return (org.springframework.security.core.userdetails.User) userRepository.findByName(userName)
-                    .map(user -> new org.springframework.security.core.userdetails.User(((User) user).getName(), ((User) user).getPassword(), ((User) user).getRoles()
+    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
+            return userRepository.findByLogin(login)
+                    .map(user -> new org.springframework.security.core.userdetails.User(user.getLogin(), user.getPassword(), user.getRoles()
                             .stream()
                             .map(role -> new SimpleGrantedAuthority(role.getName()))
                             .collect(Collectors.toList())))
-                    .orElseThrow(() -> new UsernameNotFoundException("user with userName " + userName + " doesn't exist"));
-        } catch (Throwable throwable) {
-            log.error(throwable.getMessage(), throwable);
-            throw new UsernameNotFoundException("user name " + userName);
-        }
+                    .orElseThrow(() -> new UsernameNotFoundException("user with login " + login + " doesn't exist"));
 
     }
 

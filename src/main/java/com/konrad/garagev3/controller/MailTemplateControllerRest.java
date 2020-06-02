@@ -8,7 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/mail-template")
+@RequestMapping("/api/mail-body")
 public class MailTemplateControllerRest {
     @Autowired
     private MailTemplateService mailTemplateService;
@@ -24,7 +24,6 @@ public class MailTemplateControllerRest {
     }
     @GetMapping("/{page}/[size}")
     public Page<Template> getList(@PathVariable Integer page, @PathVariable Integer size) {
-//        return userService.findAll(PageRequest.of(page, size)).map(userMapper::toUserDto);
         return mailTemplateService.findAll(PageRequest.of(page, size));
     }
 

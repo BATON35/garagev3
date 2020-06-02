@@ -22,7 +22,7 @@ public class Template {
     @Id
     private Long id;
     @Lob
-    private String template;
+    private String body;
     @CreatedBy
     private String createdBy;
     @CreatedDate

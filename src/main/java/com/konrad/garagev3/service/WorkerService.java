@@ -2,7 +2,8 @@ package com.konrad.garagev3.service;
 
 import com.konrad.garagev3.mapper.WorkerMapper;
 import com.konrad.garagev3.model.dao.Worker;
-import com.konrad.garagev3.model.dao.WorkerStatisticSell;
+import com.konrad.garagev3.model.response.WorkerStatisticSell;
+import com.konrad.garagev3.model.request.StatisticScope;
 import com.konrad.garagev3.model.dto.WorkerDto;
 import com.konrad.garagev3.repository.WorkerRepository;
 import org.mapstruct.factory.Mappers;
@@ -15,7 +16,9 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.List;
+import java.math.BigDecimal;
+import java.time.Period;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,7 +34,6 @@ public class WorkerService {
     }
 
     public Worker saveWorker(Worker worker) {
-        worker.setActive(1);
         return workerRepository.save(worker);
     }
 
@@ -70,13 +72,49 @@ public class WorkerService {
                 .collect(Collectors.toList());
 
     }
-    public List<WorkerStatisticSell> getStatistic(){
-        return workerRepository.getStatisticByWorker()
+
+    public List<WorkerStatisticSell> getStatistic(StatisticScope statisticScope) {
+        List<WorkerStatisticSell> workerStatisticSells = workerRepository.getStatisticByWorker(statisticScope.getStart(), statisticScope.getEnd())
                 .stream()
                 .map(r -> WorkerStatisticSell.builder()
-                .date(r.getDate())
-                .price(r.getPrice())
-                .name(r.getName())
-                .build()).collect(Collectors.toList());
+                        .date(r.getDate())
+                        .price(r.getPrice())
+                        .name(r.getName())
+                        .build())
+                .collect(Collectors.toList());
+
+        Map<String, List<WorkerStatisticSell>> statisticGrouped = workerStatisticSells
+                .stream()
+                .collect(Collectors.groupingBy(WorkerStatisticSell::getName));
+
+        statisticGrouped.forEach((key, value) -> {
+            Period intervalPeriod = Period.between(statisticScope.getStart(), statisticScope.getEnd());
+            int periodOfTimeInMonths = intervalPeriod.getMonths() + intervalPeriod.getYears() * 12 + (int) Math.ceil(intervalPeriod.getDays() / 31.0);
+            Map<String, Boolean> workerMonth = new HashMap<>();
+            for (int i = 0; i < periodOfTimeInMonths; i++) {
+                workerMonth.put(statisticScope.getStart().plusMonths(i).toString().substring(0, 7), false);
+            }
+            value.forEach(statisticSell -> {
+                if (workerMonth.containsKey(statisticSell.getDate())) {
+                    workerMonth.put(statisticSell.getDate(), true);
+                }
+            });
+            workerMonth.entrySet().forEach(entry -> {
+                if (!entry.getValue()) {
+                    value.add(WorkerStatisticSell
+                            .builder()
+                            .price(new BigDecimal(0))
+                            .date(entry.getKey())
+                            .name(key)
+                            .build());
+                }
+            });
+        });
+        return statisticGrouped.entrySet()
+                .stream()
+                .flatMap(element -> element.getValue()
+                        .stream().sorted(Comparator.comparing(WorkerStatisticSell::getName)
+                                .thenComparing(WorkerStatisticSell::getDate)))
+                .collect(Collectors.toList());
     }
 }
